@@ -1,10 +1,14 @@
-import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
-import { Box, Card, Link, Container, Typography, Tooltip } from '@material-ui/core';
+import {
+  Box,
+  Card,
+  Link,
+  Container,
+  Typography,
+} from '@material-ui/core';
 // hooks
-import useAuth from '../../hooks/useAuth';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // layouts
@@ -13,14 +17,13 @@ import AuthLayout from '../../layouts/AuthLayout';
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import { RegisterForm } from '../../components/authentication/register';
-import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 }));
 
 const SectionStyle = styled(Card)(({ theme }) => ({
@@ -29,7 +32,7 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
+  margin: theme.spacing(2, 0, 2, 2),
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -39,29 +42,36 @@ const ContentStyle = styled('div')(({ theme }) => ({
   minHeight: '100vh',
   flexDirection: 'column',
   justifyContent: 'center',
-  padding: theme.spacing(12, 0)
+  padding: theme.spacing(12, 0),
 }));
 
 // ----------------------------------------------------------------------
 
 export default function Register() {
-  const { method } = useAuth();
 
   return (
     <RootStyle title="Register | Minimal-UI">
       <AuthLayout>
-        Already have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.login}>
-          Login
+        Bạn đã có tài khoản? &nbsp;
+        <Link
+          underline="none"
+          variant="subtitle2"
+          component={RouterLink}
+          to={PATH_AUTH.login}
+        >
+          Đăng nhập
         </Link>
       </AuthLayout>
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Manage the job more effectively with Minimal
+          <Typography variant="h4" sx={{ px: 5, mt: 10, mb: 5 }}>
+            Chào mừng bạn đến với Delta!
           </Typography>
-          <img alt="register" src="/static/illustrations/illustration_register.png" />
+          <img
+            alt="register"
+            src="/static/illustrations/register.png"
+          />
         </SectionStyle>
       </MHidden>
 
@@ -70,36 +80,23 @@ export default function Register() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                Get started absolutely free.
+                Đăng ký
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>Free forever. No credit card needed.</Typography>
             </Box>
-            <Tooltip title={capitalCase(method)}>
-              <Box component="img" src={`/static/auth/ic_${method}.png`} sx={{ width: 32, height: 32 }} />
-            </Tooltip>
+            <Box
+              component="img"
+              src={`/static/auth/ic_jwt.png`}
+              sx={{ width: 32, height: 32 }}
+            />
           </Box>
-
-          {method === 'firebase' && <AuthFirebaseSocials />}
 
           <RegisterForm />
 
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
-            <Link underline="always" color="text.primary" href="#">
-              Terms of Service
-            </Link>
-            &nbsp;and&nbsp;
-            <Link underline="always" color="text.primary" href="#">
-              Privacy Policy
-            </Link>
-            .
-          </Typography>
-
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
+              Bạn đã có tài khoản?&nbsp;
               <Link to={PATH_AUTH.login} component={RouterLink}>
-                Login
+                Đăng nhập
               </Link>
             </Typography>
           </MHidden>

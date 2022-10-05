@@ -1,13 +1,15 @@
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // components
-import Label from '../../components/Label';
 import SvgIconStyle from '../../components/SvgIconStyle';
 
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => (
-  <SvgIconStyle src={`/static/icons/navbar/${name}.svg`} sx={{ width: '100%', height: '100%' }} />
+  <SvgIconStyle
+    src={`/static/icons/navbar/${name}.svg`}
+    sx={{ width: '100%', height: '100%' }}
+  />
 );
 
 const ICONS = {
@@ -22,97 +24,74 @@ const ICONS = {
   ecommerce: getIcon('ic_ecommerce'),
   analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
-  booking: getIcon('ic_booking')
+  booking: getIcon('ic_booking'),
+  role: getIcon('ic_role'),
+  tacgia: getIcon('ic_new'),
+  danhmuc: getIcon('ic_category'),
+  ngonngu: getIcon('ic_translate'),
+  book: getIcon('ic_book'),
+  phieunhap: getIcon('ic_addbook'),
 };
 
 const sidebarConfig = [
-  // GENERAL
-  // ----------------------------------------------------------------------
-  {
-    subheader: 'general',
-    items: [
-      {
-        title: 'app',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard
-      },
-      { title: 'e-commerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
-      { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
-      { title: 'booking', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
-    ]
-  },
-
   // MANAGEMENT
   // ----------------------------------------------------------------------
   {
-    subheader: 'management',
     items: [
       // MANAGEMENT : USER
       {
         title: 'user',
-        path: PATH_DASHBOARD.user.root,
+        path: PATH_DASHBOARD.user.list,
         icon: ICONS.user,
-        children: [
-          { title: 'profile', path: PATH_DASHBOARD.user.profile },
-          { title: 'cards', path: PATH_DASHBOARD.user.cards },
-          { title: 'list', path: PATH_DASHBOARD.user.list },
-          { title: 'create', path: PATH_DASHBOARD.user.newUser },
-          { title: 'edit', path: PATH_DASHBOARD.user.editById },
-          { title: 'account', path: PATH_DASHBOARD.user.account }
-        ]
+      },
+      {
+        title: 'Quyền',
+        path: PATH_DASHBOARD.role.root,
+        icon: ICONS.role,
+      },
+      {
+        title: 'Sách',
+        path: PATH_DASHBOARD.book.root,
+        icon: ICONS.book,
+      },
+      // {
+      //   title: 'Nhập hàng',
+      //   path: PATH_DASHBOARD.phieunhap.root,
+      //   icon: ICONS.phieunhap,
+      // },
+      // {
+      //   title: 'Nhà xuất bản',
+      //   path: PATH_DASHBOARD.nhaxuatban.root,
+      //   icon: ICONS.tacgia,
+      // },
+      // {
+      //   title: 'Chủ sở hữu đất',
+      //   path: PATH_DASHBOARD.nhacungcap.root,
+      //   icon: ICONS.tacgia,
+      // },
+      {
+        title: 'Chủ sở hữu đất',
+        path: PATH_DASHBOARD.tacgia.root,
+        icon: ICONS.user,
       },
 
-      // MANAGEMENT : E-COMMERCE
       {
-        title: 'e-commerce',
-        path: PATH_DASHBOARD.eCommerce.root,
-        icon: ICONS.cart,
-        children: [
-          { title: 'shop', path: PATH_DASHBOARD.eCommerce.shop },
-          { title: 'product', path: PATH_DASHBOARD.eCommerce.productById },
-          { title: 'list', path: PATH_DASHBOARD.eCommerce.list },
-          { title: 'create', path: PATH_DASHBOARD.eCommerce.newProduct },
-          { title: 'edit', path: PATH_DASHBOARD.eCommerce.editById },
-          { title: 'checkout', path: PATH_DASHBOARD.eCommerce.checkout },
-          { title: 'invoice', path: PATH_DASHBOARD.eCommerce.invoice }
-        ]
+        title: 'Danh mục',
+        path: PATH_DASHBOARD.danhmuc.root,
+        icon: ICONS.danhmuc,
       },
-
-      // MANAGEMENT : BLOG
       {
-        title: 'blog',
-        path: PATH_DASHBOARD.blog.root,
-        icon: ICONS.blog,
-        children: [
-          { title: 'posts', path: PATH_DASHBOARD.blog.posts },
-          { title: 'post', path: PATH_DASHBOARD.blog.postById },
-          { title: 'new post', path: PATH_DASHBOARD.blog.newPost }
-        ]
-      }
-    ]
+        title: 'Thể loại',
+        path: PATH_DASHBOARD.theloai.root,
+        icon: ICONS.danhmuc,
+      },
+      // {
+      //   title: 'Ngôn ngữ',
+      //   path: PATH_DASHBOARD.ngonngu.root,
+      //   icon: ICONS.ngonngu,
+      // },
+    ],
   },
-
-  // APP
-  // ----------------------------------------------------------------------
-  {
-    subheader: 'app',
-    items: [
-      {
-        title: 'mail',
-        path: PATH_DASHBOARD.mail.root,
-        icon: ICONS.mail,
-        info: <Label color="error">2</Label>
-      },
-      { title: 'chat', path: PATH_DASHBOARD.chat.root, icon: ICONS.chat },
-      { title: 'calendar', path: PATH_DASHBOARD.calendar, icon: ICONS.calendar },
-      {
-        title: 'kanban',
-        path: PATH_DASHBOARD.kanban,
-        icon: ICONS.kanban
-      }
-    ]
-  }
 ];
 
 export default sidebarConfig;

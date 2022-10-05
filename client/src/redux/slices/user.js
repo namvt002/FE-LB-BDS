@@ -2,6 +2,7 @@ import { map, filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 // utils
 import axios from '../../utils/axios';
+import Cookies from 'js-cookie';
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +19,13 @@ const initialState = {
   cards: null,
   addressBook: [],
   invoices: [],
-  notifications: null
+  notifications: null,
+  current: {
+    email: Cookies.get('email') || null,
+    fullname: Cookies.get('fullname') || null,
+    token: Cookies.get('token') || null,
+    role: Cookies.get('role') || null,
+  },
 };
 
 const slice = createSlice({
@@ -56,7 +63,10 @@ const slice = createSlice({
 
     // DELETE USERS
     deleteUser(state, action) {
-      const deleteUser = filter(state.userList, (user) => user.id !== action.payload);
+      const deleteUser = filter(
+        state.userList,
+        (user) => user.id !== action.payload,
+      );
       state.userList = deleteUser;
     },
 
@@ -74,7 +84,7 @@ const slice = createSlice({
         if (follower.id === followerId) {
           return {
             ...follower,
-            isFollowed: !follower.isFollowed
+            isFollowed: !follower.isFollowed,
           };
         }
         return follower;
@@ -123,15 +133,31 @@ const slice = createSlice({
     getNotificationsSuccess(state, action) {
       state.isLoading = false;
       state.notifications = action.payload;
-    }
-  }
+    },
+
+    logout(state) {
+      state.current = {};
+      Cookies.remove('email');
+      Cookies.remove('fullname');
+      Cookies.remove('token');      
+      Cookies.remove('role');
+    },
+    login(state) {
+      state.current = {
+        email: Cookies.get('email'),
+        fullname: Cookies.get('fullname'),
+        token: Cookies.get('token'),
+        role: Cookies.get('role'),
+      };
+    },
+  },
 });
 
 // Reducer
 export default slice.reducer;
-
+export const getUserInfo = state => state.user.current;
 // Actions
-export const { onToggleFollow, deleteUser } = slice.actions;
+export const { onToggleFollow, deleteUser, login, logout } = slice.actions;
 
 // ----------------------------------------------------------------------
 
@@ -265,8 +291,12 @@ export function getNotifications() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/user/account/notifications-settings');
-      dispatch(slice.actions.getNotificationsSuccess(response.data.notifications));
+      const response = await axios.get(
+        '/api/user/account/notifications-settings',
+      );
+      dispatch(
+        slice.actions.getNotificationsSuccess(response.data.notifications),
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

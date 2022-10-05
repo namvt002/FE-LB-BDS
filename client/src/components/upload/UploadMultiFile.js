@@ -17,7 +17,7 @@ import {
   Typography,
   ListItemIcon,
   ListItemText,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
 } from '@material-ui/core';
 // utils
 import { fData } from '../../utils/formatNumber';
@@ -40,7 +40,7 @@ const DropZoneStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.neutral,
   border: `1px dashed ${theme.palette.grey[500_32]}`,
   '&:hover': { opacity: 0.72, cursor: 'pointer' },
-  [theme.breakpoints.up('md')]: { textAlign: 'left', flexDirection: 'row' }
+  [theme.breakpoints.up('md')]: { textAlign: 'left', flexDirection: 'row' },
 }));
 
 // ----------------------------------------------------------------------
@@ -51,14 +51,28 @@ UploadMultiFile.propTypes = {
   files: PropTypes.array,
   onRemove: PropTypes.func,
   onRemoveAll: PropTypes.func,
-  sx: PropTypes.object
+  sx: PropTypes.object,
 };
 
-export default function UploadMultiFile({ error, showPreview = false, files, onRemove, onRemoveAll, sx, ...other }) {
+export default function UploadMultiFile({
+  error,
+  showPreview = false,
+  files,
+  onRemove,
+  onRemoveAll,
+  sx,
+  ...other
+}) {
   const hasFile = files.length > 0;
 
-  const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
-    ...other
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragReject,
+    fileRejections,
+  } = useDropzone({
+    ...other,
   });
 
   const ShowRejectionItems = () => (
@@ -69,7 +83,7 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
         px: 2,
         mt: 3,
         borderColor: 'error.light',
-        bgcolor: (theme) => alpha(theme.palette.error.main, 0.08)
+        bgcolor: (theme) => alpha(theme.palette.error.main, 0.08),
       }}
     >
       {fileRejections.map(({ file, errors }) => {
@@ -99,8 +113,8 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
           ...((isDragReject || error) && {
             color: 'error.main',
             borderColor: 'error.light',
-            bgcolor: 'error.lighter'
-          })
+            bgcolor: 'error.lighter',
+          }),
         }}
       >
         <input {...getInputProps()} />
@@ -109,15 +123,7 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
 
         <Box sx={{ p: 3, ml: { md: 2 } }}>
           <Typography gutterBottom variant="h5">
-            Drop or Select file
-          </Typography>
-
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Drop files here or click&nbsp;
-            <Typography variant="body2" component="span" sx={{ color: 'primary.main', textDecoration: 'underline' }}>
-              browse
-            </Typography>
-            &nbsp;thorough your machine
+            Chọn hình ảnh
           </Typography>
         </Box>
       </DropZoneStyle>
@@ -144,14 +150,19 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
                     borderRadius: 1.5,
                     overflow: 'hidden',
                     position: 'relative',
-                    display: 'inline-flex'
+                    display: 'inline-flex',
                   }}
                 >
                   <Paper
                     variant="outlined"
                     component="img"
                     src={isString(file) ? file : preview}
-                    sx={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute' }}
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                    }}
                   />
                   <Box sx={{ top: 6, right: 6, position: 'absolute' }}>
                     <MIconButton
@@ -160,10 +171,12 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
                       sx={{
                         p: '2px',
                         color: 'common.white',
-                        bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
+                        bgcolor: (theme) =>
+                          alpha(theme.palette.grey[900], 0.72),
                         '&:hover': {
-                          bgcolor: (theme) => alpha(theme.palette.grey[900], 0.48)
-                        }
+                          bgcolor: (theme) =>
+                            alpha(theme.palette.grey[900], 0.48),
+                        },
                       }}
                     >
                       <Icon icon={closeFill} />
@@ -184,7 +197,7 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
                   px: 2,
                   borderRadius: 1,
                   border: (theme) => `solid 1px ${theme.palette.divider}`,
-                  bgcolor: 'background.paper'
+                  bgcolor: 'background.paper',
                 }}
               >
                 <ListItemIcon>
@@ -197,7 +210,11 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
                   secondaryTypographyProps={{ variant: 'caption' }}
                 />
                 <ListItemSecondaryAction>
-                  <MIconButton edge="end" size="small" onClick={() => onRemove(file)}>
+                  <MIconButton
+                    edge="end"
+                    size="small"
+                    onClick={() => onRemove(file)}
+                  >
                     <Icon icon={closeFill} />
                   </MIconButton>
                 </ListItemSecondaryAction>
@@ -210,9 +227,8 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
       {hasFile && (
         <Stack direction="row" justifyContent="flex-end">
           <Button onClick={onRemoveAll} sx={{ mr: 1.5 }}>
-            Remove all
+            Xóa tất cả
           </Button>
-          <Button variant="contained">Upload files</Button>
         </Stack>
       )}
     </Box>

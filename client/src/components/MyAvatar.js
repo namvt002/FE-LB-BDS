@@ -1,22 +1,22 @@
 // hooks
-import useAuth from '../hooks/useAuth';
 //
 import { MAvatar } from './@material-extend';
 import createAvatar from '../utils/createAvatar';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
 export default function MyAvatar({ ...other }) {
-  const { user } = useAuth();
+  const user = useSelector((state) => state.user.current);
 
   return (
     <MAvatar
-      src={user.photoURL}
-      alt={user.displayName}
-      color={user.photoURL ? 'default' : createAvatar(user.displayName).color}
+      src={user?.photoURL || 'https://cdn.quasar.dev/img/avatar4.jpg'}
+      alt={user?.fullname}
+      color={user?.photoURL ? 'default' : createAvatar(user.fullname).color}
       {...other}
     >
-      {createAvatar(user.displayName).name}
+      {createAvatar(user.fullname).name}
     </MAvatar>
   );
 }

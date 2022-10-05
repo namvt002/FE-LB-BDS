@@ -1,17 +1,26 @@
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
-import { Box, Button, AppBar, Toolbar, Container } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  AppBar,
+  Toolbar,
+  Container,
+  Typography,
+} from '@material-ui/core';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 // components
 import Logo from '../../components/Logo';
-import Label from '../../components/Label';
 import { MHidden } from '../../components/@material-extend';
 //
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
+import Searchbar from './Searchbar';
+import AccountPopover from './AccountPopover';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -22,11 +31,11 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: APP_BAR_MOBILE,
   transition: theme.transitions.create(['height', 'background-color'], {
     easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter
+    duration: theme.transitions.duration.shorter,
   }),
   [theme.breakpoints.up('md')]: {
-    height: APP_BAR_DESKTOP
-  }
+    height: APP_BAR_DESKTOP,
+  },
 }));
 
 const ToolbarShadowStyle = styled('div')(({ theme }) => ({
@@ -39,7 +48,7 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   borderRadius: '50%',
   position: 'absolute',
   width: `calc(100% - 48px)`,
-  boxShadow: theme.customShadows.z8
+  boxShadow: theme.customShadows.z8,
 }));
 
 // ----------------------------------------------------------------------
@@ -48,7 +57,7 @@ export default function MainNavbar() {
   const isOffset = useOffSetTop(100);
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-
+  const isLogined = !!useSelector((state) => state.user.current.email);
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
       <ToolbarStyle
@@ -56,8 +65,8 @@ export default function MainNavbar() {
         sx={{
           ...(isOffset && {
             bgcolor: 'background.default',
-            height: { md: APP_BAR_DESKTOP - 16 }
-          })
+            height: { md: APP_BAR_DESKTOP - 16 },
+          }),
         }}
       >
         <Container
@@ -65,27 +74,43 @@ export default function MainNavbar() {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
           }}
         >
           <RouterLink to="/">
             <Logo />
           </RouterLink>
-          <Label color="info" sx={{ ml: 1 }}>
-            v2.5.0
-          </Label>
+          <Typography variant="h4" sx={{ ml: 2, color: 'text.primary' }}>
+            HYPE
+          </Typography>
           <Box sx={{ flexGrow: 1 }} />
-
           <MHidden width="mdDown">
-            <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
+            <MenuDesktop
+              isOffset={isOffset}
+              isHome={isHome}
+              navConfig={navConfig}
+            />
           </MHidden>
-
-          <Button variant="contained" target="_blank" href="https://material-ui.com/store/items/minimal-dashboard/">
-            Purchase Now
-          </Button>
+          <Searchbar />
+          {isLogined ? (
+            <AccountPopover />
+          ) : (
+            <Button
+              variant="contained"
+              target="_blank"
+              href="http://localhost:3000/auth/login"
+              sx={{ ml: 4 }}
+            >
+              Đăng nhập
+            </Button>
+          )}
 
           <MHidden width="mdUp">
-            <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
+            <MenuMobile
+              isOffset={isOffset}
+              isHome={isHome}
+              navConfig={navConfig}
+            />
           </MHidden>
         </Container>
       </ToolbarStyle>

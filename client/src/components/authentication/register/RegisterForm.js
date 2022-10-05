@@ -6,60 +6,78 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import { useNavigate } from 'react-router-dom';
+
 // material
-import { Stack, TextField, IconButton, InputAdornment, Alert } from '@material-ui/core';
+import {
+  Stack,
+  TextField,
+  IconButton,
+  InputAdornment,
+} from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 // hooks
-import useAuth from '../../../hooks/useAuth';
-import useIsMountedRef from '../../../hooks/useIsMountedRef';
 //
 import { MIconButton } from '../../@material-extend';
+import { postData } from 'src/_helper/httpProvider';
+import { API_BASE_URL } from 'src/config/configUrl';
 
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
-  const { register } = useAuth();
-  const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
+  const [showRePassword, setShowRePassword] = useState(false);
+  const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    fullname: Yup.string()
+      .min(5, 'Họ tên quá ngắn!')
+      .max(50, 'Họ tên quá dài!')
+      .required('Vui lòng điền họ tên'),
+    email: Yup.string()
+      .email('Địa chỉ email không hợp lệ!')
+      .required('Vui lòng nhập địa chỉ email!'),
+    password: Yup.string()
+      .min(8, 'Mật khẩu ít nhất 8 ký tự!')
+      .required('Vui lòng nhập mật khẩu'),
+    repwd: Yup.string()
+      .required('Vui lòng nhập lại mật khẩu')
+      .oneOf([Yup.ref('password')], 'Mật khẩu không khớp'),
   });
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      fullname: '',
       email: '',
-      password: ''
+      password: '',
+      repwd: '',
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await register(values.email, values.password, values.firstName, values.lastName);
+        await postData(API_BASE_URL + '/user/register', values);
         enqueueSnackbar('Register success', {
           variant: 'success',
           action: (key) => (
             <MIconButton size="small" onClick={() => closeSnackbar(key)}>
               <Icon icon={closeFill} />
             </MIconButton>
-          )
+          ),
         });
-        if (isMountedRef.current) {
-          setSubmitting(false);
-        }
+        navigate(`/auth/verify?email=${values.email}`)
       } catch (error) {
         console.error(error);
-        if (isMountedRef.current) {
-          setErrors({ afterSubmit: error.message });
-          setSubmitting(false);
-        }
+        enqueueSnackbar(error.response.data, {
+          variant: 'error',
+          action: (key) => (
+            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+              <Icon icon={closeFill} />
+            </MIconButton>
+          ),
+        });
       }
-    }
+    },
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
@@ -68,23 +86,13 @@ export default function RegisterForm() {
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
-          {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
-
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
-              label="First name"
-              {...getFieldProps('firstName')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
-            />
-
-            <TextField
-              fullWidth
-              label="Last name"
-              {...getFieldProps('lastName')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
+              label="Họ và tên"
+              {...getFieldProps('fullname')}
+              error={Boolean(touched.fullname && errors.fullname)}
+              helperText={touched.fullname && errors.fullname}
             />
           </Stack>
 
@@ -92,7 +100,7 @@ export default function RegisterForm() {
             fullWidth
             autoComplete="username"
             type="email"
-            label="Email address"
+            label="Email"
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
@@ -102,23 +110,54 @@ export default function RegisterForm() {
             fullWidth
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
-            label="Password"
+            label="Mật khẩu"
             {...getFieldProps('password')}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                  <IconButton
+                    edge="end"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
                     <Icon icon={showPassword ? eyeFill : eyeOffFill} />
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
 
-          <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-            Register
+          <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={showRePassword ? 'text' : 'password'}
+            label="Nhập lại mật khẩu"
+            {...getFieldProps('repwd')}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    edge="end"
+                    onClick={() => setShowRePassword((prev) => !prev)}
+                  >
+                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            error={Boolean(touched.repwd && errors.repwd)}
+            helperText={touched.repwd && errors.repwd}
+          />
+
+          <LoadingButton
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
+            Đăng ký
           </LoadingButton>
         </Stack>
       </Form>

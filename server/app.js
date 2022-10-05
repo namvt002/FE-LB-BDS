@@ -8,6 +8,8 @@ require("./lib/googleLogin");
 const path = require("path");
 global.publicPath = path.resolve("public/images");
 const bodyParser = require("body-parser");
+require("dotenv").config();
+
 //---------------------------------------------------------------------------------------
 const app = express();
 app.use(morgan("dev"));
@@ -77,7 +79,6 @@ app.get("/", (req, res) => {
   res.send('<a href="/auth/google">Authenticate with Google</a>');
 });
 const PORT = process.env.PORT || 4000;
-console.log(process.env.PORT)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
