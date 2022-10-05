@@ -57,20 +57,15 @@ module.exports = function (app) {
   app.get("/books", async (req, res) => {
     let qr = `
     SELECT 
-        san_pham.*, 
-        nha_xuat_ban.nxb_ten, the_loai.tl_ten, tac_gia.tg_ten, ngon_ngu.nn_ten
+        san_pham.*,  the_loai.tl_ten, tac_gia.tg_ten
     FROM san_pham
-        LEFT JOIN nha_xuat_ban ON nha_xuat_ban.nxb_id = san_pham.sp_idnxb
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
-        LEFT JOIN ngon_ngu ON ngon_ngu.nn_id = san_pham.sp_idnn
     `;
     if (req.query.search) {
       qr += `WHERE tl_ten like '%${req.query.search}%' or 
                   tg_ten like '%${req.query.search}%' or
-                  nn_ten like '%${req.query.search}%' or
                   sp_ten like '%${req.query.search}%' or 
-                  nxb_ten like '%${req.query.search}%' or 
                   sp_masp like '%${req.query.search}%'
       `;
     }
@@ -92,13 +87,11 @@ module.exports = function (app) {
     const { id } = req.params;
     let qr = `
     SELECT 
-        san_pham.*, 
-        nha_xuat_ban.nxb_ten, the_loai.tl_ten, tac_gia.tg_ten, ngon_ngu.nn_ten
+        san_pham.*, the_loai.tl_ten, tac_gia.tg_ten
     FROM san_pham
-        LEFT JOIN nha_xuat_ban ON nha_xuat_ban.nxb_id = san_pham.sp_idnxb
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
-        LEFT JOIN ngon_ngu ON ngon_ngu.nn_id = san_pham.sp_idnn
+
     WHERE sp_id = ?;
     `;
     const _books = await query(db, qr, id);

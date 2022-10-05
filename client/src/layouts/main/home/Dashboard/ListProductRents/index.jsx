@@ -19,8 +19,6 @@ const list_product = [
 ]
 
 export default function ListProductRents() {
-
-
     return (
        <Box className="list-product-new">
             <Container sx={{py: 5}}>

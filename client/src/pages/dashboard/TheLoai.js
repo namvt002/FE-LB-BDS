@@ -37,7 +37,6 @@ import TheLoaiListHead from 'src/components/_dashboard/theloai/list/TheLoaiListH
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'tên', label: 'Tên danh mục', alignRight: false },
   { id: 'tên', label: 'Tên thể loại', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
   { id: '' },
@@ -190,7 +189,7 @@ export default function TheLoaiList() {
                           page * rowsPerPage + rowsPerPage,
                         )
                         .map((row) => {
-                          const { tl_id, tl_ten, dm_ten, active, tl_iddm } =
+                          const { tl_id, tl_ten, active } =
                             row;
                           const isItemSelected = selected.indexOf(tl_id) !== -1;
                           return (
@@ -209,15 +208,6 @@ export default function TheLoaiList() {
                                     handleClick(event, tl_id)
                                   }
                                 />
-                              </TableCell>
-                              <TableCell
-                                component="th"
-                                scope="row"
-                                padding="none"
-                              >
-                                <Typography variant="subtitle2" noWrap>
-                                  {dm_ten}
-                                </Typography>
                               </TableCell>
                               <TableCell
                                 component="th"
@@ -247,8 +237,7 @@ export default function TheLoaiList() {
                                         isEdit: true,
                                         current: {
                                           id: tl_id,
-                                          tl_ten: tl_ten,
-                                          tl_iddm: tl_iddm,
+                                          tl_ten: tl_ten
                                         },
                                       })
                                     }

@@ -2,7 +2,7 @@ const sql = require("../db");
 
 module.exports = function (app) {
   app.get("/theloai", async (req, res) => {
-    let qr = "SELECT * FROM `the_loai` LEFT JOIN danh_muc ON danh_muc.dm_id = the_loai.tl_iddm ";
+    let qr = "SELECT * FROM `the_loai` ";
     if (req.query.search) {
       qr += `WHERE tl_ten like '%${req.query.search}%' or dm_ten like '%${req.query.search}%'`;
     }
