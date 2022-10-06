@@ -131,6 +131,7 @@ module.exports = function (app) {
           res.cookie("fullname", req.user.displayName);
           res.cookie("email", req.user.email);
           res.cookie("role", data[0].role);
+          if(data[0].role === 'ADMIN') return res.redirect("http://localhost:3000/dashboard");
           return res.redirect("http://localhost:3000");
         } else {
           let sql =

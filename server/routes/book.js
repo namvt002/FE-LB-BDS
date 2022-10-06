@@ -16,7 +16,9 @@ const storage = multer.diskStorage({
   },
 });
 
-let upload = multer({ storage: storage });
+let upload = multer({ storage: storage , limits: {
+  fileSize: 1000000
+}});
 
 module.exports = function (app) {
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -57,14 +59,16 @@ module.exports = function (app) {
   app.get("/books", async (req, res) => {
     let qr = `
     SELECT 
-        san_pham.*,  the_loai.tl_ten, tac_gia.tg_ten
+        san_pham.*,  the_loai.tl_ten, tac_gia.tg_ten, danh_muc.dm_ten
     FROM san_pham
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
+        LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
     `;
     if (req.query.search) {
       qr += `WHERE tl_ten like '%${req.query.search}%' or 
                   tg_ten like '%${req.query.search}%' or
+                  dm_ten like '%${req.query.search}%' or
                   sp_ten like '%${req.query.search}%' or 
                   sp_masp like '%${req.query.search}%'
       `;
@@ -87,10 +91,11 @@ module.exports = function (app) {
     const { id } = req.params;
     let qr = `
     SELECT 
-        san_pham.*, the_loai.tl_ten, tac_gia.tg_ten
+        san_pham.*, the_loai.tl_ten, tac_gia.tg_ten, danh_muc.dm_ten
     FROM san_pham
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
+        LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
 
     WHERE sp_id = ?;
     `;

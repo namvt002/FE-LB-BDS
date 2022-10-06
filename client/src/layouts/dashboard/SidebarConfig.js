@@ -50,7 +50,7 @@ const sidebarConfig = [
         icon: ICONS.role,
       },
       {
-        title: 'Sách',
+        title: 'Dự án bất động sản',
         path: PATH_DASHBOARD.book.root,
         icon: ICONS.book,
       },

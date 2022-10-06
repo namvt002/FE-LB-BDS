@@ -34,14 +34,14 @@ export default function UserCreate() {
   }, [id,  isEdit]);
 
   return (
-    <Page title="Book | HYPE">
+    <Page title="Dự án | Delta">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={!isEdit ? 'Thêm sách' : 'Chỉnh sửa'}
+          heading={!isEdit ? 'Thêm dự án' : 'Chỉnh sửa'}
           links={[
             { name: 'Quản lý', href: PATH_DASHBOARD.root },
-            { name: 'sách', href: PATH_DASHBOARD.book.root },
-            { name: !isEdit ? 'Thêm sách' : id },
+            { name: 'Dự án', href: PATH_DASHBOARD.book.root },
+            { name: !isEdit ? 'Thêm dự án' : id },
           ]}
         />
 

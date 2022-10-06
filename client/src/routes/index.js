@@ -1,11 +1,12 @@
 import { Suspense, lazy } from 'react';
-import { Navigate, useRoutes, useLocation } from 'react-router-dom';
+import { Navigate, useRoutes, useLocation} from 'react-router-dom';
 // layouts
 import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // components
 import LoadingScreen from '../components/LoadingScreen';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +37,8 @@ const Loadable = (Component) => (props) => {
 };
 
 export default function Router() {
-  return useRoutes([
+  const isAdmin = useSelector((state) => state.user.current.role) === 'ADMIN';
+    return useRoutes([
     {
       path: 'auth',
       children: [
@@ -53,9 +55,10 @@ export default function Router() {
     },
 
     // Dashboard Routes
+    
     {
       path: 'dashboard',
-      element: <DashboardLayout />,
+      element: isAdmin ? <DashboardLayout /> : <Navigate to="/" />,
       children: [
         {
           path: 'user',

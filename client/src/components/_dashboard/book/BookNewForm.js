@@ -45,20 +45,17 @@ ProductNewForm.propTypes = {
 export default function ProductNewForm({ isEdit, currentProduct }) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [tacgiaList, setTacgiaList] = useState([]);
-  const [nxbList, setNxbList] = useState([]);
   const [tlList, setTlList] = useState([]);
-  const [nnList, setNnList] = useState([]);
+  const [dmList, setDmList] = useState([]);
 
   useEffect(() => {
     (async () => {
       const _tacgia = await getData(API_BASE_URL + '/tacgia');
       setTacgiaList(_tacgia.data);
-      const _nxb = await getData(API_BASE_URL + '/nhaxuatban');
-      setNxbList(_nxb.data);
       const _tl = await getData(API_BASE_URL + '/theloai');
       setTlList(_tl.data);
-      const _nn = await getData(API_BASE_URL + '/ngonngu');
-      setNnList(_nn.data);
+      const _dm = await getData(API_BASE_URL + '/danhmuc');
+      setDmList(_dm.data);
     })();
   }, []);
 
@@ -67,6 +64,10 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     sp_mota: Yup.string(),
     sp_hinhanh: Yup.array(),
     sp_masp: Yup.string().required('Vui lòng nhập mã sản phẩm'),
+    sp_diachi: Yup.string().required('Vui lòng nhập địa chỉ'),
+    sp_gia: Yup.number().required('Vui lòng nhập giá'),
+    sp_dientich: Yup.string().required('Vui lòng diện tích'),
+    sp_huongnha: Yup.string().required('Vui lòng nhập hướng nhà'),
   });
 
   const formik = useFormik({
@@ -78,27 +79,26 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
         currentProduct?.sp_hinhanh?.map(
           (e) => `${URL_PUBLIC_IMAGES + e.ha_hinh}`,
         ) || [],
-      sp_chieudai: currentProduct?.sp_chieudai || 20,
-      sp_chieurong: currentProduct?.sp_chieurong || 10,
+      sp_gia: currentProduct?.sp_gia || 1000000,
+      sp_phongngu: currentProduct?.sp_phongngu || 1,
+      sp_dientich: currentProduct?.sp_dientich || 1,
+      sp_phongwc: currentProduct?.sp_phongwc || 1,
+      sp_huongnha: currentProduct?.sp_huongnha || '',
+      sp_diachi: currentProduct?.sp_diachi || '',
       sp_idtl:
         {
           tl_ten: currentProduct?.tl_ten,
           tl_id: currentProduct?.sp_idtl,
         } || '',
+      sp_iddm:
+        {
+          dm_ten: currentProduct?.dm_ten,
+          dm_id: currentProduct?.sp_iddm,
+        } || '',
       sp_idtg:
         {
           tg_ten: currentProduct?.tg_ten,
           tg_id: currentProduct?.sp_idtg,
-        } || '',
-      sp_idnxb:
-        {
-          nxb_ten: currentProduct?.nxb_ten,
-          nxb_id: currentProduct?.sp_idnxb,
-        } || '',
-      sp_idnn:
-        {
-          nn_ten: currentProduct?.nn_ten,
-          nn_id: currentProduct?.sp_idnn,
         } || '',
       active: Boolean(currentProduct?.active) || true,
       sp_masp: currentProduct?.sp_masp || '',
@@ -107,10 +107,9 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     validationSchema: NewProductSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
       let _values = { ...values };
-      _values.sp_idnxb = values.sp_idnxb.nxb_id;
       _values.sp_idtg = values.sp_idtg.tg_id;
       _values.sp_idtl = values.sp_idtl.tl_id;
-      _values.sp_idnn = values.sp_idnn.nn_id;
+      _values.sp_iddm = values.sp_iddm.dm_id;
       try {
         const formDt = new FormData();
         if (values.sp_hinhanh.length > 0) {
@@ -158,7 +157,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     setFieldValue,
     getFieldProps,
   } = formik;
-  console.log(values);
 
   const handleDrop = useCallback(
     (acceptedFiles) => {
@@ -192,7 +190,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
               <Stack spacing={3}>
                 <TextField
                   fullWidth
-                  label="Tên sách"
+                  label="Tên dự án"
                   {...getFieldProps('sp_ten')}
                   error={Boolean(touched.sp_ten && errors.sp_ten)}
                   helperText={touched.sp_ten && errors.sp_ten}
@@ -243,36 +241,44 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                 <Stack spacing={3}>
                   <TextField
                     fullWidth
-                    label="Mã sản phẩm"
+                    label="Mã dự án"
                     {...getFieldProps('sp_masp')}
                     error={Boolean(touched.sp_masp && errors.sp_masp)}
                     helperText={touched.sp_masp && errors.sp_masp}
                   />
                   <TextField
                     fullWidth
-                    label="Chiều dài"
-                    {...getFieldProps('sp_chieudai')}
+                    label="Giá tiền"
+                    {...getFieldProps('sp_gia')}
                   />
                   <TextField
                     fullWidth
-                    label="Chiều rộng"
-                    {...getFieldProps('sp_chieurong')}
+                    label="Phòng ngủ"
+                    {...getFieldProps('sp_phongngu')}
                   />
-
-                  <Autocomplete
-                    freeSolo
-                    value={values.sp_idnxb}
-                    onChange={(event, newValue) => {
-                      setFieldValue('sp_idnxb', newValue);
-                    }}
-                    options={nxbList?.map((option) => ({
-                      nxb_id: option.nxb_id,
-                      nxb_ten: option.nxb_ten,
-                    }))}
-                    renderInput={(params) => (
-                      <TextField label="Nhà xuất bản" {...params} />
-                    )}
-                    getOptionLabel={(option) => option.nxb_ten || ''}
+                  <TextField
+                    fullWidth
+                    label="Phòng vệ sinh"
+                    {...getFieldProps('sp_phongwc')}
+                  />
+                  <TextField
+                    fullWidth
+                    label="Diện tích"
+                    {...getFieldProps('sp_dientich')}
+                  />
+                  <TextField
+                    fullWidth
+                    label="Hướng nhà"
+                    {...getFieldProps('sp_huongnha')}
+                  />
+                  <TextField
+                    fullWidth
+                    label="Địa chỉ"
+                    multiline
+                    rows={4}
+                    {...getFieldProps('sp_diachi')}                 
+                    error={Boolean(touched.sp_diachi && errors.sp_diachi)}
+                    helperText={touched.sp_diachi && errors.sp_diachi}
                   />
 
                   <Autocomplete
@@ -286,11 +292,25 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                       tg_ten: option.tg_ten,
                     }))}
                     renderInput={(params) => (
-                      <TextField label="Tác giả" {...params} />
+                      <TextField label="Chủ sở hữu" {...params} />
                     )}
                     getOptionLabel={(option) => option.tg_ten || ''}
                   />
-
+                  <Autocomplete
+                    freeSolo
+                    value={values.sp_iddm}
+                    onChange={(event, newValue) => {
+                      setFieldValue('sp_iddm', newValue);
+                    }}
+                    options={dmList?.map((option) => ({
+                      dm_id: option.dm_id,
+                      dm_ten: option.dm_ten,
+                    }))}
+                    renderInput={(params) => (
+                      <TextField label="Danh mục" {...params} />
+                    )}
+                    getOptionLabel={(option) => option.dm_ten || ''}
+                  />
                   <Autocomplete
                     freeSolo
                     value={values.sp_idtl}
@@ -306,21 +326,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                     )}
                     getOptionLabel={(option) => option.tl_ten || ''}
                   />
-                  <Autocomplete
-                    freeSolo
-                    value={values.sp_idnn}
-                    onChange={(event, newValue) => {
-                      setFieldValue('sp_idnn', newValue);
-                    }}
-                    options={nnList?.map((option) => ({
-                      nn_id: option.nn_id,
-                      nn_ten: option.nn_ten,
-                    }))}
-                    renderInput={(params) => (
-                      <TextField label="Ngôn ngữ" {...params} />
-                    )}
-                    getOptionLabel={(option) => option.nn_ten || ''}
-                  />
                 </Stack>
               </Card>
               <LoadingButton
@@ -329,7 +334,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                 variant="contained"
                 size="large"
               >
-                {!isEdit ? 'Thêm sách' : 'Lưu'}
+                {!isEdit ? 'Thêm dự án' : 'Lưu'}
               </LoadingButton>
             </Stack>
           </Grid>

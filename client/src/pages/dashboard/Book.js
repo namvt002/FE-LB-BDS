@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
+
 // material
 import {
   Card,
@@ -36,16 +37,17 @@ import closeFill from '@iconify/icons-eva/close-fill';
 import BookListToolbar from 'src/components/_dashboard/book/list/BookListToolbar';
 import BookListHead from 'src/components/_dashboard/book/list/BookListHead';
 import BookMoreMenu from 'src/components/_dashboard/book/list/BookMoreMenu';
+import { fCurrency } from 'src/utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'sp_masp', label: 'Mã sách', alignRight: false },
-  { id: 'sp_ten', label: 'Tên sách', alignRight: false },
-  { id: 'sp_nxb', label: 'Nhà xuất bản', alignRight: false },
-  { id: 'sp_tg', label: 'Tác giả', alignRight: false },
+  { id: 'sp_masp', label: 'Giá', alignRight: false },
+  { id: 'sp_ten', label: 'Tên dự án', alignRight: false },
+  { id: 'sp_dm', label: 'Danh mục', alignRight: false },
+  { id: 'sp_tg', label: 'Chủ sở hữu', alignRight: false },
   { id: 'sp_tl', label: 'Thể loại', alignRight: false },
-  { id: 'sp_nn', label: 'Ngôn ngữ', alignRight: false },
+  { id: 'sp_tl', label: 'Danh mục', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
   { id: '' },
 ];
@@ -151,10 +153,10 @@ export default function BookList() {
     <Page title="Book: List | HYPE">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Sách"
+          heading="Dự án"
           links={[
             { name: 'Quản lý', href: PATH_DASHBOARD.root },
-            { name: 'Sách', href: PATH_DASHBOARD.user.list },
+            { name: 'Dự án', href: PATH_DASHBOARD.book.root },
             { name: 'Danh sách' },
           ]}
           action={
@@ -164,7 +166,7 @@ export default function BookList() {
               to={PATH_DASHBOARD.book.new}
               startIcon={<Icon icon={plusFill} />}
             >
-              Thêm sách
+              Thêm dự án
             </Button>
           }
         />
@@ -196,12 +198,12 @@ export default function BookList() {
                       const {
                         sp_id,
                         sp_masp,
+                        sp_gia,
                         sp_ten,
                         sp_hinhanh,
-                        nxb_ten,
                         tg_ten,
                         tl_ten,
-                        nn_ten,
+                        dm_ten,
                         active,
                       } = row;
                       const isItemSelected = selected.indexOf(sp_id) !== -1;
@@ -227,7 +229,7 @@ export default function BookList() {
                               spacing={2}
                             >
                               <Typography variant="subtitle2" noWrap>
-                                {sp_masp}
+                                {fCurrency(sp_gia)}đ
                               </Typography>
                             </Stack>
                           </TableCell>
@@ -248,10 +250,9 @@ export default function BookList() {
                               {sp_ten}
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{nxb_ten}</TableCell>
+                          <TableCell align="left">{dm_ten}</TableCell>
                           <TableCell align="left">{tg_ten}</TableCell>
                           <TableCell align="left">{tl_ten}</TableCell>
-                          <TableCell align="left">{nn_ten}</TableCell>
                           <TableCell align="left">
                             <Switch
                               checked={active === 1}

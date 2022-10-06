@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useSnackbar } from 'notistack5';
-import { Link as RouterLink} from 'react-router-dom';
+import { Link as RouterLink, useNavigate} from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -23,20 +23,21 @@ import { PATH_AUTH } from '../../../routes/paths';
 import { MIconButton } from '../../@material-extend';
 import { postData } from 'src/_helper/httpProvider';
 import { API_BASE_URL } from 'src/config/configUrl';
+import Cookies from 'js-cookie';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
       .email('Địa chỉ email không hợp lệ')
       .required('Vui lòng nhập địa chỉ email'),
     password: Yup.string().required('Vui lòng nhập mật khẩu'),
   });
-
+ 
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -46,6 +47,10 @@ export default function LoginForm() {
     onSubmit: async (values, { resetForm }) => {
       try {
         await postData(API_BASE_URL + '/auth/login', values);
+        // isLogin 
+        if(Cookies.get('role') === 'ADMIN'){
+          navigate('/dashboard');
+        }
         enqueueSnackbar('Login success', {
           variant: 'success',
           action: (key) => (

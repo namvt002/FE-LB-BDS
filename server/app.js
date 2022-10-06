@@ -62,6 +62,7 @@ app.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.clearCookie("email");
   res.clearCookie("fullname");
+  res.clearCookie("role")
   return res.status(200).send("Goodbye!");
 });
 require("./routes/auth")(app);

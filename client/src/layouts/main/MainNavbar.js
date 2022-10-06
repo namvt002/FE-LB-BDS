@@ -3,7 +3,6 @@ import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
 import {
   Box,
-  Button,
   AppBar,
   Toolbar,
   Container,
@@ -19,8 +18,8 @@ import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
 import Searchbar from './Searchbar';
-import AccountPopover from './AccountPopover';
-import { useSelector } from 'react-redux';
+// import AccountPopover from './AccountPopover';
+// import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -57,7 +56,7 @@ export default function MainNavbar() {
   const isOffset = useOffSetTop(100);
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-  const isLogined = !!useSelector((state) => state.user.current.email);
+  // const isLogined = !!useSelector((state) => state.user.current.email);
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
       <ToolbarStyle
@@ -92,7 +91,7 @@ export default function MainNavbar() {
             />
           </MHidden>
           <Searchbar />
-          {isLogined ? (
+          {/* {isLogined ? (
             <AccountPopover />
           ) : (
             <Button
@@ -103,7 +102,7 @@ export default function MainNavbar() {
             >
               Đăng nhập
             </Button>
-          )}
+          )} */}
 
           <MHidden width="mdUp">
             <MenuMobile
