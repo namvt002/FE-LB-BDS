@@ -1,18 +1,17 @@
-import { Link as RouterLink } from 'react-router-dom';
+// import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
 import {
   Box,
   Card,
   Stack,
-  Link,
   Container,
   Typography,
 } from '@material-ui/core';
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+// import { PATH_AUTH } from '../../routes/paths';
 // layouts
-import AuthLayout from '../../layouts/AuthLayout';
+// import AuthLayout from '../../layouts/AuthLayout';
 // components
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
@@ -50,7 +49,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   return (
     <RootStyle title="Login | Minimal-UI">
-      <AuthLayout>
+      {/* <AuthLayout>
         Bạn chưa có tài khoản? &nbsp;
         <Link
           underline="none"
@@ -60,7 +59,7 @@ export default function Login() {
         >
           Đăng ký
         </Link>
-      </AuthLayout>
+      </AuthLayout> */}
 
       <MHidden width="mdDown">
         <SectionStyle>
@@ -89,7 +88,7 @@ export default function Login() {
 
           <LoginForm />
 
-          <MHidden width="smUp">
+          {/* <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Bạn chưa có tài khoản?&nbsp;
               <Link
@@ -100,7 +99,7 @@ export default function Login() {
                 Đăng ký
               </Link>
             </Typography>
-          </MHidden>
+          </MHidden> */}
         </ContentStyle>
       </Container>
     </RootStyle>

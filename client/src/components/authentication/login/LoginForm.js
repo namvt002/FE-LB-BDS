@@ -24,6 +24,8 @@ import { MIconButton } from '../../@material-extend';
 import { postData } from 'src/_helper/httpProvider';
 import { API_BASE_URL } from 'src/config/configUrl';
 import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { login } from 'src/redux/slices/user';
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +39,7 @@ export default function LoginForm() {
       .required('Vui lòng nhập địa chỉ email'),
     password: Yup.string().required('Vui lòng nhập mật khẩu'),
   });
- 
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -49,6 +51,7 @@ export default function LoginForm() {
         await postData(API_BASE_URL + '/auth/login', values);
         // isLogin 
         if(Cookies.get('role') === 'ADMIN'){
+          dispatch(login())
           navigate('/dashboard');
         }
         enqueueSnackbar('Login success', {

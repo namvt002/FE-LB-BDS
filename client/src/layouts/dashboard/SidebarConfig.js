@@ -43,6 +43,12 @@ const sidebarConfig = [
         title: 'user',
         path: PATH_DASHBOARD.user.list,
         icon: ICONS.user,
+        // children: [
+        //   {
+        //     title: 'account',
+        //     path: PATH_DASHBOARD.user.account,
+        //   }
+        // ]
       },
       {
         title: 'Quyền',
@@ -85,11 +91,11 @@ const sidebarConfig = [
         path: PATH_DASHBOARD.theloai.root,
         icon: ICONS.danhmuc,
       },
-      // {
-      //   title: 'Ngôn ngữ',
-      //   path: PATH_DASHBOARD.ngonngu.root,
-      //   icon: ICONS.ngonngu,
-      // },
+      {
+        title: 'Bài viết',
+        path: PATH_DASHBOARD.blog.root,
+        icon: ICONS.ngonngu,
+      },
     ],
   },
 ];

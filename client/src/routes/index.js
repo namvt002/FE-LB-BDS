@@ -55,7 +55,6 @@ export default function Router() {
     },
 
     // Dashboard Routes
-    
     {
       path: 'dashboard',
       element: isAdmin ? <DashboardLayout /> : <Navigate to="/" />,
@@ -67,6 +66,7 @@ export default function Router() {
               path: '/',
               element: <UserList />,
             },
+            { path: 'account', element: <UserAccount /> },
             { path: 'list', element: <UserList /> },
             { path: 'new', element: <UserCreate /> },
             { path: '/:id/edit', element: <UserCreate /> },
@@ -90,27 +90,6 @@ export default function Router() {
           ],
         },
         {
-          path: 'phieunhap',
-          children: [
-            {
-              path: '/',
-              element: <PhieuNhapList />,
-            },
-            {
-              path: '/new',
-              element: <PhieuNhapCreate />,
-            },
-            {
-              path: '/:id/edit',
-              element: <PhieuNhapCreate />,
-            },
-            {
-              path: '/:id/detail',
-              element: <PhieuNhapDetail />,
-            },
-          ],
-        },
-        {
           path: 'role',
           children: [
             {
@@ -124,40 +103,6 @@ export default function Router() {
             {
               path: '/:id/edit',
               element: <RoleCreate />,
-            },
-          ],
-        },
-        {
-          path: 'nhaxuatban',
-          children: [
-            {
-              path: '/',
-              element: <NhaXuatBanList />,
-            },
-            {
-              path: '/new',
-              element: <NhaXuatBanCreate />,
-            },
-            {
-              path: '/:id/edit',
-              element: <NhaXuatBanCreate />,
-            },
-          ],
-        },
-        {
-          path: 'nhacungcap',
-          children: [
-            {
-              path: '/',
-              element: <NhaCungCapList />,
-            },
-            {
-              path: '/new',
-              element: <NhaCungCapCreate />,
-            },
-            {
-              path: '/:id/edit',
-              element: <NhaCungCapCreate />,
             },
           ],
         },
@@ -189,12 +134,15 @@ export default function Router() {
           ],
         },
         {
-          path: 'ngonngu',
+          path: 'blog',
           children: [
             {
               path: '/',
-              element: <NgonNguList />,
+              element: <Navigate to="/dashboard/blog/posts" replace />,
             },
+            { path: 'posts', element: <BlogPosts /> },
+            { path: 'post/:title', element: <BlogPost /> },
+            { path: 'new-post', element: <BlogNewPost /> },
           ],
         },
       ],
@@ -220,6 +168,11 @@ export default function Router() {
 
 // IMPORT COMPONENTS
 
+
+// userAccount
+const UserAccount = Loadable(
+  lazy(() => import('../pages/dashboard/UserAccount')),
+);
 // Authentication
 const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
 const Register = Loadable(
@@ -241,29 +194,14 @@ const RoleCreate = Loadable(
   lazy(() => import('../pages/dashboard/RoleCreate')),
 );
 
-//--------------------------nhaxuatban-------------------------------------------
-const NhaXuatBanList = Loadable(
-  lazy(() => import('../pages/dashboard/NhaXuatBan')),
-);
-const NhaXuatBanCreate = Loadable(
-  lazy(() => import('../pages/dashboard/NXBCreate')),
-);
 
-//--------------------------nhacungcap-------------------------------------------
-const NhaCungCapList = Loadable(
-  lazy(() => import('../pages/dashboard/NhaCungCap')),
-);
-const NhaCungCapCreate = Loadable(
-  lazy(() => import('../pages/dashboard/NCCCreate')),
-);
 //--------------------------Danh Muc-------------------------------------------
 const DanhMucList = Loadable(lazy(() => import('../pages/dashboard/DanhMuc')));
 //--------------------------Tác giả-------------------------------------------
 const TacGiaList = Loadable(lazy(() => import('../pages/dashboard/TacGia')));
 //--------------------------Thể loại-------------------------------------------
 const TheLoaiList = Loadable(lazy(() => import('../pages/dashboard/TheLoai')));
-//--------------------------Ngôn ngữ-------------------------------------------
-const NgonNguList = Loadable(lazy(() => import('../pages/dashboard/NgonNgu')));
+
 //--------------------------Sách-------------------------------------------
 const BookList = Loadable(lazy(() => import('../pages/dashboard/Book')));
 
@@ -271,18 +209,13 @@ const BookCreate = Loadable(
   lazy(() => import('../pages/dashboard/BookCreate')),
 );
 
-//--------------------------Phiếu nhập-------------------------------------------
 
-const PhieuNhapList = Loadable(
-  lazy(() => import('../pages/dashboard/PhieuNhap')),
-);
 
-const PhieuNhapCreate = Loadable(
-  lazy(() => import('../pages/dashboard/PhieuNhapCreate')),
-);
-
-const PhieuNhapDetail = Loadable(
-  lazy(() => import('../pages/dashboard/PhieuNhapDetail')),
+//------------------------Bai Viet--------------------------------
+const BlogPosts = Loadable(lazy(() => import('../pages/dashboard/BlogPosts')));
+const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
+const BlogNewPost = Loadable(
+  lazy(() => import('../pages/dashboard/BlogNewPost')),
 );
 
 //-------------------------------------------------------------------------------

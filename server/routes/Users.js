@@ -96,7 +96,32 @@ module.exports = function (app) {
       }
       return res.status(200).send("Cập nhật thành công");
     });
-    console.log(sql);
+  });
+  
+  app.post('/users/:email/change-password',async (req, res) => {
+    const {email} = req.params;
+    const data = req.body;
+    const qrFind = "SELECT * FROM users WHERE email = ?";
+    const qrUpdate = "UPDATE `users` SET `users`.`credential` = ? WHERE `users`.`email` = ?;";
+    await sql.query(qrFind,email,(err, result) => {
+      if(err){
+        console.log(err);
+        return res.status(500).send(err);
+      }
+      bcrypt.compare(data.oldPassword,result[0].credential,(err, match)=>{
+        if(match){
+          bcrypt.hash(data.newPassword, 8, async(err, hash)=>{
+              await sql.query(qrUpdate,[hash, email], (err, _)=>{
+                if(err){
+                  console.log(err);
+                  return res.status(500).send(err);
+                }
+                return res.status(200).send("Cập nhật thành công");
+              })
+          })
+        }
+      })
+    })
   });
   app.post("/user/create", async (req, res) => {
     let data = req.body;
