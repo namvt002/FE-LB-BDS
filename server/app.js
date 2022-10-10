@@ -17,7 +17,6 @@ app.use(CookieParser());
 app.use(express.json());
 
 // cors option
-app.use("/public", express.static(publicPath));
 const corsOptions = {
   origin: true, //included origin as true
   credentials: true, //included credentials as true
@@ -38,7 +37,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
+app.use("/public", express.static(publicPath));
 app.use(session({ secret: "cats", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());

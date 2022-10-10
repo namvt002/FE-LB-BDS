@@ -3,7 +3,7 @@
     text-align: center;
     color: white;
     cursor: pointer;
-
+    text-decoration: none;
     &:last-child {
         margin-right: 0px !important;
     }
@@ -40,6 +40,6 @@
     .typography {
         font-weight: 600;
         color: white !important;
-        text-decoration: underline !important;
+        text-decoration: none !important;
     }
 }
