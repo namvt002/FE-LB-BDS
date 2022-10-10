@@ -7,10 +7,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Pannellum } from "pannellum-react";
-import myImage from "../../../../public/images/download";
 import './index.scss';
 
 export default function DialogListImage({ open, handleClickCloseDialog, listProduct }) {
+    const myImage = "../../../../public/images/download";
     const [imgActive, setImgActive] = React.useState(0);
     const firstProduct = myImage;
     const [imgSrc, setImgSrc] = React.useState(firstProduct.image);

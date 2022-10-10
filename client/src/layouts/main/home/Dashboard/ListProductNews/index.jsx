@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
@@ -10,15 +10,10 @@ import Container from '@mui/material/Container';
 import { Typography } from '@mui/material';
 
 import './index.scss';
-import './list-product.scss';
 import Product from '../Product';
+import { API_BASE_URL } from 'src/config/configUrl';
+import { getData } from 'src/_helper/httpProvider';
 
-const product_img_thumb1 = '/images/product_img_thumb1.png';
-const product_img_thumb2 = '/images/product_img_thumb2.png';
-const product_img_thumb3 = '/images/product_img_thumb3.png';
-const product_img_thumb4 = '/images/product_img_thumb4.png';
-const product_img_thumb5 = '/images/product_img_thumb5.png';
-const product_img_thumb6 = '/images/product_img_thumb6.png';
 
 const menu_items = [
     'Biệt thự',
@@ -27,22 +22,28 @@ const menu_items = [
     'Nhà vườn',
 ];
 
-const list_product = [
-    {id: 1, title: 'Cho thuê căn hộ, biệt thự cao cấp', address: 'Phường 15 Bình Thạnh HỒ CHÍ MINH', price: '36.000.000', notes: ['cho thuê'], detail: {info_1: 3, info_2: 2, info_3: '175m2'}, image:  product_img_thumb1 },
-    {id: 1, title: 'Biệt thự Sunshine Group', address: 'Quảng An Tây Hồ Hà Nội', price: '15.000.000.000', notes: ['bán', 'hot'], detail: {info_1: 3, info_2: 2, info_3: '175m2'}, image:  product_img_thumb2 },
-    {id: 1, title: 'Bán biệt thự N03 Sài Đồng', address: 'Sài Đồng Long Biên Hà Nội', price: '18.700.000.000', notes: ['cho thuê'], detail: {info_1: 3, info_2: 2, info_3: '175m2'}, image:  product_img_thumb3 },
-    {id: 1, title: 'Cho thuê biệt thự hiện đại', address: 'Phường 15 Bình Thạnh Hồ Chí Minh', price: '48.000.000', notes: ['bán', 'hot'], detail: {info_1: 3, info_2: 2, info_3: '175m2'}, image:  product_img_thumb4 },
-    {id: 1, title: 'Bán biệt thự hiện đại mới xây', address: 'Xuân Thủy Cầu Giấy Hà Nội', price: '12.500.000.000', notes: ['cho thuê'], detail: {info_1: 3, info_2: 2, info_3: '175m2'}, image:  product_img_thumb5 },
-    {id: 1, title: 'Bán biệt thự khu Jamona Golden Silk', address: 'Sài Đồng Long Biên Hà Nội', price: '14.000.000.000', notes: ['bán'], detail: {info_1: 3, info_2: 2, info_3: '175m2'}, image:  product_img_thumb6 }
-]
 
 export default function ListProductNews() {
     const [toggleMenu, setToggleMenu] = useState(null);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const open = Boolean(toggleMenu);
     const handleClickListItem = (event) => {
-    setToggleMenu(event.currentTarget);
+        setToggleMenu(event.currentTarget);
     };
+    const [datas, setDatas] = React.useState([]);
+    useEffect(() => {
+        (async () => {
+          try {
+            const res = await getData(
+              API_BASE_URL + `/books`,
+            );
+            setDatas(res.data);
+            console.log(res.data,"ListProductNews");
+          } catch (e) {
+            console.log(e);
+          }
+        })();
+      }, []);
 
     const handleMenuItemClick = ( event, index ) => {
         setSelectedIndex(index);
@@ -99,7 +100,7 @@ export default function ListProductNews() {
                 </Menu>
                 <Grid container spacing={2} sx={{mt: 5}}>
                     {
-                        list_product.map((product, index) => {
+                        datas?.map((product, index) => {
                             return (
                                 <Grid key={index} item xs={12} md={6} lg={4}>
                                     <Box sx={{width: '100%'}}>

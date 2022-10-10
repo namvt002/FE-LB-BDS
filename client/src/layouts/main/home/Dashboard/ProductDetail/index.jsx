@@ -12,12 +12,12 @@ import Product from '../Product';
 import DialogListImage from '../DialogListImage';
 
 
-import product_img_thumb1 from '../../../../public/images/product_img_thumb1.png';
-import product_img_thumb2 from '../../../../public/images/product_img_thumb2.png';
-import product_img_thumb3 from '../../../../public/images/product_img_thumb3.png';
-import product_img_thumb4 from '../../../../public/images/product_img_thumb4.png';
-import product_img_thumb5 from '../../../../public/images/product_img_thumb5.png';
-import product_img_thumb6 from '../../../../public/images/product_img_thumb6.png';
+const product_img_thumb1 = '../../../../public/images/product_img_thumb1.png';
+const product_img_thumb2 = '../../../../public/images/product_img_thumb2.png';
+const product_img_thumb3 = '../../../../public/images/product_img_thumb3.png';
+const product_img_thumb4 = '../../../../public/images/product_img_thumb4.png';
+const product_img_thumb5 = '../../../../public/images/product_img_thumb5.png';
+const product_img_thumb6 = '../../../../public/images/product_img_thumb6.png';
 
 const listProduct = [
 	{ id: 1, title: 'Cho thuê căn hộ, biệt thự cao cấp', address: 'Phường 15 Bình Thạnh HỒ CHÍ MINH', price: '36.000.000', notes: ['cho thuê'], detail: { info_1: 3, info_2: 2, info_3: '175m2' }, image: product_img_thumb1 },
@@ -176,7 +176,7 @@ export default function ProductDetail() {
 							</Box>
 							<Box></Box>
 						</Stack>
-						<Grid container spacing={2} sx={{ mt: 2 }}>
+						{/* <Grid container spacing={2} sx={{ mt: 2 }}>
 							{
 								listProduct.map((product, index) => {
 									if (index < 3) {
@@ -190,7 +190,7 @@ export default function ProductDetail() {
 									}
 								})
 							}
-						</Grid>
+						</Grid> */}
 					</Box>
 					<Box className="list-product-new" sx={{ mt: 3 }}>
 						<Stack className="h-title-menu" direction="row" alignItems="center">
@@ -200,7 +200,7 @@ export default function ProductDetail() {
 							</Box>
 							<Box></Box>
 						</Stack>
-						<Grid container spacing={2} sx={{ mt: 2 }}>
+						{/* <Grid container spacing={2} sx={{ mt: 2 }}>
 							{
 								listProduct.map((product, index) => {
 									if (index < 1) {
@@ -214,7 +214,7 @@ export default function ProductDetail() {
 									}
 								})
 							}
-						</Grid>
+						</Grid> */}
 					</Box>
 				</Container>
 			</Box>

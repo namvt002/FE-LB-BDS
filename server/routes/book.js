@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 });
 
 let upload = multer({ storage: storage , limits: {
-  fileSize: 1000000
+  fileSize: 100000000
 }});
 
 module.exports = function (app) {
@@ -91,7 +91,7 @@ module.exports = function (app) {
     const { id } = req.params;
     let qr = `
     SELECT 
-        san_pham.*, the_loai.tl_ten, tac_gia.tg_ten, danh_muc.dm_ten
+        san_pham.*, the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
     FROM san_pham
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg

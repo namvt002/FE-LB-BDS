@@ -43,12 +43,11 @@ const sidebarConfig = [
         title: 'user',
         path: PATH_DASHBOARD.user.list,
         icon: ICONS.user,
-        // children: [
-        //   {
-        //     title: 'account',
-        //     path: PATH_DASHBOARD.user.account,
-        //   }
-        // ]
+      },
+      {
+        title: 'Đổi mật khẩu',
+        path: PATH_DASHBOARD.user.account,
+        icon: ICONS.user,
       },
       {
         title: 'Quyền',
@@ -60,21 +59,6 @@ const sidebarConfig = [
         path: PATH_DASHBOARD.book.root,
         icon: ICONS.book,
       },
-      // {
-      //   title: 'Nhập hàng',
-      //   path: PATH_DASHBOARD.phieunhap.root,
-      //   icon: ICONS.phieunhap,
-      // },
-      // {
-      //   title: 'Nhà xuất bản',
-      //   path: PATH_DASHBOARD.nhaxuatban.root,
-      //   icon: ICONS.tacgia,
-      // },
-      // {
-      //   title: 'Chủ sở hữu đất',
-      //   path: PATH_DASHBOARD.nhacungcap.root,
-      //   icon: ICONS.tacgia,
-      // },
       {
         title: 'Chủ sở hữu đất',
         path: PATH_DASHBOARD.tacgia.root,
@@ -94,7 +78,7 @@ const sidebarConfig = [
       {
         title: 'Bài viết',
         path: PATH_DASHBOARD.blog.root,
-        icon: ICONS.ngonngu,
+        icon: ICONS.kanban,
       },
     ],
   },

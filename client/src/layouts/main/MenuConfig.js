@@ -59,6 +59,7 @@ const menuConfig = [
     title: 'Tin rao',
     path: '/pages',
     icon: <Icon icon={fileFill} {...ICON_SIZE} />,
+    
   }
 ];
 

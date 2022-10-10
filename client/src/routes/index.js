@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Navigate, useRoutes, useLocation} from 'react-router-dom';
+import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
 import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
@@ -38,7 +38,7 @@ const Loadable = (Component) => (props) => {
 
 export default function Router() {
   const isAdmin = useSelector((state) => state.user.current.role) === 'ADMIN';
-    return useRoutes([
+  return useRoutes([
     {
       path: 'auth',
       children: [
@@ -161,13 +161,22 @@ export default function Router() {
     {
       path: '/',
       element: <MainLayout />,
+      children: [
+        {
+          path: '/',
+          element: <Home />,
+        },
+        {
+          path: 'san-pham/:id',
+          element: <ProductDetail />,
+        },
+      ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
 
 // IMPORT COMPONENTS
-
 
 // userAccount
 const UserAccount = Loadable(
@@ -194,7 +203,6 @@ const RoleCreate = Loadable(
   lazy(() => import('../pages/dashboard/RoleCreate')),
 );
 
-
 //--------------------------Danh Muc-------------------------------------------
 const DanhMucList = Loadable(lazy(() => import('../pages/dashboard/DanhMuc')));
 //--------------------------Tác giả-------------------------------------------
@@ -209,8 +217,11 @@ const BookCreate = Loadable(
   lazy(() => import('../pages/dashboard/BookCreate')),
 );
 
+const ProductDetail = Loadable(
+  lazy(() => import('../layouts/main/home/Dashboard/ProductDetail')),
+);
 
-
+const Home = Loadable(lazy(() => import('../layouts/main/home')));
 //------------------------Bai Viet--------------------------------
 const BlogPosts = Loadable(lazy(() => import('../pages/dashboard/BlogPosts')));
 const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
