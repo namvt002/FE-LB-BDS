@@ -170,6 +170,10 @@ export default function Router() {
           path: 'san-pham/:id',
           element: <ProductDetail />,
         },
+        {
+          path: 'danh-muc/:seo',
+          element: <CategoryDetail />,
+        },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
@@ -219,6 +223,10 @@ const BookCreate = Loadable(
 
 const ProductDetail = Loadable(
   lazy(() => import('../layouts/main/home/Dashboard/ProductDetail')),
+);
+
+const CategoryDetail = Loadable(
+  lazy(() => import('../layouts/main/home/Dashboard/CategoryDetail')),
 );
 
 const Home = Loadable(lazy(() => import('../layouts/main/home')));

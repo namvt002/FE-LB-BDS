@@ -16,6 +16,7 @@ const Search_2 = () => {
         {name: 'Căn hộ', image: '/images/collection_5.png',seo: 'biet-thu'}
     ];
 
+
     return (
         <>
             <Stack sx={{mt: 4}} direction="row" justifyContent="center">

@@ -16,16 +16,17 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
-import thumbnail_category from '../../../../public/images/thumbnail_category.png';
-import thumbnail_category2 from '../../../../public/images/thumbnail_category2.png';
+import './index.scss';
+const thumbnail_category = 'http://localhost:3000/images/thumbnail_category.png';
+const thumbnail_category2 = 'http://localhost:3000/images/thumbnail_category2.png';
 
 
-import product_img_thumb1 from '../../../../public/images/product_img_thumb1.png';
-import product_img_thumb2 from '../../../../public/images/product_img_thumb2.png';
-import product_img_thumb3 from '../../../../public/images/product_img_thumb3.png';
-import product_img_thumb4 from '../../../../public/images/product_img_thumb4.png';
-import product_img_thumb5 from '../../../../public/images/product_img_thumb5.png';
-import product_img_thumb6 from '../../../../public/images/product_img_thumb6.png';
+const product_img_thumb1 = '../../../../public/images/product_img_thumb1.png';
+const product_img_thumb2 = '../../../../public/images/product_img_thumb2.png';
+const product_img_thumb3 = '../../../../public/images/product_img_thumb3.png';
+const product_img_thumb4 = '../../../../public/images/product_img_thumb4.png';
+const product_img_thumb5 = '../../../../public/images/product_img_thumb5.png';
+const product_img_thumb6 = '../../../../public/images/product_img_thumb6.png';
 
 const listProduct = [
 	{ id: 1, title: 'Cho thuê căn hộ, biệt thự cao cấp', address: 'Phường 15 Bình Thạnh HỒ CHÍ MINH', price: '36.000.000', notes: ['cho thuê'], detail: { info_1: 3, info_2: 2, info_3: '175m2' }, image: product_img_thumb1 },
@@ -199,7 +200,7 @@ export default function CategoryDetail() {
 								<MenuItem value={4}>Giá giảm dần</MenuItem>
 							</Select>
 							<Divider sx={{ my: 2 }} light />
-							<Grid container spacing={2}>
+							{/* <Grid container spacing={2}>
 								{
 									listProduct.map((product, index) => {
 										return (
@@ -211,7 +212,7 @@ export default function CategoryDetail() {
 										)
 									})
 								}
-							</Grid>
+							</Grid> */}
 						</Box>
 					</Grid>
 					<Grid tem xs={12}>
