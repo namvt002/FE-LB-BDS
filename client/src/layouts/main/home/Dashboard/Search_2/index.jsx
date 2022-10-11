@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 
 import './index.scss';
+import { API_BASE_URL } from 'src/config/configUrl';
+import { getData } from 'src/_helper/httpProvider';
 
 const Search_2 = () => {
     const listSearch = [
@@ -16,18 +18,32 @@ const Search_2 = () => {
         {name: 'Căn hộ', image: '/images/collection_5.png',seo: 'biet-thu'}
     ];
 
+    const [datas, setDatas] = React.useState([]);
+    React.useEffect(() => {
+        (async () => {
+          try {
+            const res = await getData(
+              API_BASE_URL + `/danhmuc`,
+            );
+            setDatas(res.data);
+          } catch (e) {
+            console.log(e);
+          }
+        })();
+      }, []);
+
 
     return (
         <>
             <Stack sx={{mt: 4}} direction="row" justifyContent="center">
                 {
-                    listSearch.map((obj, index) => {
+                    datas.map((obj, index) => {
                         return (
-                            <Link to={`/danh-muc/${obj?.seo}`} className="_1-search-advanced">
+                            <Link to={`/danh-muc/${obj?.dm_id}`} className="_1-search-advanced">
                                 <Box className="thumbnail">
-                                    <img src={obj.image} alt="" />
+                                    <img src={`http://localhost:4000/public/${obj.dm_hinhanh[0].adm_hinh}`} alt="" />
                                 </Box>
-                                <Typography sx={{textDecoration: "none"}} className="typography" variant="p">{obj.name}</Typography>
+                                <Typography sx={{textDecoration: "none"}} className="typography" variant="p">{obj.dm_ten}</Typography>
                             </Link>
                         )
                     })

@@ -28,10 +28,10 @@ module.exports = function (app) {
   app.get("/danhmuc", async (req, res) => {
     let qr = "SELECT * FROM danh_muc";
     if (req.query.search) {
-      qr += `WHERE danh_muc.dm_ten like '%${req.query.search}%'`;
+      qr += ` WHERE dm_ten LIKE '%${req.query.search}%' `;
     }
-
     const _danhmuc = await query(db, qr);
+    console.log(_danhmuc)
     await Promise.all(
       _danhmuc.map(async (danhmuc, idx) => {
         _hinhanh = await query(
@@ -44,6 +44,30 @@ module.exports = function (app) {
     );
     res.status(200).send(_danhmuc);
   });
+
+  app.get("/danhmuc/tieubieu", async (req, res) => {
+    let qr = `
+      SELECT san_pham.*, danh_muc.dm_ten,hinh_anh.adm_hinh, COUNT(DISTINCT(san_pham.sp_id)) as so_luong_Sp
+      FROM san_pham
+      LEFT JOIN danh_muc ON danh_muc.dm_id =san_pham.sp_iddm
+      LEFT JOIN anh_danh_muc ON anh_danh_muc.adm_iddm = danh_muc.dm_id,
+      (
+        SELECT anh_danh_muc.*
+          FROM anh_danh_muc, 
+            (	SELECT MAX(adm1.adm_id) adm_id, adm1.adm_iddm
+              FROM anh_danh_muc adm1
+              GROUP BY adm1.adm_iddm
+              ) adm_t
+          WHERE anh_danh_muc.adm_iddm = adm_t.adm_iddm AND anh_danh_muc.adm_id = adm_t.adm_id
+      ) hinh_anh
+      WHERE hinh_anh.adm_iddm = san_pham.sp_iddm
+      GROUP BY san_pham.sp_iddm
+    `;
+    const _danhmuc = await query(db, qr);
+    res.status(200).send(_danhmuc);
+  });
+
+
 
   app.post("/danhmuc/active", async (req, res) => {
     const { id, active } = req.body;

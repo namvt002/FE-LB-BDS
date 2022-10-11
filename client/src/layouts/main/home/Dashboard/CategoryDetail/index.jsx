@@ -16,7 +16,10 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import { useParams } from 'react-router-dom';
 import './index.scss';
+import { getData } from 'src/_helper/httpProvider';
+import { API_BASE_URL } from 'src/config/configUrl';
 const thumbnail_category = 'http://localhost:3000/images/thumbnail_category.png';
 const thumbnail_category2 = 'http://localhost:3000/images/thumbnail_category2.png';
 
@@ -39,6 +42,20 @@ const listProduct = [
 
 
 export default function CategoryDetail() {
+	const params = useParams();
+	const [datas, setDatas] = React.useState([]);
+    React.useEffect(() => {
+        (async () => {
+          try {
+            const res = await getData(
+              API_BASE_URL + `/books/danhmuc/${params.id}`,
+            );
+            setDatas(res.data);
+          } catch (e) {
+            console.log(e);
+          }
+        })();
+      }, []);
 
 	const [sort, setSort] = React.useState(0);
 	const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -200,9 +217,9 @@ export default function CategoryDetail() {
 								<MenuItem value={4}>Giá giảm dần</MenuItem>
 							</Select>
 							<Divider sx={{ my: 2 }} light />
-							{/* <Grid container spacing={2}>
+							<Grid container spacing={2}>
 								{
-									listProduct.map((product, index) => {
+									datas.map((product, index) => {
 										return (
 											<Grid key={index} item xs={12}>
 												<Box sx={{ width: '100%' }}>
@@ -212,7 +229,7 @@ export default function CategoryDetail() {
 										)
 									})
 								}
-							</Grid> */}
+							</Grid>
 						</Box>
 					</Grid>
 					<Grid tem xs={12}>

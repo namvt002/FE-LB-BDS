@@ -66,7 +66,7 @@ module.exports = function (app) {
         LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
     `;
     if (req.query.search) {
-      qr += `WHERE tl_ten like '%${req.query.search}%' or 
+      qr += ` WHERE tl_ten like '%${req.query.search}%' or 
                   tg_ten like '%${req.query.search}%' or
                   dm_ten like '%${req.query.search}%' or
                   sp_ten like '%${req.query.search}%' or 
@@ -86,7 +86,107 @@ module.exports = function (app) {
     );
     res.status(200).send(_books);
   });
+  //danh sach sp moi
+  app.get("/books/new", async (req, res) => {
+    let qr = `
+    SELECT 
+      san_pham.*,  the_loai.tl_ten, tac_gia.tg_ten, danh_muc.dm_ten
+    FROM san_pham
+        LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
+        LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
+        LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
+        ORDER BY san_pham.sp_id DESC LIMIT 9
+    `;
+    const _books = await query(db, qr);
+    await Promise.all(
+      _books.map(async (book, idx) => {
+        _hinhanh = await query(
+          db,
+          "SELECT * FROM hinh_anh WHERE ha_idsp = ?",
+          book.sp_id
+        );
+        _books[idx].sp_hinhanh = _hinhanh;
+      })
+    );
+    res.status(200).send(_books);
+  });
+  //sp thue
+  app.get("/books/thue", async (req, res) => {
+    let qr = `
+    SELECT 
+      san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
+    FROM san_pham
+        LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
+        LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
+        LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
+        WHERE the_loai.tl_ten = "Cho thuê"
+        ORDER BY san_pham.sp_id DESC LIMIT 9
+    `;
+    const _books = await query(db, qr);
+    await Promise.all(
+      _books.map(async (book, idx) => {
+        _hinhanh = await query(
+          db,
+          "SELECT * FROM hinh_anh WHERE ha_idsp = ?",
+          book.sp_id
+        );
+        _books[idx].sp_hinhanh = _hinhanh;
+      })
+    );
+    res.status(200).send(_books);
+  });
+  //sp ban
+  app.get("/books/ban", async (req, res) => {
+    let qr = `
+    SELECT 
+      san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
+    FROM san_pham
+        LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
+        LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
+        LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
+        WHERE the_loai.tl_ten = "Bán"
+        ORDER BY san_pham.sp_id DESC LIMIT 9
+    `;
+    const _books = await query(db, qr);
+    await Promise.all(
+      _books.map(async (book, idx) => {
+        _hinhanh = await query(
+          db,
+          "SELECT * FROM hinh_anh WHERE ha_idsp = ?",
+          book.sp_id
+        );
+        _books[idx].sp_hinhanh = _hinhanh;
+      })
+    );
+    res.status(200).send(_books);
+  });
 
+  //day sp theo danh muc
+  app.get("/books/danhmuc/:id", async (req, res) => {
+    const {id} = req.params;
+    let qr = `
+    SELECT 
+        san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
+    FROM san_pham
+        LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
+        LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
+        LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
+        WHERE danh_muc.dm_id = ?
+    `;
+    const _books = await query(db, qr, id);
+    await Promise.all(
+      _books.map(async (book, idx) => {
+        _hinhanh = await query(
+          db,
+          "SELECT * FROM hinh_anh WHERE ha_idsp = ?",
+          book.sp_id
+        );
+        _books[idx].sp_hinhanh = _hinhanh;
+      })
+    );
+    res.status(200).send(_books);
+  });
+  //lay sp theo id sp
   app.get("/book/:id", async (req, res) => {
     const { id } = req.params;
     let qr = `

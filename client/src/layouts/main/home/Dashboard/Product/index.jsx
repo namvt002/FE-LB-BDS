@@ -5,6 +5,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 
 import './index.scss';
+import { fCurrency } from 'src/utils/formatNumber';
 
 
 export default function Product(props) {
@@ -50,14 +51,22 @@ export default function Product(props) {
                         <li><span><LocationOnIcon className="icon-map-marker" />&nbsp;</span><span>{props.product.sp_diachi}</span></li>
                     </ul>
                 </div>
-                <div className="section">
+                <div className="tag_mix section">
+                    <ul className="padding-0">
+                        <li>
+                            <a className="inIcon contact" id="phoneCallProduct" href="tel:0123456789" title="Gọi ngay"><LocalPhoneIcon sx={{fontSize: 15}} id="iconPhoneProduct" ></LocalPhoneIcon>{props.product.tg_phone}</a> 
+                        </li>
+                    </ul>
+                </div>
+                <div className="section" id='wrapperPriceProduct'>
                     <div className="group_contact">
-                        <a className="inIcon contact" href="tel:0123456789" title="Gọi ngay"><LocalPhoneIcon sx={{fontSize: 18}}></LocalPhoneIcon></a>
                     </div>
                     <div className="blockprice">
                         <div className="product-item-price price-box">
                             <span className="special-price">
-                                <span className="price product-price">{props.product.sp_gia}₫</span>
+                                <span className="price product-price">
+                                 Giá: {fCurrency(props.product.sp_gia)}
+                                </span>
                             </span>
                         </div>
                     </div>

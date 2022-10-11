@@ -171,7 +171,7 @@ export default function Router() {
           element: <ProductDetail />,
         },
         {
-          path: 'danh-muc/:seo',
+          path: 'danh-muc/:id',
           element: <CategoryDetail />,
         },
       ],
