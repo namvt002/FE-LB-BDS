@@ -22,7 +22,6 @@ const Search_2 = () => {
             <Stack sx={{mt: 4}} direction="row" justifyContent="center">
                 {
                     listSearch.map((obj, index) => {
-                        const img = '../../../public/images/collection_'+(index+1)+'.png';
                         return (
                             <Link to={`/danh-muc/${obj?.seo}`} className="_1-search-advanced">
                                 <Box className="thumbnail">

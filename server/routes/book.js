@@ -108,7 +108,6 @@ module.exports = function (app) {
   app.put("/book/:id", upload.array("sp_hinhanh", 10), async (req, res) => {
     const id = req.params.id;
     upload.array("sp_hinhanh", 10);
-    console.log(req.files);
     let { data } = req.body;
     data = JSON.parse(data);
     if (req.files.length > 0) {

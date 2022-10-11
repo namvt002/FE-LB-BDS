@@ -16,6 +16,7 @@ import {
   Switch,
   Grid,
   IconButton,
+  Avatar
 } from '@material-ui/core';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
@@ -27,7 +28,7 @@ import Scrollbar from '../../components/Scrollbar';
 import SearchNotFound from '../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { getData, postData } from 'src/_helper/httpProvider';
-import { API_BASE_URL } from 'src/config/configUrl';
+import { API_BASE_URL, URL_PUBLIC_IMAGES } from 'src/config/configUrl';
 import { useSnackbar } from 'notistack5';
 import { MIconButton } from 'src/components/@material-extend';
 import closeFill from '@iconify/icons-eva/close-fill';
@@ -39,6 +40,7 @@ import DanhMucListHead from 'src/components/_dashboard/danhmuc/list/DanhMucListH
 
 const TABLE_HEAD = [
   { id: 'tên', label: 'Tên', alignRight: false },
+  { id: 'anh', label: 'Hình ảnh', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
   { id: '' },
 ];
@@ -65,7 +67,6 @@ export default function DanhMucList() {
           API_BASE_URL + `/danhmuc?search=${filterName}`,
         );
         setDatas(res.data);
-        console.log(res.data);
       } catch (e) {
         console.log(e);
       }
@@ -150,7 +151,7 @@ export default function DanhMucList() {
           heading="Danh mục"
           links={[
             { name: 'Quản lý', href: PATH_DASHBOARD.root },
-            { name: 'Danh mục', href: PATH_DASHBOARD.nhaxuatban.root },
+            { name: 'Danh mục', href: PATH_DASHBOARD.danhmuc.root },
           ]}
         />
 
@@ -191,7 +192,7 @@ export default function DanhMucList() {
                           page * rowsPerPage + rowsPerPage,
                         )
                         .map((row) => {
-                          const { dm_id, dm_ten, active } = row;
+                          const { dm_id, dm_ten, dm_hinhanh, active } = row;
                           const isItemSelected = selected.indexOf(dm_id) !== -1;
                           return (
                             <TableRow
@@ -220,9 +221,17 @@ export default function DanhMucList() {
                                   alignItems="center"
                                   spacing={2}
                                 >
-                                  <Typography variant="subtitle2" noWrap>
+                                   <Avatar
+                                      variant="square"
+                                      alt=""
+                                      sx={{ mr: 1}}
+                                      src={`${
+                                        URL_PUBLIC_IMAGES + dm_hinhanh[0]?.adm_hinh
+                                      }`}
+                                    />
+                                  {/* <Typography variant="subtitle2" noWrap> */}
                                     {dm_ten}
-                                  </Typography>
+                                  {/* </Typography> */}
                                 </Stack>
                               </TableCell>
                               <TableCell align="left">
@@ -242,7 +251,7 @@ export default function DanhMucList() {
                                     onClick={() =>
                                       setEdit({
                                         isEdit: true,
-                                        current: { id: dm_id, dm_ten: dm_ten },
+                                        current: { id: dm_id, dm_ten: dm_ten, dm_hinhanh: dm_hinhanh},
                                       })
                                     }
                                   />
