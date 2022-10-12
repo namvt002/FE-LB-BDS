@@ -138,11 +138,16 @@ export default function Router() {
           children: [
             {
               path: '/',
-              element: <Navigate to="/dashboard/blog/posts" replace />,
+              element: <BlogList />,
             },
-            { path: 'posts', element: <BlogPosts /> },
-            { path: 'post/:title', element: <BlogPost /> },
-            { path: 'new-post', element: <BlogNewPost /> },
+            {
+              path: '/new',
+              element: <BlogCreate />,
+            },
+            {
+              path: '/:id/edit',
+              element: <BlogCreate />,
+            },
           ],
         },
       ],
@@ -214,8 +219,14 @@ const TacGiaList = Loadable(lazy(() => import('../pages/dashboard/TacGia')));
 //--------------------------Thể loại-------------------------------------------
 const TheLoaiList = Loadable(lazy(() => import('../pages/dashboard/TheLoai')));
 
-//--------------------------Sách-------------------------------------------
+//--------------------------sanpham-------------------------------------------
 const BookList = Loadable(lazy(() => import('../pages/dashboard/Book')));
+
+//--------------------------Blog-------------------------------------------/
+const BlogList = Loadable(lazy(() => import('../pages/dashboard/Blog')));
+const BlogCreate = Loadable(
+  lazy(() => import('../pages/dashboard/BlogCreate')),
+);
 
 const BookCreate = Loadable(
   lazy(() => import('../pages/dashboard/BookCreate')),
@@ -231,11 +242,7 @@ const CategoryDetail = Loadable(
 
 const Home = Loadable(lazy(() => import('../layouts/main/home')));
 //------------------------Bai Viet--------------------------------
-const BlogPosts = Loadable(lazy(() => import('../pages/dashboard/BlogPosts')));
-const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
-const BlogNewPost = Loadable(
-  lazy(() => import('../pages/dashboard/BlogNewPost')),
-);
+
 
 //-------------------------------------------------------------------------------
 

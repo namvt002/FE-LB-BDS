@@ -198,7 +198,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Bạn cần giúp gì không?
-              <br /> Vui lòng liên hệ: <b>0794351150</b>
+              <br /> Vui lòng liên hệ: <b>0793994478</b>
             </Typography>
           </div>
         </Stack>
