@@ -77,7 +77,7 @@ export default function BlogListToolbar({
 
   const deleteUser = async () => {
     try {
-      const res = await deleteData(API_BASE_URL + '/book/delete', {
+      const res = await deleteData(API_BASE_URL + '/blog/delete', {
         arrID: JSON.stringify(selected),
       });
       if (setLoad) setLoad((e) => e + 1);

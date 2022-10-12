@@ -10,13 +10,6 @@ import { API_BASE_URL } from 'src/config/configUrl';
 import { getData } from 'src/_helper/httpProvider';
 
 const Search_2 = () => {
-    const listSearch = [
-        {name: 'Biệt thự', image: '/images/collection_1.png',seo: 'biet-thu'},
-        {name: 'Nhà vườn', image: '/images/collection_2.png',seo: 'biet-thu'},
-        {name: 'Nhà phố', image: '/images/collection_3.png',seo: 'biet-thu'},
-        {name: 'Chung cư', image: '/images/collection_4.png',seo: 'biet-thu'},
-        {name: 'Căn hộ', image: '/images/collection_5.png',seo: 'biet-thu'}
-    ];
 
     const [datas, setDatas] = React.useState([]);
     React.useEffect(() => {

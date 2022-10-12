@@ -67,7 +67,6 @@ export default function TacGiaList() {
           API_BASE_URL + `/tacgia?search=${filterName}`,
         );
         setDatas(res.data);
-        console.log(res.data);
       } catch (e) {
         console.log(e);
       }

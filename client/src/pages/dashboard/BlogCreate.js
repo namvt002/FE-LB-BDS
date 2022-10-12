@@ -26,9 +26,8 @@ export default function BlogCreate() {
   useEffect(() => {
     (async () => {
       if (isEdit) {
-        const _res = await getData(API_BASE_URL + `/book/${id}`);
+        const _res = await getData(API_BASE_URL + `/blog/${id}`);
         setCurrent(_res.data);
-        console.log(_res.data);
       }
     })();
   }, [id,  isEdit]);

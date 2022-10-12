@@ -17,28 +17,12 @@ export default function New_2(props) {
                 </div>	
                 <div className="content_blog">
                     <span className="time_post">
-                        <i className="fa fa-calendar-check"></i>&nbsp;{props.new.date}&nbsp;<span><TurnedInIcon sx={{fontSize: 18, position: 'relative', top: 3}} />&nbsp;2&nbsp; Bình luận</span>
+                        <i className="fa fa-calendar-check"></i>&nbsp;{props.new.date}&nbsp;
                     </span>
                     <Stack sx={{width: '100%'}}>
                         <h3 className="h3">
                             <Link className="tag-a" href="#" title={props.new.title}>{props.new.title}</Link>
                         </h3>
-                        <div className="post_author">
-                            <div className="sharing_button">
-                                <span><ShareIcon className="icon"></ShareIcon></span>
-                                {/* <div className="social-media">
-                                    <Link className="tag-a share-facebook" target="_blank" href="http://www.facebook.com/sharer.php?u=https://delta-platinum.mysapo.net/nhung-li-do-day-thu-hut-cua-du-an-chung-cu-new-city" title="Chia sẻ lên Facebook">
-                                        <FacebookIcon className="icon"></FacebookIcon>
-                                    </Link>
-                                    <Link className="tag-a share-twitter" target="_blank" href="http://twitter.com/share?text=Nh%e1%bb%afngl%c3%addo%c4%91%e1%ba%a7ythuh%c3%batc%e1%bb%a7ad%e1%bb%b1%c3%a1nchungc%c6%b0NewCity&amp;url=https://delta-platinum.mysapo.net/nhung-li-do-day-thu-hut-cua-du-an-chung-cu-new-city"  title="Chia sẻ lên Twitter">
-                                        <TwitterIcon className="icon"></TwitterIcon>
-                                    </Link>
-                                    <Link className="tag-a share-google" target="_blank" href="http://plus.google.com/share?url=https://delta-platinum.mysapo.net/nhung-li-do-day-thu-hut-cua-du-an-chung-cu-new-city"  title="+1">
-                                        <GoogleIcon className="icon"></GoogleIcon>
-                                    </Link>
-                                </div> */}
-                            </div>
-                        </div>
                     </Stack>
                 </div>
             </div>

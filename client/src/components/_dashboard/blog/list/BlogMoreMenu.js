@@ -43,7 +43,7 @@ export default function BlogMoreMenu({ id }) {
       >
         <MenuItem
           component={RouterLink}
-          to={`${PATH_DASHBOARD.book.root}/${id}/edit`}
+          to={`${PATH_DASHBOARD.blog.root}/${id}/edit`}
           sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>

@@ -10,7 +10,6 @@ import {
   TableBody,
   TableCell,
   Container,
-  Typography,
   TableContainer,
   TablePagination,
   Switch,

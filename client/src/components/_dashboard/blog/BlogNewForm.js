@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack5';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback} from 'react';
 import { Form, FormikProvider, useFormik } from 'formik';
 // material
 import { styled } from '@material-ui/core/styles';
@@ -13,7 +13,6 @@ import {
   Switch,
   TextField,
   Typography,
-  Autocomplete,
   FormControlLabel,
   Icon,
 } from '@material-ui/core';
@@ -22,7 +21,7 @@ import {
 //
 import { QuillEditor } from '../../editor';
 import { UploadMultiFile } from '../../upload';
-import { getData, postData, putData } from 'src/_helper/httpProvider';
+import { postData, putData } from 'src/_helper/httpProvider';
 import { API_BASE_URL, URL_PUBLIC_IMAGES } from 'src/config/configUrl';
 import { MIconButton } from 'src/components/@material-extend';
 import closeFill from '@iconify/icons-eva/close-fill';
@@ -47,44 +46,46 @@ export default function BlogNewForm({ isEdit, currentProduct }) {
 
 
   const NewProductSchema = Yup.object().shape({
-    sp_ten: Yup.string().required('Vui lòng nhập tên sản phẩm'),
+    bv_ten: Yup.string().required('Vui lòng nhập tên bài viết'),
+    bv_ma: Yup.string().required('Vui lòng nhập mã bài viết'),
     sp_mota: Yup.string(),
-    sp_hinhanh: Yup.array(),
+    bv_hinhanh: Yup.array(),
   });
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      sp_ten: currentProduct?.sp_ten || '',
-      sp_mota: currentProduct?.sp_mota || '',
-      sp_hinhanh:
-        currentProduct?.sp_hinhanh?.map(
-          (e) => `${URL_PUBLIC_IMAGES + e.ha_hinh}`,
+      bv_ten: currentProduct?.bv_ten || '',
+      bv_ma: currentProduct?.bv_ma || '',
+      bv_mota: currentProduct?.bv_mota || '',
+      bv_hinhanh:
+        currentProduct?.bv_hinhanh?.map(
+          (e) => `${URL_PUBLIC_IMAGES + e.abv_hinh}`,
         ) || [],
       active: Boolean(currentProduct?.active) || true,
-      sp_hinhanh_old: currentProduct?.sp_hinhanh || [],
+      bv_hinhanh_old: currentProduct?.bv_hinhanh || [],
     },
     validationSchema: NewProductSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
       let _values = { ...values };
       try {
         const formDt = new FormData();
-        if (values.sp_hinhanh.length > 0) {
-          values.sp_hinhanh.map((value) => {
-            return formDt.append('sp_hinhanh', value);
+        if (values.bv_hinhanh.length > 0) {
+          values.bv_hinhanh.map((value) => {
+            return formDt.append('bv_hinhanh', value);
           });
         }
         formDt.append('data', JSON.stringify(_values));
         if (isEdit) {
           await putData(
-            API_BASE_URL + `/book/${currentProduct.sp_id}`,
+            API_BASE_URL + `/blog/${currentProduct.bv_id}`,
             formDt,
             {
               'content-type': 'multipart/form-data',
             },
           );
         } else {
-          await postData(API_BASE_URL + '/book/create', formDt, {
+          await postData(API_BASE_URL + '/blog/create', formDt, {
             'content-type': 'multipart/form-data',
           });
           resetForm();
@@ -118,7 +119,7 @@ export default function BlogNewForm({ isEdit, currentProduct }) {
   const handleDrop = useCallback(
     (acceptedFiles) => {
       setFieldValue(
-        'sp_hinhanh',
+        'bv_hinhanh',
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
@@ -130,12 +131,12 @@ export default function BlogNewForm({ isEdit, currentProduct }) {
   );
 
   const handleRemoveAll = () => {
-    setFieldValue('sp_hinhanh', []);
+    setFieldValue('bv_hinhanh', []);
   };
 
   const handleRemove = (file) => {
-    const filteredItems = values.sp_hinhanh.filter((_file) => _file !== file);
-    setFieldValue('sp_hinhanh', filteredItems);
+    const filteredItems = values.bv_hinhanh.filter((_file) => _file !== file);
+    setFieldValue('bv_hinhanh', filteredItems);
   };
 
   return (
@@ -158,19 +159,26 @@ export default function BlogNewForm({ isEdit, currentProduct }) {
                 <TextField
                   fullWidth
                   label="Tên bài viết"
-                  {...getFieldProps('sp_ten')}
-                  error={Boolean(touched.sp_ten && errors.sp_ten)}
-                  helperText={touched.sp_ten && errors.sp_ten}
+                  {...getFieldProps('bv_ten')}
+                  error={Boolean(touched.bv_ten && errors.bv_ten)}
+                  helperText={touched.bv_ten && errors.bv_ten}
+                />
+                <TextField
+                  fullWidth
+                  label="Mã bài viết"
+                  {...getFieldProps('bv_ma')}
+                  error={Boolean(touched.bv_ma && errors.bv_ma)}
+                  helperText={touched.bv_ma && errors.bv_ma}
                 />
 
                 <div>
-                  <LabelStyle>Mô tả</LabelStyle>
+                  <LabelStyle>Mô tả bài viết</LabelStyle>
                   <QuillEditor
                     simple
                     id="product-description"
-                    value={values.sp_mota}
-                    placeholder="Mô tả ..."
-                    onChange={(val) => setFieldValue('sp_mota', val)}
+                    value={values.bv_mota}
+                    placeholder="Mô tả bài viết"
+                    onChange={(val) => setFieldValue('bv_mota', val)}
                   />
                 </div>
 
@@ -180,11 +188,11 @@ export default function BlogNewForm({ isEdit, currentProduct }) {
                     showPreview
                     maxSize={3145728}
                     accept="image/*"
-                    files={values.sp_hinhanh}
+                    files={values.bv_hinhanh}
                     onDrop={handleDrop}
                     onRemove={handleRemove}
                     onRemoveAll={handleRemoveAll}
-                    error={Boolean(touched.sp_hinhanh && errors.sp_hinhanh)}
+                    error={Boolean(touched.bv_hinhanh && errors.bv_hinhanh)}
                   />
                 </div>
 

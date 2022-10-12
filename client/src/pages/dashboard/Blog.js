@@ -14,7 +14,6 @@ import {
   TableBody,
   TableCell,
   Container,
-  Typography,
   TableContainer,
   TablePagination,
   Switch,
@@ -34,20 +33,15 @@ import { API_BASE_URL, URL_PUBLIC_IMAGES } from 'src/config/configUrl';
 import { useSnackbar } from 'notistack5';
 import { MIconButton } from 'src/components/@material-extend';
 import closeFill from '@iconify/icons-eva/close-fill';
-import BookListToolbar from 'src/components/_dashboard/book/list/BookListToolbar';
-import BookListHead from 'src/components/_dashboard/book/list/BookListHead';
-import BookMoreMenu from 'src/components/_dashboard/book/list/BookMoreMenu';
-import { fCurrency } from 'src/utils/formatNumber';
+import BlogListToolbar from 'src/components/_dashboard/blog/list/BlogListToolbar';
+import BookListHead from 'src/components/_dashboard/blog/list/BlogListHead';
+import BlogMoreMenu from 'src/components/_dashboard/blog/list/BlogMoreMenu';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'sp_masp', label: 'Giá', alignRight: false },
-  { id: 'sp_ten', label: 'Tên dự án', alignRight: false },
-  { id: 'sp_dm', label: 'Danh mục', alignRight: false },
-  { id: 'sp_tg', label: 'Chủ sở hữu', alignRight: false },
-  { id: 'sp_tl', label: 'Thể loại', alignRight: false },
-  { id: 'sp_tl', label: 'Danh mục', alignRight: false },
+  { id: 'bv_ma', label: 'Mã bài viết', alignRight: false },
+  { id: 'sp_ten', label: 'Tên bài viêt', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
   { id: '' },
 ];
@@ -69,9 +63,9 @@ export default function BlogList() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await getData(API_BASE_URL + `/books?search=${filterName}`);
+        const res = await getData(API_BASE_URL + `/blogs?search=${filterName}`);
         setDatas(res.data);
-        console.log(res.data);
+        console.log(res.data, "select")
       } catch (e) {
         console.log(e);
       }
@@ -86,7 +80,7 @@ export default function BlogList() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = _datas.map((n) => n.sp_id);
+      const newSelecteds = _datas.map((n) => n.bv_id);
       setSelected(newSelecteds);
       return;
     }
@@ -172,7 +166,7 @@ export default function BlogList() {
         />
 
         <Card>
-          <BookListToolbar
+          <BlogListToolbar
             selected={selected}
             filterName={filterName}
             onFilterName={handleFilterByName}
@@ -196,21 +190,17 @@ export default function BlogList() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                       const {
-                        sp_id,
-                        sp_masp,
-                        sp_gia,
-                        sp_ten,
-                        sp_hinhanh,
-                        tg_ten,
-                        tl_ten,
-                        dm_ten,
+                        bv_id,
+                        bv_ma,
+                        bv_ten,
+                        bv_hinhanh,
                         active,
                       } = row;
-                      const isItemSelected = selected.indexOf(sp_id) !== -1;
+                      const isItemSelected = selected.indexOf(bv_id) !== -1;
                       return (
                         <TableRow
                           hover
-                          key={sp_id}
+                          key={bv_id}
                           tabIndex={-1}
                           role="checkbox"
                           selected={isItemSelected}
@@ -219,19 +209,11 @@ export default function BlogList() {
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
-                              onChange={(event) => handleClick(event, sp_id)}
+                              onChange={(event) => handleClick(event, bv_id)}
                             />
                           </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack
-                              direction="row"
-                              alignItems="center"
-                              spacing={2}
-                            >
-                              <Typography variant="subtitle2" noWrap>
-                                {fCurrency(sp_gia)}đ
-                              </Typography>
-                            </Stack>
+                          <TableCell align="right">
+                             {bv_ma}
                           </TableCell>
                           <TableCell align="left">
                             <Stack
@@ -241,29 +223,26 @@ export default function BlogList() {
                             >
                               <Avatar
                                 variant="square"
-                                alt={sp_masp}
+                                alt={bv_ma}
                                 sx={{ mr: 1}}
                                 src={`${
-                                  URL_PUBLIC_IMAGES + sp_hinhanh[0]?.ha_hinh
+                                  URL_PUBLIC_IMAGES + bv_hinhanh[0]?.abv_hinh
                                 }`}
                               />
-                              {sp_ten}
+                              {bv_ten}
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{dm_ten}</TableCell>
-                          <TableCell align="left">{tg_ten}</TableCell>
-                          <TableCell align="left">{tl_ten}</TableCell>
                           <TableCell align="left">
                             <Switch
                               checked={active === 1}
                               onChange={() => {
-                                changeActiveUser(sp_id, !active);
+                                changeActiveUser(bv_id, !active);
                               }}
                             />
                           </TableCell>
 
                           <TableCell align="right">
-                            <BookMoreMenu id={sp_id} />
+                            <BlogMoreMenu id={bv_id} />
                           </TableCell>
                         </TableRow>
                       );

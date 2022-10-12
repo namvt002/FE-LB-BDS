@@ -1,4 +1,4 @@
-import { useLocation, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 // material
 // components
 //
@@ -8,8 +8,8 @@ import MainFooter from './MainFooter';
 // ----------------------------------------------------------------------
 
 export default function MainLayout() {
-  const { pathname } = useLocation();
-  const isHome = pathname === '/';
+  // const { pathname } = useLocation();
+  // const isHome = pathname === '/';
 
   return (
     <>

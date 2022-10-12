@@ -9,9 +9,6 @@ import './index.scss';
 import Product from '../Product';   
 import { getData } from 'src/_helper/httpProvider';
 import { API_BASE_URL } from 'src/config/configUrl';
-const product_img_thumb1 = '/images/product_img_thumb9.png';
-const product_img_thumb2 = '/images/product_img_thumb10.png';
-const product_img_thumb3 = '/images/product_img_thumb8.png';
 
 export default function ListProductSale() {
 

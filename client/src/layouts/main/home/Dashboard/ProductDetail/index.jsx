@@ -40,7 +40,7 @@ export default function ProductDetail() {
         console.log(e);
       }
     })();
-  }, []);
+  }, [params.id]);
 
 
 
@@ -280,7 +280,11 @@ export default function ProductDetail() {
 												</Box>
 											</Grid>
 										)
-									}
+									}else{
+                    return (
+                      <></>
+                    )
+                  }
 								})
 							}
 						</Grid>

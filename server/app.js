@@ -75,6 +75,7 @@ require("./routes/theloai")(app);
 require("./routes/ngonngu")(app);
 require("./routes/book")(app);
 require("./routes/phieunhap")(app);
+require("./routes/baiviet")(app);
 app.get("/", (req, res) => {
   res.send('<a href="/auth/google">Authenticate with Google</a>');
 });
