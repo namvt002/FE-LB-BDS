@@ -29,7 +29,10 @@ module.exports = function (app) {
     delete data.sp_hinhanh_old;
     const qr_sp = "SELECT * FROM san_pham WHERE sp_masp = ?";
     await db.query(qr_sp, data.sp_masp, async (err, result) => {
-      if (err) return res.status(500).send(err);
+      if (err) {
+        console.log(err)
+        return
+      } ;
       if (result.length !== 0)
         return res.status(500).send("Mã sản phẩm đã tồn tại");
       else {
@@ -38,7 +41,11 @@ module.exports = function (app) {
         let id_sp = "";
         let values = [];
 
-        await db.query(qr, data, async (_, rs) => {
+        await db.query(qr, data, async (err, rs) => {
+          if(err){
+            console.log(err);
+            return
+          }
           id_sp = rs.insertId;
           if (req.files.length > 0) {
             const qr_ha = "INSERT INTO hinh_anh(ha_hinh, ha_idsp) VALUES ?";
@@ -59,7 +66,7 @@ module.exports = function (app) {
   app.get("/books", async (req, res) => {
     let qr = `
     SELECT 
-        san_pham.*,  the_loai.tl_ten, tac_gia.tg_ten, danh_muc.dm_ten
+        san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
     FROM san_pham
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg

@@ -31,7 +31,6 @@ module.exports = function (app) {
       qr += ` WHERE dm_ten LIKE '%${req.query.search}%' `;
     }
     const _danhmuc = await query(db, qr);
-    console.log(_danhmuc)
     await Promise.all(
       _danhmuc.map(async (danhmuc, idx) => {
         _hinhanh = await query(
@@ -66,8 +65,6 @@ module.exports = function (app) {
     const _danhmuc = await query(db, qr);
     res.status(200).send(_danhmuc);
   });
-
-
 
   app.post("/danhmuc/active", async (req, res) => {
     const { id, active } = req.body;

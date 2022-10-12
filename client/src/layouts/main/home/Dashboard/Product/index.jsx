@@ -40,12 +40,14 @@ export default function Product(props) {
                         })}	
                     </div>
                 </div> */}
-                <a href="cho-thue-can-ho-biet-thu-cao-cap.html" title="Dự án hỗ trợ xem ảnh 360 độ" className="degrees">
+                <Link to={`/san-pham/${props.product?.sp_id}`} title="Dự án hỗ trợ xem ảnh 360 độ" className="degrees">
                     <img src={img_watch_360}   alt="Tin 306 độ"/>
-                </a>	
+                </Link>	
             </div>
             <div className="product-info product-bottom mh">
-                <h3 className="product-name"><a href="cho-thue-can-ho-biet-thu-cao-cap.html" title={props.product.sp_ten}>{props.product.sp_ten}</a></h3>
+                <h3 className="product-name">
+                    <Link to={`/san-pham/${props.product?.sp_id}`}  title={props.product.sp_ten}>{props.product.sp_ten}</Link>
+                </h3>
                 <div className="tag_mix section">
                     <ul className="padding-0">
                         <li><span><LocationOnIcon className="icon-map-marker" />&nbsp;</span><span>{props.product.sp_diachi}</span></li>

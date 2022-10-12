@@ -22,6 +22,8 @@ export default function ProductDetail() {
   const [datas, setDatas] = React.useState([]);
   const [dataImage, setListImage] = React.useState([]);
   const [imgSrc, setImgSrc] = React.useState('');
+  const [dataTinCungChuDe, setDataTinCungChuDe] = React.useState([]);
+
 
   useEffect(() => {
     (async () => {
@@ -29,8 +31,8 @@ export default function ProductDetail() {
         const res = await getData(API_BASE_URL + `/book/${params.id}`);
         setDatas(res.data);
         setListImage(res.data.sp_hinhanh);
-
-        // console.log(res.data, 'hinh anh ne');
+        const rs = await getData(API_BASE_URL + `/books/danhmuc/${res.data.sp_iddm}`);
+        setDataTinCungChuDe(rs.data)
         setImgSrc(
           `http://localhost:4000/public/${res.data?.sp_hinhanh[0]?.ha_hinh}`,
         );
@@ -39,6 +41,9 @@ export default function ProductDetail() {
       }
     })();
   }, []);
+
+
+
 
   const handleClickOpenDialog = () => {
     setOpen(true);
@@ -256,34 +261,6 @@ export default function ProductDetail() {
             <Stack className="h-title-menu" direction="row" alignItems="center">
               <Box className="h-title" sx={{ flexGrow: 1 }}>
                 <Typography variant="h5">
-                  <span className="h5-title">CÙNG</span> NGƯỜI ĐĂNG
-                </Typography>
-                <Typography variant="p" className="p-title">
-                  Những dự án khác cùng người đăng
-                </Typography>
-              </Box>
-              <Box></Box>
-            </Stack>
-            {/* <Grid container spacing={2} sx={{ mt: 2 }}>
-					{
-						datas.map((product, index) => {
-							if (index < 3) {
-								return (
-									<Grid key={index} item xs={12} md={6} lg={4}>
-										<Box sx={{ width: '100%' }}>
-											<Product product={product}></Product>
-										</Box>
-									</Grid>
-								)
-							}
-						})
-					}
-			</Grid> */}
-          </Box>
-          <Box className="list-product-new" sx={{ mt: 3 }}>
-            <Stack className="h-title-menu" direction="row" alignItems="center">
-              <Box className="h-title" sx={{ flexGrow: 1 }}>
-                <Typography variant="h5">
                   <span className="h5-title">TIN RAO</span> CÙNG CHỦ ĐỀ
                 </Typography>
                 <Typography variant="p" className="p-title">
@@ -292,9 +269,9 @@ export default function ProductDetail() {
               </Box>
               <Box></Box>
             </Stack>
-            {/* <Grid container spacing={2} sx={{ mt: 2 }}>
+            <Grid container spacing={2} sx={{ mt: 2 }}>
 							{
-								listProduct.map((product, index) => {
+								dataTinCungChuDe.map((product, index) => {
 									if (index < 1) {
 										return (
 											<Grid key={index} item xs={12} md={6} lg={4}>
@@ -306,7 +283,7 @@ export default function ProductDetail() {
 									}
 								})
 							}
-						</Grid> */}
+						</Grid>
           </Box>
         </Container>
       </Box>
