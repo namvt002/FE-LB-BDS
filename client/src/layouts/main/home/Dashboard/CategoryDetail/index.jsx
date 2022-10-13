@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Checkbox from '@mui/material/Checkbox';
+import Radio from '@mui/material/Radio';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
@@ -20,26 +20,50 @@ import { useParams } from 'react-router-dom';
 import './index.scss';
 import { getData } from 'src/_helper/httpProvider';
 import { API_BASE_URL } from 'src/config/configUrl';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { info } from 'node-sass';
 const thumbnail_category = 'http://localhost:3000/images/thumbnail_category.png';
-const thumbnail_category2 = 'http://localhost:3000/images/thumbnail_category2.png';
 
 
 
 export default function CategoryDetail() {
 	const params = useParams();
 	const [datas, setDatas] = React.useState([]);
+	const [selectedValue, setSelectedValue] = React.useState({
+		radioPrice: '',
+		radioSize: '',
+		radioSort: '',
+		radioType: ''
+	});
     React.useEffect(() => {
         (async () => {
           try {
+			let {radioPrice, radioSize, radioSort, radioType} = selectedValue;
+			radioPrice 	= radioPrice.split('-');
+			radioSize 	= radioSize.split('-');
+
+			let _fromPrice = '', _toPrice='', _fromSize = '', _toSize = '';
+
+			if(radioPrice.length > 1){
+				if (radioPrice[0] !== '*' ) _fromPrice = radioPrice[0];
+				if (radioPrice[1] !== '*' ) _toPrice = radioPrice[1];
+			}
+
+			if(radioSize.length > 1){
+				if (radioSize[0] !== '*' ) _fromSize = radioSize[0];
+				if (radioSize[1] !== '*' ) _toSize = radioSize[1];
+			}
+			
             const res = await getData(
-              API_BASE_URL + `/books/danhmuc/${params.id}`,
+              API_BASE_URL + `/books/danhmuc/${params.id}?_fromPrice=${_fromPrice}&&_toPrice=${_toPrice}&&_fromSize=${_fromSize}&&_toSize=${_toSize}&&sort=${radioSort}&&type=${radioType}`,
             );
             setDatas(res.data);
           } catch (e) {
             console.log(e);
           }
         })();
-      }, [params.id]);
+      }, [params.id, selectedValue.radioPrice, selectedValue.radioSize, selectedValue.radioSort, selectedValue.radioType]);
 
 	const [sort, setSort] = React.useState(0);
 	const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -53,6 +77,11 @@ export default function CategoryDetail() {
 			return;
 		}
 		setOpenDrawer(_boolean);
+	};
+	
+
+	const handleChangeRadio = (event) => {
+	  setSelectedValue(event.target.value);
 	};
 
 
@@ -72,45 +101,93 @@ export default function CategoryDetail() {
 					<Typography sx={{ display: { xs: 'inline-block', sm: 'none' } }} variant="h5" className="product-title">TP. HỒ CHÍ MINH</Typography>
 					<Breadcrumbs sx={{ mb: 2 }} aria-label="breadcrumb" className="breadcrumb">
 						<Link to="#" className="tag-a">Trang chủ</Link>
-						<Link to="#" className="tag-a active">Biệt thự</Link>
+						{/* <Link to="#" className="tag-a active"></Link> */}
 					</Breadcrumbs>
 					<Grid className="news-write-info" container direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 2, md: 5 }} sx={{ my: 3 }}>
 						<Grid item xs={12} md={3} order={{ xs: 2, md: 1 }} sx={{display: {xs: 'none', md: 'inline-block'}}}>
 							<Box className="search-products">
-								<Box>
+								{/* <Box>
 									<Typography className="title" variant="h6">Tin liên quan</Typography>
-									<ul className="news-category search-checkbox">
-										<li><Checkbox size="small" name="category" /> Biệt Thự</li>
-										<li><Checkbox size="small" name="category" /> Căn hộ</li>
+									<ul className="news-category search-Radio">
+										<li><Radio size="small" name="category" /> Biệt Thự</li>
+										<li><Radio size="small" name="category" /> Căn hộ</li>
 									</ul>
-								</Box>
+								</Box> */}
 								<Box>
 									<Typography className="title" variant="h6">Chọn mức giá</Typography>
-									<ul className="news-category search-checkbox">
-										<li><Checkbox size="small" name="price" /> Giá dưới 100.000.000đ</li>
-										<li><Checkbox size="small" name="price" /> 100.000.000đ - 200.000.000đ</li>
-										<li><Checkbox size="small" name="price" /> 200.000.000đ - 300.000.000đ</li>
-										<li><Checkbox size="small" name="price" /> 300.000.000đ - 500.000.000đ</li>
-										<li><Checkbox size="small" name="price" /> 500.000.000đ - 1.000.000.000đ</li>
-										<li><Checkbox size="small" name="price" /> Giá trên 1.000.000.000đ</li>
+									<ul className="news-category search-Radio">
+										<RadioGroup
+											aria-labelledby="demo-error-radios"
+											name="radio-price"
+											value={selectedValue.radioPrice}
+											onChange={(e)=>{
+												setSelectedValue(pre => ({...pre, radioPrice: e.target.value}))
+											}}
+										>
+											<li><FormControlLabel value="*-100000000" control={<Radio size="small" name="price" />} label=" Giá dưới 100.000.000đ" /></li>
+											<li>
+												<FormControlLabel value="100000000-200000000" control={<Radio size="small" name="price" />} label="100.000.000đ - 200.000.000đ" />
+											</li>
+											<li>
+												<FormControlLabel value="200000000-300000000" control={<Radio size="small" name="price" />} label="200.000.000đ - 300.000.000đ" />
+											</li>
+											<li>
+												<FormControlLabel value="300000000-500000000" control={<Radio size="small"  name="price" />} label="300.000.000đ - 500.000.000đ" />
+											</li>
+											<li>
+												<FormControlLabel value="500000000-1000000000" control={<Radio size="small"  name="price"/>} label="500.000.000đ - 1.000.000.000đ" />
+											</li>
+											<li>
+												<FormControlLabel value="1000000000-*" control={<Radio size="small" name="price" />} label="Giá trên 1.000.000.000đ" />
+											</li>
+										</RadioGroup>
 									</ul>
 								</Box>
 								<Box>
 									<Typography className="title" variant="h6">Chọn diện tích</Typography>
-									<ul className="news-category search-checkbox">
-										<li><Checkbox size="small" name="size" /> Từ 20 - 50 m2</li>
-										<li><Checkbox size="small" name="size" /> 50 - 90 m2</li>
-										<li><Checkbox size="small" name="size" /> 90 - 120 m2</li>
-										<li><Checkbox size="small" name="size" /> 20 - 160 m2</li>
-										<li><Checkbox size="small" name="size" /> Trên 160 m2</li>
-										<li><Checkbox size="small" name="size" /> Dưới 20 m2</li>
+									<ul className="news-category search-Radio">
+										<RadioGroup
+											aria-labelledby="demo-error-radios"
+											name="radio-size"
+											value={selectedValue.radioSize}
+											onChange={(e)=>{
+												setSelectedValue(pre => ({...pre, radioSize: e.target.value}))
+											}}
+										>
+											<li><FormControlLabel value="20-50" control={<Radio size="small" name="size" />} label=" Từ 20 - 50 m2" /></li>
+											<li>
+												<FormControlLabel value="50-90" control={<Radio size="small" name="size" />} label=" 50 - 90 m2" />
+											</li>
+											<li>
+												<FormControlLabel value="90-120" control={<Radio size="small" name="size" />} label="90 - 120 m2" />
+											</li>
+											<li>
+												<FormControlLabel value="120-160" control={<Radio size="small"  name="size" />} label=" 120 - 160 m2" />
+											</li>
+											<li>
+												<FormControlLabel value="160-*" control={<Radio size="small"  name="size"/>} label=" Trên 160 m2" />
+											</li>
+										</RadioGroup>
 									</ul>
 								</Box>
 								<Box>
 									<Typography className="title" variant="h6">Loại tin rao</Typography>
-									<ul className="news-category search-checkbox">
-										<li><Checkbox size="small" name="type" /> Nhà đất - Bán</li>
-										<li><Checkbox size="small" name="type" /> Nhà đất - Thuê</li>
+									<ul className="news-category search-Radio">
+										<RadioGroup
+											aria-labelledby="demo-error-radios"
+											name="radio-type"
+											value={selectedValue.radioType}
+											onChange={(e)=>{
+												setSelectedValue(pre => ({...pre, radioType: e.target.value}))
+											}}
+										>
+											<li>
+												<FormControlLabel value="1" control={<Radio size="small"  name="type"/>} label=" Nhà đất - Bán" />
+											</li>
+											<li>
+												<FormControlLabel value="2" control={<Radio size="small"  name="type"/>} label=" Nhà đất - Thuê" />
+											</li>
+										</RadioGroup>
 									</ul>
 								</Box>
 								<Box>
@@ -123,9 +200,6 @@ export default function CategoryDetail() {
 										<li><Link to="#" className="tag-a">Liên hệ</Link></li>
 									</ul>
 								</Box>
-								<Box sx={{ textAlign: 'center' }} >
-									<img style={{ width: '200px' }} alt="" src={thumbnail_category2} />
-								</Box>
 							</Box>
 						</Grid >
 						<Grid item xs={12} md={9} order={{ xs: 1, md: 2 }}>
@@ -133,16 +207,28 @@ export default function CategoryDetail() {
 								<img className="rounded" width="100%" src={thumbnail_category} alt="" />
 								<Stack sx={{ display: { xs: 'none', md: 'flex' }, mt: 2 }} direction="row" spacing={2} alignItems="center">
 									<small>Ưu tiên xem:</small>
-									<small><Checkbox size="small" name="sort" value={1} /> Tin rao mới</small>
-									<small><Checkbox size="small" name="sort" value={2} /> Tin rao cũ</small>
-									<small><Checkbox size="small" name="sort" value={3} /> Giá tăng dần</small>
-									<small><Checkbox size="small" name="sort" value={4} /> Giá giảm dần</small>
+									{/* <small><Radio size="small" name="sort" value={3} /> Giá tăng dần</small>
+									<small><Radio size="small" name="sort" value={4} /> Giá giảm dần</small> */}
+									<RadioGroup
+										aria-labelledby="demo-error-radios"
+										name="radio-sort"
+										value={selectedValue.radioSort}
+										onChange={(e)=>{
+											setSelectedValue(pre => ({...pre, radioSort: e.target.value}))
+										}}
+										sx={{display: "inline-block"}}
+									>
+											<small>
+												<FormControlLabel value="ASC" control={<Radio size="small" name="sort" />} label=" Giá tăng dần " />
+											</small>
+											<small>
+												<FormControlLabel value="DESC" control={<Radio size="small"  name="type"/>} label=" Giá giảm dần" />
+											</small>
+									</RadioGroup>
 								</Stack>
 
 								<Select sx={{ display: { xs: 'inline-block', md: 'none' }, mt: 2 }} labelId="demo-select-small" size="small" value={sort} label="Sort" onChange={handleChange} >
 									<MenuItem value={0}> <em>Sắp xếp theo</em> </MenuItem>
-									<MenuItem value={1}>Tin rao mới</MenuItem>
-									<MenuItem value={2}>Tin rao cũ</MenuItem>
 									<MenuItem value={3}>Giá tăng dần</MenuItem>
 									<MenuItem value={4}>Giá giảm dần</MenuItem>
 								</Select>
@@ -152,8 +238,8 @@ export default function CategoryDetail() {
 										datas.map((product, index) => {
 											return (
 												<Grid key={index} item xs={12}>
-													<Box sx={{ width: '100%' }}>
-														<Product flexDirection="row" product={product}></Product>
+													<Box sx={{ width: '40%' }}>
+														<Product product={product}></Product>
 													</Box>
 												</Grid>
 											)
@@ -164,7 +250,7 @@ export default function CategoryDetail() {
 						</Grid>
 						<Grid tem xs={12}>
 							<Button sx={{display: {xs: 'inline-block', md: 'none'}}} className="btn btn-open-drawer" onClick={toggleDrawer(true)}><PlaylistAddCheckIcon sx={{fontSize: '25px'}}></PlaylistAddCheckIcon></Button>
-							<Drawer
+							{/* <Drawer
 								anchor="right"
 								open={openDrawer}
 								onClose={toggleDrawer(false)}
@@ -173,38 +259,38 @@ export default function CategoryDetail() {
 									<Box sx={{width: '100%', display: 'flex', justifyContent: 'flex-end', mt: 1}}><Button onClick={toggleDrawer(false)}><CloseIcon></CloseIcon></Button></Box>
 									<Box>
 										<Typography className="title" variant="h6">Tin liên quan</Typography>
-										<ul className="news-category search-checkbox">
-											<li><Checkbox size="small" name="category" /> Biệt Thự</li>
-											<li><Checkbox size="small" name="category" /> Căn hộ</li>
+										<ul className="news-category search-Radio">
+											<li><Radio size="small" name="category" /> Biệt Thự</li>
+											<li><Radio size="small" name="category" /> Căn hộ</li>
 										</ul>
 									</Box>
 									<Box>
 										<Typography className="title" variant="h6">Chọn mức giá</Typography>
-										<ul className="news-category search-checkbox">
-											<li><Checkbox size="small" name="price" /> Giá dưới 100.000.000đ</li>
-											<li><Checkbox size="small" name="price" /> 100.000.000đ - 200.000.000đ</li>
-											<li><Checkbox size="small" name="price" /> 200.000.000đ - 300.000.000đ</li>
-											<li><Checkbox size="small" name="price" /> 300.000.000đ - 500.000.000đ</li>
-											<li><Checkbox size="small" name="price" /> 500.000.000đ - 1.000.000.000đ</li>
-											<li><Checkbox size="small" name="price" /> Giá trên 1.000.000.000đ</li>
+										<ul className="news-category search-Radio">
+											<li><Radio size="small" name="price" /> Giá dưới 100.000.000đ</li>
+											<li><Radio size="small" name="price" /> 100.000.000đ - 200.000.000đ</li>
+											<li><Radio size="small" name="price" /> 200.000.000đ - 300.000.000đ</li>
+											<li><Radio size="small" name="price" /> 300.000.000đ - 500.000.000đ</li>
+											<li><Radio size="small" name="price" /> 500.000.000đ - 1.000.000.000đ</li>
+											<li><Radio size="small" name="price" /> Giá trên 1.000.000.000đ</li>
 										</ul>
 									</Box>
 									<Box>
 										<Typography className="title" variant="h6">Chọn diện tích</Typography>
-										<ul className="news-category search-checkbox">
-											<li><Checkbox size="small" name="size" /> Từ 20 - 50 m2</li>
-											<li><Checkbox size="small" name="size" /> 50 - 90 m2</li>
-											<li><Checkbox size="small" name="size" /> 90 - 120 m2</li>
-											<li><Checkbox size="small" name="size" /> 20 - 160 m2</li>
-											<li><Checkbox size="small" name="size" /> Trên 160 m2</li>
-											<li><Checkbox size="small" name="size" /> Dưới 20 m2</li>
+										<ul className="news-category search-Radio">
+											<li><Radio size="small" name="size" /> Từ 20 - 50 m2</li>
+											<li><Radio size="small" name="size" /> 50 - 90 m2</li>
+											<li><Radio size="small" name="size" /> 90 - 120 m2</li>
+											<li><Radio size="small" name="size" /> 20 - 160 m2</li>
+											<li><Radio size="small" name="size" /> Trên 160 m2</li>
+											<li><Radio size="small" name="size" /> Dưới 20 m2</li>
 										</ul>
 									</Box>
 									<Box>
 										<Typography className="title" variant="h6">Loại tin rao</Typography>
-										<ul className="news-category search-checkbox">
-											<li><Checkbox size="small" name="type" /> Nhà đất - Bán</li>
-											<li><Checkbox size="small" name="type" /> Nhà đất - Thuê</li>
+										<ul className="news-category search-Radio">
+											<li><Radio size="small" name="type" /> Nhà đất - Bán</li>
+											<li><Radio size="small" name="type" /> Nhà đất - Thuê</li>
 										</ul>
 									</Box>
 									<Box>
@@ -221,7 +307,7 @@ export default function CategoryDetail() {
 										<img style={{ width: '200px' }} alt="" src={thumbnail_category2} />
 									</Box>
 								</Box>
-							</Drawer>
+							</Drawer> */}
 						</Grid>
 					</Grid >
 				</Container>

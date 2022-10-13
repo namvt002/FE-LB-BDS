@@ -171,6 +171,8 @@ module.exports = function (app) {
   //day sp theo danh muc
   app.get("/books/danhmuc/:id", async (req, res) => {
     const {id} = req.params;
+    const {_fromPrice, _toPrice, _fromSize, _toSize, type, sort} = req.query;
+    console.log(req.query);
     let qr = `
     SELECT 
         san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
@@ -178,8 +180,46 @@ module.exports = function (app) {
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
         LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
-        WHERE danh_muc.dm_id = ?
+    WHERE 
     `;
+
+    if(type){
+      qr += `sp_idtl = '${type}' AND `;
+    }
+
+    if(_fromPrice){
+        if(_toPrice){
+          qr += `sp_gia  BETWEEN ${_fromPrice} AND ${_toPrice} AND `;
+        }else{
+          qr += `sp_gia >= ${_fromPrice} AND `
+        }
+    } else{
+      if(_toPrice){
+          qr += `sp_gia <= ${_toPrice} AND `;
+        }
+    }
+
+    if(_fromSize){
+      if(_toSize){
+        qr += `sp_dientich  BETWEEN ${_fromSize} AND ${_toSize} AND`;
+      }else{
+        qr += `sp_dientich >= ${_fromSize} AND`
+      }
+  } else{
+    if(_toSize){
+        qr += `sp_gia <= ${_toSize} AND`;
+      }
+  }
+
+  qr += ' danh_muc.dm_id = ? ';
+
+    if(sort){
+      qr += `ORDER BY sp_gia ${sort}`;
+    }
+
+    console.log(qr);
+
+
     const _books = await query(db, qr, id);
     await Promise.all(
       _books.map(async (book, idx) => {
