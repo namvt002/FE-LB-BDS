@@ -179,6 +179,10 @@ export default function Router() {
           path: 'danh-muc/:id',
           element: <CategoryDetail />,
         },
+        {
+          path: 'tin-tuc/:id',
+          element: <NewsDetail />,
+        },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
@@ -234,6 +238,10 @@ const BookCreate = Loadable(
 
 const ProductDetail = Loadable(
   lazy(() => import('../layouts/main/home/Dashboard/ProductDetail')),
+);
+
+const NewsDetail = Loadable(
+  lazy(() => import('../layouts/main/home/Dashboard/NewsDetail')),
 );
 
 const CategoryDetail = Loadable(

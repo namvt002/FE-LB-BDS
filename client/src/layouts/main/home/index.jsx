@@ -20,7 +20,7 @@ export default function Home() {
             <ListProductRents></ListProductRents>
             <ListNew1></ListNew1>
             <ListProductSale></ListProductSale>
-            <ListNew2></ListNew2>
+            {/* <ListNew2></ListNew2> */}
         </>
     );
 }

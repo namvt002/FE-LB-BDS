@@ -1,3 +1,44 @@
+.breadcrumb_background {
+    background-image: url(http://localhost:3000//images/backgroudProductDetail.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    min-height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .title_full {
+        .a-center {
+            text-align: center !important;
+        }
+
+        .title_page {
+            font-weight: 700;
+            font-size: 34px;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+            color: #fff;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: center;
+            text-transform: uppercase;
+        }
+    }
+}
+
+#editor-react-quiz{
+    .ql-align-center{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        border-radius: 10px;
+        img{
+            border-radius: 10px;
+        }
+    }
+}
+
 .tag-a {
     text-decoration: none !important;
     color: black;

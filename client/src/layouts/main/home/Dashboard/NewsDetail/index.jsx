@@ -7,15 +7,17 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import Avatar from '@mui/material/Avatar';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import './index.scss';
+import { API_BASE_URL } from 'src/config/configUrl';
+import { useParams } from 'react-router-dom';
+import { getData } from 'src/_helper/httpProvider';
 
-import product_img_thumb1 from '../../../../public/images/product_img_thumb1.png';
-import product_img_thumb2 from '../../../../public/images/product_img_thumb2.png';
-import product_img_thumb3 from '../../../../public/images/product_img_thumb3.png';
-import product_img_thumb4 from '../../../../public/images/product_img_thumb4.png';
-import product_img_thumb5 from '../../../../public/images/product_img_thumb5.png';
+
+const product_img_thumb1 = '../../../../public/images/product_img_thumb1.png';
+const product_img_thumb2 = '../../../../public/images/product_img_thumb2.png';
+const product_img_thumb3 = '../../../../public/images/product_img_thumb3.png';
+const product_img_thumb4 = '../../../../public/images/product_img_thumb4.png';
+const product_img_thumb5 = '../../../../public/images/product_img_thumb5.png';
 
 const listNews = [
 	{ id: 1, title: 'Loạn tên gọi các dự án chung cư cao cấp, siêu sang', image: product_img_thumb1 },
@@ -26,6 +28,18 @@ const listNews = [
 ]
 
 export default function NewsDetail() {
+	const params = useParams();
+  	const [datas, setDatas] = React.useState([]);
+	React.useEffect(() => {
+		(async () => {
+		  try {
+			const res = await getData(API_BASE_URL + `/blog/${params.id}`);
+			setDatas(res.data);
+		  } catch (e) {
+			console.log(e);
+		  }
+		})();
+	  }, [params.id]);
 	return (
 		<Box className="wrapper-product-detail wrapper-news">
 			<Box sx={{ width: '100%', display: { xs: 'none', sm: 'inline-block' } }}>
@@ -38,11 +52,10 @@ export default function NewsDetail() {
 				</div>
 			</Box>
 			<Container sx={{ pt: { xs: 0, sm: 5 }, top: '160px', position: { xs: 'absolute', sm: 'unset' } }}>
-				<Typography sx={{ display: { xs: 'inline-block', sm: 'none' } }} variant="h5" className="product-title">TP. HỒ CHÍ MINH</Typography>
 				<Breadcrumbs sx={{ mb: 2 }} aria-label="breadcrumb" className="breadcrumb">
 					<Link to="#" className="tag-a">Trang chủ</Link>
 					<Link to="#" className="tag-a">Tin Tức</Link>
-					<Link to="#" className="tag-a active">Loạn tên gọi các dự án chung cư cao cấp, siêu sang</Link>
+					<Link to="#" className="tag-a active">{datas.bv_ten}</Link>
 				</Breadcrumbs>
 				<Grid className="news-write-info" container direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 2, md: 5 }} sx={{ my: 3 }}>
 					<Grid item xs={12} md={3} order={{ xs: 2, md: 1 }}>
@@ -74,32 +87,15 @@ export default function NewsDetail() {
 					</Grid >
 					<Grid item xs={12} md={9} order={{ xs: 1, md: 2 }}>
 						<Box className="news-details">
-							<Typography className="title" variant="h7"><Link to="#" className="tag-a">Loạn tên gọi các dự án chung cư cao cấp, siêu sang</Link></Typography>
+							<Typography className="title" variant="h7"><Link to="#" className="tag-a">{datas.bv_ten}</Link></Typography>
 							<Box className="line-time-info">
-								<span><CalendarMonthIcon sx={{ position: 'relative', top: '-2px' }}></CalendarMonthIcon> 25/01/2022</span>
-								<span><TurnedInIcon sx={{ fontSize: 18, position: 'relative', top: '-1px' }} />&nbsp;2&nbsp; Bình luận</span>
-								<span><Avatar alt="Nguyễn Tú Đại" src="/static/images/avatar/1.jpg" sx={{ width: 32, height: 32 }} /></span>
-								<span>Đào Qúy Thương</span>
+								<span><CalendarMonthIcon sx={{ position: 'relative', top: '5px' }}></CalendarMonthIcon> {datas.ngaytao}</span>
+								
 							</Box>
 							<Box className="news-content">
-								<p>Theo Hiệp hội Bất động sản Tp.HCM (HoREA), trên thị trường bất động sản hiện đang xuất hiện tình trạng loạn danh xưng chung cư cao cấp, căn hộ hạng sang, căn hộ siêu sang. HoREA cho rằng, cần chấn chỉnh tình trạng này bởi đây chỉ là thủ thuật câu khách, quảng bá sản phẩm của chủ đầu tư.</p>
-								<p>Ngày 22/10, ông Lê Hoàng Châu, Chủ tịch HoREA đã có văn bản gửi các cơ quan chức năng. Theo đó, Chủ tịch HoREA cho biết, thị trường bất động sản đã xuất hiện tràn lan danh xưng chung cư cao cấp, căn hộ hạng sang, căn hộ siêu sang, gắn với các cụm từ nước ngoài như "Luxury", "Premier", "Hi-end", "Royal"... Đây chỉ là một thủ thuật câu khách, quảng bá sản phẩm của chủ đầu tư. Trong khi trên thực tế, chỉ có một số dự án bất động sản đạt chuẩn cao cấp, hoặc đạt chuẩn khu đô thị kiểu mẫu.</p>
-								<p>Thậm chí, không ít dự án bất động sản, chung cư cao tầng, căn hộ được chủ đầu tư gắn mác dự án cao cấp, căn hộ hạng sang trong khi chưa hề được Sở Xây dựng hoặc đơn vị đánh giá độc lập công nhận. Theo quy định tại Khoản 13 Điều 6 Luật Nhà ở 2014 thì hành vi cung cấp thông tin sai lệch của các chủ đầu tư này đã vi phạm các hành vi bị nghiêm cấm.</p>
-								<p align="center"><img alt="" className="rounded" data-thumb="large" original-height="300" original-width="420" src={product_img_thumb1} /></p>
-								<p>Được biết, Bộ Xây dựng đã có 2 Thông tư về phân hạng nhà chung cư trong 10 năm qua. Mặc dù đã có quy định việc phân hạng và công nhận phân hạng nhà chung cư, song đến nay chưa có chủ đầu tư dự án hoặc ban quản trị nhà chung cư nào lập hồ sơ đề xuất phân hạng nhà chung cư. Bởi vậy, rất cần xem xét lại tính thiết thực của các văn bản pháp luật vì chưa đáp ứng được thực tế, đòi hỏi của thị trường bất động sản và người tiêu dùng về sự minh bạch, trung thực và cạnh tranh lành mạnh. &nbsp;</p>
-								<p>Theo văn bản HoREA gửi các cơ quan chức năng, việc phân hạng chung cư sẽ minh bạch trong trường hợp dự án đã xây dựng xong vì khi đó đã có căn hộ thực tế, người mua nhà khó bị lừa. Nhưng đối với căn hộ hình thành trong tương lai được quảng cáo dưới mác chung cư cao cấp, căn hộ hạng sang, người mua nhà rất dễ mua nhầm sản phẩm không đúng như quảng cáo.</p>
-								<p>HoREA đề xuất cần sửa đổi, bổ sung Thông tư 31/2016 theo hướng sau khi chung cư đã hoàn thành xây dựng và nghiệm thu mới công nhận hạng nhà chung cư cao cấp để đảm bảo tính minh bạch, cạnh tranh lành mạnh và bảo vệ lợi ích chính đáng của người mua nhà.</p>
-								<p>Các dự án nhà chung cư hình thành trong tương lai chỉ được quảng cáo, tiếp thị để huy động vốn với danh xưng dự án chung cư cao cấp trong trường hợp đã có văn bản công nhận đạt tiêu chí này do Sở Xây dựng cấp.</p>
-								<p id="ctl23_ctl00_divSummary">Theo Hiệp hội Bất động sản Tp.HCM (HoREA), trên thị trường bất động sản hiện đang xuất hiện tình trạng loạn danh xưng chung cư cao cấp, căn hộ hạng sang, căn hộ siêu sang. HoREA cho rằng, cần chấn chỉnh tình trạng này bởi đây chỉ là thủ thuật câu khách, quảng bá sản phẩm của chủ đầu tư.</p>
-								<p>Ngày 22/10, ông Lê Hoàng Châu, Chủ tịch HoREA đã có văn bản gửi các cơ quan chức năng. Theo đó, Chủ tịch HoREA cho biết, thị trường bất động sản đã xuất hiện tràn lan danh xưng chung cư cao cấp, căn hộ hạng sang, căn hộ siêu sang, gắn với các cụm từ nước ngoài như "Luxury", "Premier", "Hi-end", "Royal"... Đây chỉ là một thủ thuật câu khách, quảng bá sản phẩm của chủ đầu tư. Trong khi trên thực tế, chỉ có một số dự án bất động sản đạt chuẩn cao cấp, hoặc đạt chuẩn khu đô thị kiểu mẫu.</p>
-								<p>Thậm chí, không ít dự án bất động sản, chung cư cao tầng, căn hộ được chủ đầu tư gắn mác dự án cao cấp, căn hộ hạng sang trong khi chưa hề được Sở Xây dựng hoặc đơn vị đánh giá độc lập công nhận. Theo quy định tại Khoản 13 Điều 6 Luật Nhà ở 2014 thì hành vi cung cấp thông tin sai lệch của các chủ đầu tư này đã vi phạm các hành vi bị nghiêm cấm.</p>
-								<p align="center"><img alt="" className="rounded" data-thumb="large" original-height="300" original-width="420" src={product_img_thumb2} /></p>
-								<p>Được biết, Bộ Xây dựng đã có 2 Thông tư về phân hạng nhà chung cư trong 10 năm qua. Mặc dù đã có quy định việc phân hạng và công nhận phân hạng nhà chung cư, song đến nay chưa có chủ đầu tư dự án hoặc ban quản trị nhà chung cư nào lập hồ sơ đề xuất phân hạng nhà chung cư. Bởi vậy, rất cần xem xét lại tính thiết thực của các văn bản pháp luật vì chưa đáp ứng được thực tế, đòi hỏi của thị trường bất động sản và người tiêu dùng về sự minh bạch, trung thực và cạnh tranh lành mạnh. &nbsp;</p>
-								<p>Theo văn bản HoREA gửi các cơ quan chức năng, việc phân hạng chung cư sẽ minh bạch trong trường hợp dự án đã xây dựng xong vì khi đó đã có căn hộ thực tế, người mua nhà khó bị lừa. Nhưng đối với căn hộ hình thành trong tương lai được quảng cáo dưới mác chung cư cao cấp, căn hộ hạng sang, người mua nhà rất dễ mua nhầm sản phẩm không đúng như quảng cáo.</p>
-								<p>HoREA đề xuất cần sửa đổi, bổ sung Thông tư 31/2016 theo hướng sau khi chung cư đã hoàn thành xây dựng và nghiệm thu mới công nhận hạng nhà chung cư cao cấp để đảm bảo tính minh bạch, cạnh tranh lành mạnh và bảo vệ lợi ích chính đáng của người mua nhà.</p>
-								<p>Các dự án nhà chung cư hình thành trong tương lai chỉ được quảng cáo, tiếp thị để huy động vốn với danh xưng dự án chung cư cao cấp trong trường hợp đã có văn bản công nhận đạt tiêu chí này do Sở Xây dựng cấp.</p>
+								<div id="editor-react-quiz" dangerouslySetInnerHTML={{ __html: datas.bv_mota }}></div>
 							</Box>
-							<Box className="news-comments">
+							{/* <Box className="news-comments">
 								<Typography className="title" variant="h5">Viết bình luận của bạn:</Typography>
 								<form action="" method="POST">
 									<Grid container spacing={{xs: 1, md: 3}}>
@@ -117,7 +113,7 @@ export default function NewsDetail() {
 										</Grid> 
 									</Grid>
 								</form>
-							</Box>
+							</Box> */}
 						</Box>
 					</Grid >
 				</Grid >

@@ -26,6 +26,16 @@
         padding: 15px 15px 0;
         width: 100%;
         text-align: left;
+        #motabv{
+            width: 500px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 25px;
+            -webkit-line-clamp: 1;
+            height: 20px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
         .time_post {
             font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
             font-size: 14px;
@@ -47,7 +57,7 @@
             }
         }
         .h3 {
-            height: 50px;
+            height: 20px;
             overflow: hidden;
             margin: 5px 0 10px 0;
             padding: 0;
