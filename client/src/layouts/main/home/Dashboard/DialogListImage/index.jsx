@@ -14,7 +14,6 @@ export default function DialogListImage({
   handleClickCloseDialog,
   listProduct,
 }) {
-
   const [imgActive, setImgActive] = React.useState(0);
   const [imgSrc, setImgSrc] = React.useState(
     `http://localhost:4000/public/${listProduct[0].ha_hinh}`,

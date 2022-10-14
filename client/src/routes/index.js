@@ -176,12 +176,16 @@ export default function Router() {
           element: <ProductDetail />,
         },
         {
-          path: 'danh-muc/:id',
+          path: 'tat-ca-san-pham',
           element: <CategoryDetail />,
         },
         {
           path: 'tin-tuc/:id',
           element: <NewsDetail />,
+        },
+        {
+          path: 'gioi-thieu',
+          element: <GioiThieu />,
         },
       ],
     },
@@ -216,6 +220,8 @@ const RoleCreate = Loadable(
   lazy(() => import('../pages/dashboard/RoleCreate')),
 );
 
+//--------------------------Gioi thiue-------------------------------------------
+const GioiThieu = Loadable(lazy(() => import('../layouts/main/home/Dashboard/GioiThieu')));
 //--------------------------Danh Muc-------------------------------------------
 const DanhMucList = Loadable(lazy(() => import('../pages/dashboard/DanhMuc')));
 //--------------------------Tác giả-------------------------------------------

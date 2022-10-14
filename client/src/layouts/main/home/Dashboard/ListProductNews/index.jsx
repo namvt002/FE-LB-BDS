@@ -62,14 +62,14 @@ export default function ListProductNews() {
                         <Typography variant="h5"><span className="h5-title">DỰ ÁN</span> MỚI NHẤT</Typography>
                         <Typography variant="p" className="p-title">Dự án mới nhất này có đang ở gần bạn ?</Typography>
                     </Box>
-                    <Box className="h-menu">
-                    <Box sx={{display: {xs: 'none', md: 'inline-block'}}}>
-                            <ul>
-                                <li><Link className="tag-a selected">BIỆT THỰ</Link></li>
-                                <li><Link className="tag-a">CĂN HỘ</Link></li>
-                                <li><Link className="tag-a">CHUNG cư</Link></li>
-                                <li><Link className="tag-a">NHÀ VƯỜN</Link></li>
-                            </ul>
+                    {/* <Box className="h-menu">
+                        <Box sx={{display: {xs: 'none', md: 'inline-block'}}}>
+                                <ul>
+                                    <li><Link className="tag-a selected">BIỆT THỰ</Link></li>
+                                    <li><Link className="tag-a">CĂN HỘ</Link></li>
+                                    <li><Link className="tag-a">CHUNG cư</Link></li>
+                                    <li><Link className="tag-a">NHÀ VƯỜN</Link></li>
+                                </ul>
                         </Box>
                         <MenuIcon
                             aria-controls="h-menu"
@@ -77,7 +77,7 @@ export default function ListProductNews() {
                             className="icon-menu" 
                             sx={{display: {xs: 'inline-block', md: 'none'}}}
                         ></MenuIcon>
-                    </Box>
+                    </Box> */}
                 </Stack>
                 <Menu
                     sx={{display: {xs: 'inline-block', md: 'none'}}}

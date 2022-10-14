@@ -9,7 +9,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
 import { Grid, Link, Divider, Container, Typography, IconButton, Stack } from '@material-ui/core';
 // routes
-import { PATH_PAGE } from '../../routes/paths';
 //
 import Logo from '../../components/Logo';
 
@@ -24,25 +23,17 @@ const SOCIALS = [
 
 const LINKS = [
   {
-    headline: 'Minimal',
+    headline: 'Delta',
     children: [
-      { name: 'About us', href: PATH_PAGE.about },
-      { name: 'Contact us', href: PATH_PAGE.contact },
-      { name: 'FAQs', href: PATH_PAGE.faqs }
+      { name: 'Giới thiệu', href: "/gioi-thieu" },
+      { name: 'Tất cả sản phẩm', href: "/tat-ca-san-pham"},
     ]
   },
   {
-    headline: 'Legal',
+    headline: 'Địa chỉ liên hệ',
     children: [
-      { name: 'Terms and Condition', href: '#' },
-      { name: 'Privacy Policy', href: '#' }
-    ]
-  },
-  {
-    headline: 'Contact',
-    children: [
-      { name: 'support@minimals.cc', href: '#' },
-      { name: 'Los Angeles, 359  Hidden Valley Road', href: '#' }
+      { name: 'viettrung0601@gmail.com', href: '#' },
+      { name: 'Châu Thành A, Hậu Giang', href: '#' }
     ]
   }
 ];
@@ -71,8 +62,8 @@ export default function MainFooter() {
           </Grid>
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-              The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI
-              ©, ready to be customized to your style.
+              Delta Platinum là một sản phẩm của Delta Web, với nỗ lực phát triển bền vững về thị trường bất động sản, Delta Platinum đều có thể giúp bạn.
+              Tìm tin bán nhà đất hoặc cho thuê nhà đất mới nhất bằng cách sử dụng công cụ tìm kiếm hoặc các đường link ngay trên trang chủ.
             </Typography>
 
             <Stack
@@ -127,7 +118,7 @@ export default function MainFooter() {
             textAlign: { xs: 'center', md: 'left' }
           }}
         >
-          © 2021. All rights reserved
+          © 2021. Trung B1805931
         </Typography>
       </Container>
     </RootStyle>

@@ -32,7 +32,7 @@ const Search_2 = () => {
                 {
                     datas.map((obj, index) => {
                         return (
-                            <Link to={`/danh-muc/${obj?.dm_id}`} className="_1-search-advanced">
+                            <Link to={`/tat-ca-san-pham?danhmuc=${obj?.dm_id}`} className="_1-search-advanced">
                                 <Box className="thumbnail">
                                     <img src={`http://localhost:4000/public/${obj.dm_hinhanh[0].adm_hinh}`} alt="" />
                                 </Box>

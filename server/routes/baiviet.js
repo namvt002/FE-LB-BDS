@@ -126,11 +126,9 @@ module.exports = function (app) {
         "SELECT * FROM anh_bai_viet WHERE abv_idbv = ?",
         id
       );
-      console.log(results.length, data.bv_hinhanh);
       if (results.length !== data.bv_hinhanh.length) {
         await query(db, "DELETE FROM anh_bai_viet WHERE abv_idbv = ?", id);
         let values = [];
-        console.log(data.bv_hinhanh);
         data.bv_hinhanh.map((e) => {
           values.push([e.replace("http://localhost:4000/public/", ""), id]);
         });
@@ -153,7 +151,6 @@ module.exports = function (app) {
   });
 
   app.delete("/blog/delete", async (req, res) => {
-    console.log("trnungggggggggggggg ")
     if (!!req.body.arrID) {
       console.log(req.body.arrID)
       const arrID = JSON.parse(req.body.arrID);

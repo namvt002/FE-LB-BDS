@@ -8,6 +8,7 @@ export default function WrapSearch() {
     return (
         <div style={{marginTop: '200px'}}>
             <Typography sx={{ color: 'white', mb: 5 }} align="center" variant="h2">Tìm kiếm nhà đất mơ ước</Typography>
+            {/* <Typography sx={{ color: 'white', mb: 5 }} align="center" variant="h2">Xây dựng tương lai cuộc sống</Typography> */}
                 <Box sx={{ width: "80%", mx: 'auto' }}>
                     <Search></Search>
                 </Box>

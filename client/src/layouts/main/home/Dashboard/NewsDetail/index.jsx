@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Grid from '@mui/material/Grid';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import './index.scss';
 import { API_BASE_URL } from 'src/config/configUrl';
@@ -13,27 +12,17 @@ import { useParams } from 'react-router-dom';
 import { getData } from 'src/_helper/httpProvider';
 
 
-const product_img_thumb1 = '../../../../public/images/product_img_thumb1.png';
-const product_img_thumb2 = '../../../../public/images/product_img_thumb2.png';
-const product_img_thumb3 = '../../../../public/images/product_img_thumb3.png';
-const product_img_thumb4 = '../../../../public/images/product_img_thumb4.png';
-const product_img_thumb5 = '../../../../public/images/product_img_thumb5.png';
-
-const listNews = [
-	{ id: 1, title: 'Loạn tên gọi các dự án chung cư cao cấp, siêu sang', image: product_img_thumb1 },
-	{ id: 1, title: 'Chia nhỏ căn hộ, cho thuê ngắn hạn lợi ít hại nhiều', image: product_img_thumb2 },
-	{ id: 1, title: 'Hàng loạt rào cản kìm hãm nguồn cung căn hộ giá rẻ', image: product_img_thumb3 },
-	{ id: 1, title: 'Ít cửa sáng cho thị trường căn hộ Tp.HCM', image: product_img_thumb4 },
-	{ id: 1, title: 'Thúc đẩy nhà giá rẻ phát triển cần có chính sách mạnh mẽ hơn', image: product_img_thumb5 },
-]
-
 export default function NewsDetail() {
 	const params = useParams();
   	const [datas, setDatas] = React.useState([]);
+  	const [dataListNews, setDataListNews] = React.useState([]);
+
 	React.useEffect(() => {
 		(async () => {
 		  try {
 			const res = await getData(API_BASE_URL + `/blog/${params.id}`);
+			const resAllTin = await getData(API_BASE_URL + `/blogs`);
+			setDataListNews(resAllTin.data);
 			setDatas(res.data);
 		  } catch (e) {
 			console.log(e);
@@ -53,7 +42,7 @@ export default function NewsDetail() {
 			</Box>
 			<Container sx={{ pt: { xs: 0, sm: 5 }, top: '160px', position: { xs: 'absolute', sm: 'unset' } }}>
 				<Breadcrumbs sx={{ mb: 2 }} aria-label="breadcrumb" className="breadcrumb">
-					<Link to="#" className="tag-a">Trang chủ</Link>
+					<Link to="/" className="tag-a">Trang chủ</Link>
 					<Link to="#" className="tag-a">Tin Tức</Link>
 					<Link to="#" className="tag-a active">{datas.bv_ten}</Link>
 				</Breadcrumbs>
@@ -62,10 +51,9 @@ export default function NewsDetail() {
 						<Box>
 							<Typography className="title" variant="h6">Danh mục tin tức</Typography>
 							<ul className="news-category">
-								<li><Link to="#" className="tag-a">Trang chủ</Link></li>
-								<li><Link to="#" className="tag-a">Tất cả tin rao</Link><KeyboardArrowDownIcon /> </li>
-								<li><Link to="#" className="tag-a">Tin tức</Link><KeyboardArrowDownIcon /> </li>
-								<li><Link to="#" className="tag-a">Giới thiệu</Link> </li>
+								<li><Link to="/" className="tag-a">Trang chủ</Link></li>
+								<li><Link to="/tat-ca-san-pham" className="tag-a">Tất cả sản phẩm</Link></li>
+								<li><Link to="/gioi-thieu" className="tag-a">Giới thiệu</Link> </li>
 								<li><Link to="#" className="tag-a">Liên hệ</Link></li>
 							</ul>
 						</Box>
@@ -73,11 +61,11 @@ export default function NewsDetail() {
 							<Typography className="title" variant="h6">Tin liên quan</Typography>
 							<ul className="news-category">
 								{
-									listNews.map((news, index) => {
+									dataListNews.map((news, index) => {
 										return (
 											<li key={index} className="once-new">
-												<Link to="#"><img src={news.image} alt="" /></Link>
-												<Link to="#" className="tag-a title">{news.title}</Link>
+												<Link to={`/tin-tuc/${news.bv_id}`}><img src={`http://localhost:4000/public/${news.bv_hinhanh[0]?.abv_hinh}`} alt="" /></Link>
+												<Link to={`/tin-tuc/${news.bv_id}`} className="tag-a title">{news.bv_ten}</Link>
 											</li>
 										)
 									})

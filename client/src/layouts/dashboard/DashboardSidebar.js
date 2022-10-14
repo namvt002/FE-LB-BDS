@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
 import {
@@ -23,8 +23,12 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 import { MHidden } from '../../components/@material-extend';
 //
+import { LoadingButton } from '@material-ui/lab';
 import sidebarConfig from './SidebarConfig';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getData } from 'src/_helper/httpProvider';
+import { API_BASE_URL } from 'src/config/configUrl';
+import { logout } from 'src/redux/slices/user';
 
 // ----------------------------------------------------------------------
 
@@ -101,6 +105,15 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
   const user = useSelector((state) => state.user.current);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onClickDangXuat = async() => {
+    await getData(API_BASE_URL + '/logout');
+    dispatch(logout())
+    navigate('/');
+  }
   const {
     isCollapse,
     collapseClick,
@@ -193,6 +206,15 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           sx={{ px: 5, pb: 5, mt: 10, width: 1, textAlign: 'center' }}
         >
           <div>
+            <LoadingButton
+              type="submit"
+              fullWidth
+              onClick={onClickDangXuat}
+              variant="contained"
+              size="small"
+            >
+              Đăng xuất
+            </LoadingButton>
             <Typography gutterBottom variant="subtitle1">
               Hi, {user?.fullname}
             </Typography>

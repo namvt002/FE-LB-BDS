@@ -168,11 +168,36 @@ module.exports = function (app) {
     res.status(200).send(_books);
   });
 
-  //day sp theo danh muc
+  //lay sp theo id danh muc
   app.get("/books/danhmuc/:id", async (req, res) => {
     const {id} = req.params;
-    const {_fromPrice, _toPrice, _fromSize, _toSize, type, sort} = req.query;
-    console.log(req.query);
+    let qr = `
+    SELECT 
+        san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
+    FROM san_pham
+        LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
+        LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
+        LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
+        WHERE san_pham.sp_iddm = ?
+    `;
+    const _books = await query(db, qr, id);
+    await Promise.all(
+      _books.map(async (book, idx) => {
+        _hinhanh = await query(
+          db,
+          "SELECT * FROM hinh_anh WHERE ha_idsp = ?",
+          book.sp_id
+        );
+        _books[idx].sp_hinhanh = _hinhanh;
+      })
+    );
+    res.status(200).send(_books);
+  });
+
+  //lay tat ca sp va loc theo danh muc
+  app.get("/sanpham/tatca", async (req, res) => {
+    const {_fromPrice, _toPrice, _fromSize, _toSize, type, sort, category} = req.query;
+    console.log(category)
     let qr = `
     SELECT 
         san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
@@ -210,17 +235,16 @@ module.exports = function (app) {
         qr += `sp_gia <= ${_toSize} AND`;
       }
   }
-
-  qr += ' danh_muc.dm_id = ? ';
-
+if(category){
+  qr += ` danh_muc.dm_id = '${category}'`;
+} else{
+  qr += ` 1`;
+}
     if(sort){
       qr += `ORDER BY sp_gia ${sort}`;
     }
-
-    console.log(qr);
-
-
-    const _books = await query(db, qr, id);
+    // console.log(qr)
+    const _books = await query(db, qr);
     await Promise.all(
       _books.map(async (book, idx) => {
         _hinhanh = await query(
@@ -233,6 +257,8 @@ module.exports = function (app) {
     );
     res.status(200).send(_books);
   });
+
+
   //lay sp theo id sp
   app.get("/book/:id", async (req, res) => {
     const { id } = req.params;

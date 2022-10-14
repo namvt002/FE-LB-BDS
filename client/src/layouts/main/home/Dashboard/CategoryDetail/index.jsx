@@ -1,9 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams  } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { Typography } from '@mui/material';
+import { FormGroup, Typography } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -12,29 +12,32 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Product from '../Product';
-import Drawer from '@mui/material/Drawer';
+// import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
-import { useParams } from 'react-router-dom';
+import Checkbox from '@mui/material/Checkbox';
 import './index.scss';
 import { getData } from 'src/_helper/httpProvider';
 import { API_BASE_URL } from 'src/config/configUrl';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { info } from 'node-sass';
 const thumbnail_category = 'http://localhost:3000/images/thumbnail_category.png';
 
 
 
 export default function CategoryDetail() {
-	const params = useParams();
+	const [searchParams] = useSearchParams();
+	let _danhmuc = searchParams.get('danhmuc'); 
 	const [datas, setDatas] = React.useState([]);
+	const [_load, setLoad] = React.useState(0);
+	const [dataDanhMuc, setDataDanhMuc] = React.useState([]);
 	const [selectedValue, setSelectedValue] = React.useState({
 		radioPrice: '',
 		radioSize: '',
 		radioSort: '',
-		radioType: ''
+		radioType: '',
+		radioDanhMuc: []
 	});
     React.useEffect(() => {
         (async () => {
@@ -54,16 +57,20 @@ export default function CategoryDetail() {
 				if (radioSize[0] !== '*' ) _fromSize = radioSize[0];
 				if (radioSize[1] !== '*' ) _toSize = radioSize[1];
 			}
+			console.log(selectedValue.radioDanhMuc)
+			if(!_danhmuc) _danhmuc = selectedValue.radioDanhMuc;
 			
             const res = await getData(
-              API_BASE_URL + `/books/danhmuc/${params.id}?_fromPrice=${_fromPrice}&&_toPrice=${_toPrice}&&_fromSize=${_fromSize}&&_toSize=${_toSize}&&sort=${radioSort}&&type=${radioType}`,
+              API_BASE_URL + `/sanpham/tatca?category=${_danhmuc}&&_fromPrice=${_fromPrice}&&_toPrice=${_toPrice}&&_fromSize=${_fromSize}&&_toSize=${_toSize}&&sort=${radioSort}&&type=${radioType}`,
             );
+			const resDanhMuc = await getData(API_BASE_URL + `/danhmuc`);
+			setDataDanhMuc(resDanhMuc.data)
             setDatas(res.data);
           } catch (e) {
             console.log(e);
           }
         })();
-      }, [params.id, selectedValue.radioPrice, selectedValue.radioSize, selectedValue.radioSort, selectedValue.radioType]);
+      }, [_danhmuc,_load,selectedValue.radioDanhMuc, selectedValue.radioPrice, selectedValue.radioSize, selectedValue.radioSort, selectedValue.radioType]);
 
 	const [sort, setSort] = React.useState(0);
 	const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -78,12 +85,13 @@ export default function CategoryDetail() {
 		}
 		setOpenDrawer(_boolean);
 	};
-	
 
-	const handleChangeRadio = (event) => {
-	  setSelectedValue(event.target.value);
-	};
-
+	const handleCheckBox = (e) => {
+		let id = e.target.value;
+		let _danhmuc_c = selectedValue.radioDanhMuc;
+		console.log(_danhmuc_c);
+			return _danhmuc_c.includes(id) ? _danhmuc_c.filter(i => i !== id) : _danhmuc_c.push(id);
+	}
 
 	return (
 		<>
@@ -106,13 +114,48 @@ export default function CategoryDetail() {
 					<Grid className="news-write-info" container direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 2, md: 5 }} sx={{ my: 3 }}>
 						<Grid item xs={12} md={3} order={{ xs: 2, md: 1 }} sx={{display: {xs: 'none', md: 'inline-block'}}}>
 							<Box className="search-products">
-								{/* <Box>
-									<Typography className="title" variant="h6">Tin liên quan</Typography>
-									<ul className="news-category search-Radio">
-										<li><Radio size="small" name="category" /> Biệt Thự</li>
-										<li><Radio size="small" name="category" /> Căn hộ</li>
+								<Box>
+									{!_danhmuc && (
+										<>
+											<Typography className="title" variant="h6">Tin liên quan</Typography>
+
+										<ul className="news-category search-Radio">
+										{
+											dataDanhMuc.map((danhmuc, index) => {
+												return (
+													// <RadioGroup
+													// 	aria-labelledby="demo-error-radios"
+													// 	name="radio-danhmuc"
+													// 	value={selectedValue.radioDanhMuc}
+													// 	onChange={(e)=>{
+													// 		setSelectedValue(pre => ({...pre, radioDanhMuc: e.target.value}))
+													// 	}}
+													// >
+													// 	<li><FormControlLabel value={danhmuc.dm_id} control={<Radio size="small" name="price" />} label={danhmuc.dm_ten} /></li>
+													// </RadioGroup>
+													<>
+														<li>
+															<FormGroup>
+																<FormControlLabel value={danhmuc.dm_id} control={
+																			<Checkbox  size="small" name="price[]" 
+																				onChange={(e)=>{
+																					setSelectedValue(pre => ({...pre, radioDanhMuc: handleCheckBox(e)}))
+																					setLoad(e=>e+1);
+																				}}
+																			/>
+																} label={danhmuc.dm_ten} />
+															</FormGroup>
+															
+														</li>
+													</>
+													
+												)
+											})
+										}
 									</ul>
-								</Box> */}
+									</>
+									)}
+								</Box>
 								<Box>
 									<Typography className="title" variant="h6">Chọn mức giá</Typography>
 									<ul className="news-category search-Radio">
@@ -238,7 +281,7 @@ export default function CategoryDetail() {
 										datas.map((product, index) => {
 											return (
 												<Grid key={index} item xs={12}>
-													<Box sx={{ width: '40%' }}>
+													<Box sx={{ width: '90%' }}>
 														<Product product={product}></Product>
 													</Box>
 												</Grid>
