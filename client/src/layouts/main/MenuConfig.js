@@ -2,11 +2,11 @@ import { Icon } from '@iconify/react';
 import fileFill from '@iconify/icons-eva/file-fill';
 
 // routes
-import {
-  PATH_AUTH,
-  PATH_PAGE,
-  PATH_DASHBOARD,
-} from '../../routes/paths';
+// import {
+//   PATH_AUTH,
+//   PATH_PAGE,
+//   PATH_DASHBOARD,
+// } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
 import { Typography } from '@mui/material';
 
@@ -27,9 +27,6 @@ export default function ListProductNews() {
     const [toggleMenu, setToggleMenu] = useState(null);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const open = Boolean(toggleMenu);
-    const handleClickListItem = (event) => {
-        setToggleMenu(event.currentTarget);
-    };
     const [datas, setDatas] = React.useState([]);
     useEffect(() => {
         (async () => {

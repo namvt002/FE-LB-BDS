@@ -33,7 +33,7 @@ export default function DialogListImage({
         className="dialog-product-image-list"
         sx={{ height: '100%' }}
       >
-        <DialogTitle>Cho thuê căn hộ, biệt thự cao cấp</DialogTitle>
+        <DialogTitle>Hình ảnh 360</DialogTitle>
         <DialogContent>
           <DialogContentText className="dialog-content">
             <Box sx={{ position: 'relative' }}>

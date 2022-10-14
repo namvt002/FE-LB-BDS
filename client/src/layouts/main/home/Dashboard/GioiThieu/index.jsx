@@ -5,42 +5,15 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Grid from '@mui/material/Grid';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import './index.scss';
-import { API_BASE_URL } from 'src/config/configUrl';
-import { useParams } from 'react-router-dom';
-import { getData } from 'src/_helper/httpProvider';
 
 
-const product_img_thumb1 = '../../../../public/images/product_img_thumb1.png';
-const product_img_thumb2 = '../../../../public/images/product_img_thumb2.png';
-const product_img_thumb3 = '../../../../public/images/product_img_thumb3.png';
-const product_img_thumb4 = '../../../../public/images/product_img_thumb4.png';
-const product_img_thumb5 = '../../../../public/images/product_img_thumb5.png';
 
-const listNews = [
-	{ id: 1, title: 'Loạn tên gọi các dự án chung cư cao cấp, siêu sang', image: product_img_thumb1 },
-	{ id: 1, title: 'Chia nhỏ căn hộ, cho thuê ngắn hạn lợi ít hại nhiều', image: product_img_thumb2 },
-	{ id: 1, title: 'Hàng loạt rào cản kìm hãm nguồn cung căn hộ giá rẻ', image: product_img_thumb3 },
-	{ id: 1, title: 'Ít cửa sáng cho thị trường căn hộ Tp.HCM', image: product_img_thumb4 },
-	{ id: 1, title: 'Thúc đẩy nhà giá rẻ phát triển cần có chính sách mạnh mẽ hơn', image: product_img_thumb5 },
-]
 
 export default function GioiThieu() {
-	const params = useParams();
-  	const [datas, setDatas] = React.useState([]);
-	React.useEffect(() => {
-		(async () => {
-		  try {
-            const a = 6;
-			const res = await getData(API_BASE_URL + `/blog/${a}`);
-			setDatas(res.data);
-		  } catch (e) {
-			console.log(e);
-		  }
-		})();
-	  }, [params.id]);
+	
 	return (
 		<Box className="wrapper-product-detail wrapper-news">
 			<Box sx={{ width: '100%', display: { xs: 'none', sm: 'inline-block' } }}>

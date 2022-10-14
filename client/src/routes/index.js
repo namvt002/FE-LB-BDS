@@ -63,28 +63,28 @@ export default function Router() {
           path: 'user',
           children: [
             {
-              path: '/',
+              path: '',
               element: <UserList />,
             },
             { path: 'account', element: <UserAccount /> },
             { path: 'list', element: <UserList /> },
             { path: 'new', element: <UserCreate /> },
-            { path: '/:id/edit', element: <UserCreate /> },
+            { path: ':id/edit', element: <UserCreate /> },
           ],
         },
         {
           path: 'book',
           children: [
             {
-              path: '/',
+              path: '',
               element: <BookList />,
             },
             {
-              path: '/new',
+              path: 'new',
               element: <BookCreate />,
             },
             {
-              path: '/:id/edit',
+              path: ':id/edit',
               element: <BookCreate />,
             },
           ],
@@ -93,15 +93,15 @@ export default function Router() {
           path: 'role',
           children: [
             {
-              path: '/',
+              path: '',
               element: <RoleList />,
             },
             {
-              path: '/new',
+              path: 'new',
               element: <RoleCreate />,
             },
             {
-              path: '/:id/edit',
+              path: ':id/edit',
               element: <RoleCreate />,
             },
           ],
@@ -110,7 +110,7 @@ export default function Router() {
           path: 'tacgia',
           children: [
             {
-              path: '/',
+              path: '',
               element: <TacGiaList />,
             },
           ],
@@ -119,7 +119,7 @@ export default function Router() {
           path: 'danhmuc',
           children: [
             {
-              path: '/',
+              path: '',
               element: <DanhMucList />,
             },
           ],
@@ -128,7 +128,7 @@ export default function Router() {
           path: 'theloai',
           children: [
             {
-              path: '/',
+              path: '',
               element: <TheLoaiList />,
             },
           ],
@@ -137,15 +137,15 @@ export default function Router() {
           path: 'blog',
           children: [
             {
-              path: '/',
+              path: '',
               element: <BlogList />,
             },
             {
-              path: '/new',
+              path: 'new',
               element: <BlogCreate />,
             },
             {
-              path: '/:id/edit',
+              path: ':id/edit',
               element: <BlogCreate />,
             },
           ],
