@@ -9,8 +9,8 @@ import { fCurrency } from 'src/utils/formatNumber';
 
 
 export default function Product(props) {
-    const { product} = props;
-    console.log(product, "product")
+    // const { product} = props;
+    // console.log(product, "product")
     // console.log( props.product.sp_hinhanh[0]?.ha_hinh, 'rong', "trung anh aaaaaaaaaaaaaa")
     const product_img_1 = '/images/product_img_1.png';
     const product_img_2 = '/images/product_img_2.png';

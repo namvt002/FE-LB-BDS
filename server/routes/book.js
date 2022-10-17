@@ -197,7 +197,9 @@ module.exports = function (app) {
   //lay tat ca sp va loc theo danh muc
   app.get("/sanpham/tatca", async (req, res) => {
     const {_fromPrice, _toPrice, _fromSize, _toSize, type, sort, category} = req.query;
-    console.log(category)
+    console.log( category.split(',')[0])
+    console.log( category.split(','))
+    console.log( category.split(',').length)
     let qr = `
     SELECT 
         san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
@@ -235,15 +237,25 @@ module.exports = function (app) {
         qr += `sp_gia <= ${_toSize} AND`;
       }
   }
-if(category){
+if(category.split(',').length == 1 && category.split(',')[0] != ''){
   qr += ` danh_muc.dm_id = '${category}'`;
-} else{
+} 
+if(category.split(',').length > 1){
+  // qr += ` danh_muc.dm_id = `
+  for(let i = 0; i <= category.split(',').length - 2; i++){
+      qr += ` ( danh_muc.dm_id = '${category.split(',')[i]}' OR `;
+      qr += ` danh_muc.dm_id = '${category.split(',')[category.split(',').length  - 1]}' ) `;
+  }
+} 
+if(category.split(',').length == 1 && category.split(',')[0] == ''){
   qr += ` 1`;
 }
+
+
     if(sort){
       qr += `ORDER BY sp_gia ${sort}`;
     }
-    // console.log(qr)
+    console.log(qr)
     const _books = await query(db, qr);
     await Promise.all(
       _books.map(async (book, idx) => {

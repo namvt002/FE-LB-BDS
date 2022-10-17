@@ -32,12 +32,13 @@ export default function CategoryDetail() {
 	const [datas, setDatas] = React.useState([]);
 	const [_load, setLoad] = React.useState(0);
 	const [dataDanhMuc, setDataDanhMuc] = React.useState([]);
+	const [checked, setChecked] = React.useState([]);
 	const [selectedValue, setSelectedValue] = React.useState({
 		radioPrice: '',
 		radioSize: '',
 		radioSort: '',
 		radioType: '',
-		radioDanhMuc: []
+		// radioDanhMuc: []
 	});
     React.useEffect(() => {
         (async () => {
@@ -57,8 +58,15 @@ export default function CategoryDetail() {
 				if (radioSize[0] !== '*' ) _fromSize = radioSize[0];
 				if (radioSize[1] !== '*' ) _toSize = radioSize[1];
 			}
-			console.log(selectedValue.radioDanhMuc)
-			if(!_danhmuc) _danhmuc = selectedValue.radioDanhMuc;
+			let arrDanhMuc = []
+			checked?.map((data)=>{
+				// console.log(data)
+				 arrDanhMuc.push(Number(data))
+				 return arrDanhMuc
+			})
+			// console.log(arrDanhMuc, "danhmuc aaaaaa")
+			if(!_danhmuc) _danhmuc = arrDanhMuc;
+
 			
             const res = await getData(
               API_BASE_URL + `/sanpham/tatca?category=${_danhmuc}&&_fromPrice=${_fromPrice}&&_toPrice=${_toPrice}&&_fromSize=${_fromSize}&&_toSize=${_toSize}&&sort=${radioSort}&&type=${radioType}`,
@@ -70,7 +78,7 @@ export default function CategoryDetail() {
             console.log(e);
           }
         })();
-      }, [_danhmuc,_load,selectedValue.radioDanhMuc, selectedValue.radioPrice, selectedValue.radioSize, selectedValue.radioSort, selectedValue.radioType]);
+      }, [_danhmuc, _load,selectedValue.radioDanhMuc, selectedValue.radioPrice, selectedValue.radioSize, selectedValue.radioSort, selectedValue.radioType]);
 
 	const [sort, setSort] = React.useState(0);
 	const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -86,11 +94,14 @@ export default function CategoryDetail() {
 		setOpenDrawer(_boolean);
 	};
 
-	const handleCheckBox = (e) => {
-		let id = e.target.value;
-		let _danhmuc_c = selectedValue.radioDanhMuc;
-		console.log(_danhmuc_c);
-			return _danhmuc_c.includes(id) ? _danhmuc_c.filter(i => i !== id) : _danhmuc_c.push(id);
+	const handleCheckBox = (event) => {
+		var updatedList = [...checked];
+		if (event.target.checked) {
+		  updatedList = [...checked, event.target.value];
+		} else {
+		  updatedList.splice(checked.indexOf(event.target.value), 1);
+		}
+		setChecked(updatedList);
 	}
 
 	return (
@@ -123,23 +134,13 @@ export default function CategoryDetail() {
 										{
 											dataDanhMuc.map((danhmuc, index) => {
 												return (
-													// <RadioGroup
-													// 	aria-labelledby="demo-error-radios"
-													// 	name="radio-danhmuc"
-													// 	value={selectedValue.radioDanhMuc}
-													// 	onChange={(e)=>{
-													// 		setSelectedValue(pre => ({...pre, radioDanhMuc: e.target.value}))
-													// 	}}
-													// >
-													// 	<li><FormControlLabel value={danhmuc.dm_id} control={<Radio size="small" name="price" />} label={danhmuc.dm_ten} /></li>
-													// </RadioGroup>
 													<>
 														<li>
 															<FormGroup>
 																<FormControlLabel value={danhmuc.dm_id} control={
 																			<Checkbox  size="small" name="price[]" 
 																				onChange={(e)=>{
-																					setSelectedValue(pre => ({...pre, radioDanhMuc: handleCheckBox(e)}))
+																					handleCheckBox(e)
 																					setLoad(e=>e+1);
 																				}}
 																			/>
