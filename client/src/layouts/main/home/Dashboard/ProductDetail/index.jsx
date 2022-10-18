@@ -14,7 +14,7 @@ import { getData } from 'src/_helper/httpProvider';
 import { API_BASE_URL } from 'src/config/configUrl';
 import { useParams } from 'react-router-dom';
 import { fCurrency } from 'src/utils/formatNumber';
-
+import Map from '../Map';
 export default function ProductDetail() {
   const [open, setOpen] = React.useState(false);
   const [imgActive, setImgActive] = React.useState(0);
@@ -71,7 +71,7 @@ export default function ProductDetail() {
                   sx={{ display: { sm: 'none', md: 'inline-block' } }}
                   className="title_page"
                 >
-                  Tp. Hồ Chí Minh
+                  {datas.sp_thanhpho}
                 </Typography>
               </div>
             </div>
@@ -96,7 +96,7 @@ export default function ProductDetail() {
             variant="h5"
             className="product-title"
           >
-            TP. HỒ CHÍ MINH
+            {datas.sp_thanhpho}
           </Typography>
           <Breadcrumbs
             sx={{ mb: 2 }}
@@ -107,7 +107,7 @@ export default function ProductDetail() {
               Trang chủ
             </Link>
             <Link underline="hover" color="inherit" href="#">
-              Tp. Hồ Chí Minh
+              {datas.sp_thanhpho}
             </Link>
             <Link underline="hover" color="inherit" className="active" href="#">
               {datas.sp_ten}
@@ -254,6 +254,23 @@ export default function ProductDetail() {
             <Grid container spacing={4}>
               <Grid item xs={12} sx={{ my: 2 }}>
                 <div dangerouslySetInnerHTML={{ __html: datas.sp_mota }}></div>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box className="product-detail-info">
+            <Typography variant="h6" className="title">
+              Vị trí dự án
+            </Typography>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sx={{ my: 2 }}>
+                  <Map 
+                    vtd={datas.sp_lat}
+                    vtc={datas.sp_lng}
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyBXCZ_ydtXnMnERAr9beiGj8mKET9OfYm8&callback=initMap`}
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `90vh`, margin: `auto`, border: '2px solid black' }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  />
               </Grid>
             </Grid>
           </Box>

@@ -60,11 +60,9 @@ export default function CategoryDetail() {
 			}
 			let arrDanhMuc = []
 			checked?.map((data)=>{
-				// console.log(data)
 				 arrDanhMuc.push(Number(data))
 				 return arrDanhMuc
 			})
-			// console.log(arrDanhMuc, "danhmuc aaaaaa")
 			if(!_danhmuc) _danhmuc = arrDanhMuc;
 
 			
@@ -277,12 +275,13 @@ export default function CategoryDetail() {
 									<MenuItem value={4}>Giá giảm dần</MenuItem>
 								</Select>
 								<Divider sx={{ my: 2 }} light />
-								<Grid container spacing={2}>
+                				<Grid container spacing={2} sx={{mt: 5, backgroundColor: "#f6f7f9" }}>
+								{/* backgroundColor: "#f6f7f9" */}
 									{
 										datas.map((product, index) => {
 											return (
-												<Grid key={index} item xs={12}>
-													<Box sx={{ width: '90%' }}>
+												<Grid key={index} item xs={12} md={6} lg={4}>
+													<Box sx={{ width: '100%'}}>
 														<Product product={product}></Product>
 													</Box>
 												</Grid>

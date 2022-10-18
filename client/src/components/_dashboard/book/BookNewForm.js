@@ -68,6 +68,9 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     sp_gia: Yup.number().required('Vui lòng nhập giá'),
     sp_dientich: Yup.string().required('Vui lòng diện tích'),
     sp_huongnha: Yup.string().required('Vui lòng nhập hướng nhà'),
+    sp_lat: Yup.string().required('Vui lòng nhập vị trí điểm đầu dự án'),
+    sp_lng: Yup.string().required('Vui lòng nhập vị trí điểm cuối dự án'),
+    sp_thanhpho: Yup.string().required('Vui lòng nhập thành phố'),
   });
 
   const formik = useFormik({
@@ -84,7 +87,9 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
       sp_dientich: currentProduct?.sp_dientich || 1,
       sp_phongwc: currentProduct?.sp_phongwc || 1,
       sp_huongnha: currentProduct?.sp_huongnha || '',
-      sp_diachi: currentProduct?.sp_diachi || '',
+      sp_lat: currentProduct?.sp_lat || 1.0,
+      sp_lng: currentProduct?.sp_lng || 1.0,
+      sp_thanhpho: currentProduct?.sp_thanhpho || '',
       sp_idtl:
         {
           tl_ten: currentProduct?.tl_ten,
@@ -194,6 +199,27 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                   {...getFieldProps('sp_ten')}
                   error={Boolean(touched.sp_ten && errors.sp_ten)}
                   helperText={touched.sp_ten && errors.sp_ten}
+                />
+                <TextField
+                  fullWidth
+                  label="Vị trí đầu"
+                  {...getFieldProps('sp_lat')}
+                  error={Boolean(touched.sp_lat && errors.sp_lat)}
+                  helperText={touched.sp_lat && errors.sp_lat}
+                />
+                <TextField
+                  fullWidth
+                  label="Vị trí cuối"
+                  {...getFieldProps('sp_lng')}
+                  error={Boolean(touched.sp_lng && errors.sp_lng)}
+                  helperText={touched.sp_lng && errors.sp_lng}
+                />
+                <TextField
+                  fullWidth
+                  label="Thành phố / Tỉnh"
+                  {...getFieldProps('sp_thanhpho')}
+                  error={Boolean(touched.sp_thanhpho && errors.sp_thanhpho)}
+                  helperText={touched.sp_thanhpho && errors.sp_thanhpho}
                 />
 
                 <div>
