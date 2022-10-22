@@ -22,7 +22,7 @@ export default function ListProductEspecical() {
               API_BASE_URL + `/danhmuc/tieubieu`,
             );
             setDatas(res.data);
-            console.log(res.data,"tieu bieu")
+            console.log(res.data.adm_hinh,"tieu bieu aaaaaaaaaa")
           } catch (e) {
             console.log(e);
           }
@@ -44,7 +44,7 @@ export default function ListProductEspecical() {
                             return (
                                 <Grid className="_item" key={index} item xs={12} sm={col_md}>
                                     <div className="wrap_banner">
-                                        <img src={`http://localhost:4000/public/${product.adm_hinsp_iddmh}`} data-lazyload="//bizweb.dktcdn.net/100/336/794/themes/692935/assets/banner_project_1.png?1638695199389" alt={product.title}/>
+                                        <img src={`http://localhost:4000/public/${product?.adm_hinh}`} alt={product.dm_ten}/>
                                         <div class="wr_title">
                                             <div class="wrap_title_ed">
                                                 <h2 class="h2"><Link className="tag-a" id="link-danh-muc" to={`/danh-muc/${product.sp_iddm}`} title={product.dm_ten}>{product.dm_ten}</Link></h2>

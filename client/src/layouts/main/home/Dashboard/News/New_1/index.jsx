@@ -20,7 +20,7 @@ export default function New_1(props) {
                         <div className="summary_item_blog" >
                             {/* {props.new.bv_mota} */}
                             <div id="motabv" dangerouslySetInnerHTML={{ __html: props.new.bv_mota }}></div>
-                        <Link to={`/tin-tuc/${props.new?.seo}`} className="tag-a" title="Đọc tiếp">Đọc tiếp</Link>
+                        <Link to={`/tin-tuc/${props.new?.bv_id}`} className="tag-a" title="Đọc tiếp">Đọc tiếp</Link>
                         </div>
                     </div>
                 </div>

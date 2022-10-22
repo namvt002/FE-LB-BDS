@@ -16,19 +16,25 @@ export default function NewsDetail() {
 	const params = useParams();
   	const [datas, setDatas] = React.useState([]);
   	const [dataListNews, setDataListNews] = React.useState([]);
-
+	let load = 1;
 	React.useEffect(() => {
 		(async () => {
 		  try {
-			const res = await getData(API_BASE_URL + `/blog/${params.id}`);
 			const resAllTin = await getData(API_BASE_URL + `/blogs`);
 			setDataListNews(resAllTin.data);
+			if(resAllTin){
+				load = load + 1
+			}else{
+				load = load;
+			}
+			console.log(resAllTin.data, "hinhhhhhhhhh");
+			const res = await getData(API_BASE_URL + `/blog/${params.id}`);
 			setDatas(res.data);
 		  } catch (e) {
 			console.log(e);
 		  }
 		})();
-	  }, [params.id]);
+	  }, [params.id], load);
 	return (
 		<Box className="wrapper-product-detail wrapper-news">
 			<Box sx={{ width: '100%', display: { xs: 'none', sm: 'inline-block' } }}>
@@ -64,7 +70,7 @@ export default function NewsDetail() {
 									dataListNews.map((news, index) => {
 										return (
 											<li key={index} className="once-new">
-												<Link to={`/tin-tuc/${news.bv_id}`}><img src={`http://localhost:4000/public/${news.bv_hinhanh[0]?.abv_hinh}`} alt="" /></Link>
+												<Link to={`/tin-tuc/${news.bv_id}`}><img id="imageListNews" src={`http://localhost:4000/public/${news.bv_hinhanh[0]?.abv_hinh}`} alt="" /></Link>
 												<Link to={`/tin-tuc/${news.bv_id}`} className="tag-a title">{news.bv_ten}</Link>
 											</li>
 										)
@@ -78,7 +84,6 @@ export default function NewsDetail() {
 							<Typography className="title" variant="h7"><Link to="#" className="tag-a">{datas.bv_ten}</Link></Typography>
 							<Box className="line-time-info">
 								<span><CalendarMonthIcon sx={{ position: 'relative', top: '5px' }}></CalendarMonthIcon> {datas.ngaytao}</span>
-								
 							</Box>
 							<Box className="news-content">
 								<div id="editor-react-quiz" dangerouslySetInnerHTML={{ __html: datas.bv_mota }}></div>

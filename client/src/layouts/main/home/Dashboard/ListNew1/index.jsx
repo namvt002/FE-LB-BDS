@@ -22,7 +22,6 @@ export default function ListNew1() {
               API_BASE_URL + `/blogs`,
             );
             setDatas(res.data);
-            console.log(res.data,"blog ne data ne");
           } catch (e) {
             console.log(e);
           }

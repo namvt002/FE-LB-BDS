@@ -237,10 +237,23 @@ module.exports = function (app) {
 if(category.split(',').length == 1 && category.split(',')[0] != ''){
   qr += ` danh_muc.dm_id = '${category}'`;
 } 
-if(category.split(',').length > 1){
+if(category.split(',').length > 1 && category.split(',').length <= 2 ){
   for(let i = 0; i <= category.split(',').length - 2; i++){
+    qr += ` ( danh_muc.dm_id = '${category.split(',')[i]}' OR `;
+    qr += ` danh_muc.dm_id = '${category.split(',')[category.split(',').length  - 1]}' ) `;
+  }
+} 
+if(category.split(',').length > 2 ){
+  for(let i = 0; i <= category.split(',').length - 2; i++){
+    if(category.split(',').length > 2){
       qr += ` ( danh_muc.dm_id = '${category.split(',')[i]}' OR `;
-      qr += ` danh_muc.dm_id = '${category.split(',')[category.split(',').length  - 1]}' ) `;
+    }
+    if(i  ==  category.split(',').length - 2){
+      qr += ` danh_muc.dm_id = '${category.split(',')[category.split(',').length  - 1]}' )`;
+    }else{
+      qr += ` danh_muc.dm_id = '${category.split(',')[category.split(',').length  - 1]}' ) OR `;
+
+    }
   }
 } 
 if(category.split(',').length == 1 && category.split(',')[0] == ''){
