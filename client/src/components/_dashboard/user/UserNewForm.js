@@ -175,7 +175,6 @@ export default function UserNewForm({ isEdit, currentUser, id }) {
                     helperText={touched.phone && errors.phone}
                   />
                 </Stack>
-
                 <TextField
                   fullWidth
                   label="Email"

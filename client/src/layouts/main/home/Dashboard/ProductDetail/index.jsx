@@ -15,8 +15,14 @@ import { API_BASE_URL } from 'src/config/configUrl';
 import { useParams } from 'react-router-dom';
 import { fCurrency } from 'src/utils/formatNumber';
 import Map from '../Map';
+import { Button } from '@material-ui/core';
+import DialogLienHe from '../DiaLogLienHe';
+
+
 export default function ProductDetail() {
+ 
   const [open, setOpen] = React.useState(false);
+  const [openLienHe, setOpenLienHe] = React.useState(false);
   const [imgActive, setImgActive] = React.useState(0);
   const params = useParams();
   const [datas, setDatas] = React.useState([]);
@@ -24,15 +30,16 @@ export default function ProductDetail() {
   const [imgSrc, setImgSrc] = React.useState('');
   const [dataTinCungChuDe, setDataTinCungChuDe] = React.useState([]);
 
-
   useEffect(() => {
     (async () => {
       try {
         const res = await getData(API_BASE_URL + `/book/${params.id}`);
         setDatas(res.data);
         setListImage(res.data.sp_hinhanh);
-        const rs = await getData(API_BASE_URL + `/books/danhmuc/${res.data.sp_iddm}`);
-        setDataTinCungChuDe(rs.data)
+        const rs = await getData(
+          API_BASE_URL + `/books/danhmuc/${res.data.sp_iddm}`,
+        );
+        setDataTinCungChuDe(rs.data);
         setImgSrc(
           `http://localhost:4000/public/${res.data?.sp_hinhanh[0]?.ha_hinh}`,
         );
@@ -42,8 +49,13 @@ export default function ProductDetail() {
     })();
   }, [params.id]);
 
+  const handleClickOpenLienHe = () => {
+    setOpenLienHe(true);
+  };
 
-
+  const handleCloseLienHe = () => {
+    setOpenLienHe(false);
+  };
 
   const handleClickOpenDialog = () => {
     setOpen(true);
@@ -176,17 +188,33 @@ export default function ProductDetail() {
                 {fCurrency(datas.sp_gia)}
               </Typography>
 
-              <div className="contactphone">
-                <a className="mobile" href="tel:0123456789">
-                  <span className="icon"></span>
-                  <div className="mb">
-                    <span itemprop="telephone" data-mobile="0123456789">
-                      0123 456 789
-                    </span>
-                    <small>Liên hệ ngay</small>
-                  </div>
-                </a>
+              <div style={{ display: 'flex' }}>
+                <div className="contactphone">
+                  <a className="mobile" href="tel:0793994478">
+                    <span className="icon"></span>
+                    <div className="mb">
+                      <span itemprop="telephone" data-mobile="0793994478">
+                        0793994478
+                      </span>
+                      <small>Liên hệ ngay</small>
+                    </div>
+                  </a>
+                </div>
+
+                <Button
+                  variant="contained"
+                  id="buttonlienhe"
+                  onClick={() => handleClickOpenLienHe()}
+                >
+                  Liên hệ tư vấn
+                </Button>
               </div>
+
+              <DialogLienHe
+                open={openLienHe}
+                handleClose={handleCloseLienHe}
+                id_sp={params.id}
+              />
             </Grid>
           </Grid>
           <Box className="product-detail-info">
@@ -263,14 +291,22 @@ export default function ProductDetail() {
             </Typography>
             <Grid container spacing={4}>
               <Grid item xs={12} sx={{ my: 2 }}>
-                  <Map 
-                    vtd={datas.sp_lat}
-                    vtc={datas.sp_lng}
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyBXCZ_ydtXnMnERAr9beiGj8mKET9OfYm8&callback=initMap`}
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `90vh`, margin: `auto`, border: '2px solid black' }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                  />
+                <Map
+                  vtd={datas.sp_lat}
+                  vtc={datas.sp_lng}
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyBXCZ_ydtXnMnERAr9beiGj8mKET9OfYm8&callback=initMap`}
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={
+                    <div
+                      style={{
+                        height: `90vh`,
+                        margin: `auto`,
+                        border: '2px solid black',
+                      }}
+                    />
+                  }
+                  mapElement={<div style={{ height: `100%` }} />}
+                />
               </Grid>
             </Grid>
           </Box>
@@ -287,24 +323,20 @@ export default function ProductDetail() {
               <Box></Box>
             </Stack>
             <Grid container spacing={2} sx={{ mt: 2 }}>
-							{
-								dataTinCungChuDe.map((product, index) => {
-									if (index < 1) {
-										return (
-											<Grid key={index} item xs={12} md={6} lg={4}>
-												<Box sx={{ width: '100%' }}>
-													<Product product={product}></Product>
-												</Box>
-											</Grid>
-										)
-									}else{
-                    return (
-                      <></>
-                    )
-                  }
-								})
-							}
-						</Grid>
+              {dataTinCungChuDe.map((product, index) => {
+                if (index < 1) {
+                  return (
+                    <Grid key={index} item xs={12} md={6} lg={4}>
+                      <Box sx={{ width: '100%' }}>
+                        <Product product={product}></Product>
+                      </Box>
+                    </Grid>
+                  );
+                } else {
+                  return <></>;
+                }
+              })}
+            </Grid>
           </Box>
         </Container>
       </Box>

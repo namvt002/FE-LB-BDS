@@ -237,9 +237,7 @@ export default function CategoryDetail() {
 									<ul className="news-category">
 										<li><Link to="#" className="tag-a">Trang chủ</Link></li>
 										<li><Link to="#" className="tag-a">Tất cả tin rao</Link><KeyboardArrowDownIcon /> </li>
-										<li><Link to="#" className="tag-a">Tin tức</Link><KeyboardArrowDownIcon /> </li>
 										<li><Link to="#" className="tag-a">Giới thiệu</Link> </li>
-										<li><Link to="#" className="tag-a">Liên hệ</Link></li>
 									</ul>
 								</Box>
 							</Box>
