@@ -68,7 +68,7 @@ const sidebarConfig = [
       {
         title: 'Danh mục',
         path: PATH_DASHBOARD.danhmuc.root,
-        icon: ICONS.danhmuc,
+        icon: ICONS.kanban,
       },
       {
         title: 'Thể loại',
@@ -76,9 +76,14 @@ const sidebarConfig = [
         icon: ICONS.danhmuc,
       },
       {
+        title: 'Liên hệ',
+        path: PATH_DASHBOARD.lienhe.root,
+        icon: ICONS.chat,
+      },
+      {
         title: 'Bài viết',
         path: PATH_DASHBOARD.blog.root,
-        icon: ICONS.kanban,
+        icon: ICONS.blog,
       },
     ],
   },

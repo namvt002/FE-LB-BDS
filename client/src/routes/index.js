@@ -134,6 +134,15 @@ export default function Router() {
           ],
         },
         {
+          path: 'lienhe',
+          children: [
+            {
+              path: '',
+              element: <LienHeList />,
+            },
+          ],
+        },
+        {
           path: 'blog',
           children: [
             {
@@ -228,6 +237,9 @@ const DanhMucList = Loadable(lazy(() => import('../pages/dashboard/DanhMuc')));
 const TacGiaList = Loadable(lazy(() => import('../pages/dashboard/TacGia')));
 //--------------------------Thể loại-------------------------------------------
 const TheLoaiList = Loadable(lazy(() => import('../pages/dashboard/TheLoai')));
+
+//--------------------------Lien he-------------------------------------------
+const LienHeList = Loadable(lazy(() => import('../pages/dashboard/LienHe')));
 
 //--------------------------sanpham-------------------------------------------
 const BookList = Loadable(lazy(() => import('../pages/dashboard/Book')));

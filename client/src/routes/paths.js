@@ -91,6 +91,9 @@ export const PATH_DASHBOARD = {
   tacgia: {
     root: path(ROOTS_DASHBOARD, '/tacgia'),
   },
+  lienhe: {
+    root: path(ROOTS_DASHBOARD, '/lienhe'),
+  },
   theloai: {
     root: path(ROOTS_DASHBOARD, '/theloai'),
   },

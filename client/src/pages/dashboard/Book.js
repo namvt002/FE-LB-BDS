@@ -47,7 +47,6 @@ const TABLE_HEAD = [
   { id: 'sp_dm', label: 'Danh mục', alignRight: false },
   { id: 'sp_tg', label: 'Chủ sở hữu', alignRight: false },
   { id: 'sp_tl', label: 'Thể loại', alignRight: false },
-  { id: 'sp_tl', label: 'Danh mục', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
   { id: '' },
 ];
