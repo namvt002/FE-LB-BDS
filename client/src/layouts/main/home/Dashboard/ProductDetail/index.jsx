@@ -209,6 +209,15 @@ export default function ProductDetail() {
                   Liên hệ tư vấn
                 </Button>
               </div>
+              <a href="http://localhost:3000/Mau-hop.pdf" className='hd-a' target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="contained"
+                  id="buttonhopdong"
+                >
+                
+                  Hợp đồng mẫu
+                </Button>
+              </a>                
 
               <DialogLienHe
                 open={openLienHe}
