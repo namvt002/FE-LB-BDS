@@ -76,6 +76,7 @@ export default function DialogLienHe({ open, handleClose, id_sp }) {
       try {
         await postData(API_BASE_URL + `/lienhe/create`, values);
         resetForm();
+        handleClose()
         enqueueSnackbar('Gửi tư vấn thành công', {
           variant: 'success',
         });

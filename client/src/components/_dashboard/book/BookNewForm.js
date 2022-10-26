@@ -87,6 +87,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
       sp_dientich: currentProduct?.sp_dientich || 1,
       sp_phongwc: currentProduct?.sp_phongwc || 1,
       sp_huongnha: currentProduct?.sp_huongnha || '',
+      sp_diachi: currentProduct?.sp_diachi || '',
       sp_lat: currentProduct?.sp_lat || 1.0,
       sp_lng: currentProduct?.sp_lng || 1.0,
       sp_thanhpho: currentProduct?.sp_thanhpho || '',

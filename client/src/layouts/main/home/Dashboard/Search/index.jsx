@@ -11,6 +11,8 @@ const Search = () => {
         setSearchAdvanced(!searchAdvanced);
     };
 
+    
+
     return (
     <div className="search_form_pro">
         <div className="search_group_wrap">

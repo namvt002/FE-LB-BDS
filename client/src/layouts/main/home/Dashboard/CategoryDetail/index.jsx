@@ -117,7 +117,7 @@ export default function CategoryDetail() {
 				<Container sx={{ pt: { xs: 0, sm: 5 }, top: '160px', position: { xs: 'absolute', sm: 'unset' } }}>
 					<Typography sx={{ display: { xs: 'inline-block', sm: 'none' } }} variant="h5" className="product-title">TP. HỒ CHÍ MINH</Typography>
 					<Breadcrumbs sx={{ mb: 2 }} aria-label="breadcrumb" className="breadcrumb">
-						<Link to="#" className="tag-a">Trang chủ</Link>
+						<Link to="/" className="tag-a">Trang chủ</Link>
 						{/* <Link to="#" className="tag-a active"></Link> */}
 					</Breadcrumbs>
 					<Grid className="news-write-info" container direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 2, md: 5 }} sx={{ my: 3 }}>
@@ -235,9 +235,9 @@ export default function CategoryDetail() {
 								<Box>
 									<Typography className="title" variant="h6">Danh mục tin tức</Typography>
 									<ul className="news-category">
-										<li><Link to="#" className="tag-a">Trang chủ</Link></li>
-										<li><Link to="#" className="tag-a">Tất cả tin rao</Link><KeyboardArrowDownIcon /> </li>
-										<li><Link to="#" className="tag-a">Giới thiệu</Link> </li>
+										<li className="li-category-intro"><Link to="/" className="tag-a">Trang chủ</Link></li>
+										<li className="li-category-intro"><Link to="/tat-ca-san-pham" className="tag-a">Tất cả sản phẩm</Link></li>
+										<li className="li-category-intro"><Link to="/gioi-thieu" className="tag-a">Giới thiệu</Link> </li>
 									</ul>
 								</Box>
 							</Box>

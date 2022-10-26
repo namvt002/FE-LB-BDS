@@ -50,7 +50,7 @@ export default function Product(props) {
                 </h3>
                 <div className="tag_mix section">
                     <ul className="padding-0">
-                        <li><span><LocationOnIcon className="icon-map-marker" />&nbsp;</span><span>{props.product.sp_diachi}</span></li>
+                        <li><span><LocationOnIcon className="icon-map-marker" />&nbsp;</span><span>{props.product.sp_thanhpho}</span></li>
                     </ul>
                 </div>
                 <div className="tag_mix section">

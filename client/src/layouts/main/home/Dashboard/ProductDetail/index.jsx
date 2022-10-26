@@ -254,8 +254,7 @@ export default function ProductDetail() {
                 <ul className="product-specical-info info-user">
                   <li>
                     <Avatar
-                      alt="Nguyễn Tú Đại"
-                      src="/static/images/avatar/1.jpg"
+                      alt={datas.tg_ten}
                       sx={{ width: 56, height: 56, mb: 1 }}
                     />
                   </li>

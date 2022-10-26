@@ -273,6 +273,10 @@
     line-height: 24px;
 }
 
+.li-category-intro a{
+    text-decoration: none;
+}
+
 @media (max-width: 920px) {
     .wrapper-product-detail .product-detail-info ul.product-specical-info li {
         border-right: 0px !important;

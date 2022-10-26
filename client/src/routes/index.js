@@ -143,6 +143,15 @@ export default function Router() {
           ],
         },
         {
+          path: 'thongke',
+          children: [
+            {
+              path: '',
+              element: <GeneralBooking />,
+            },
+          ],
+        },
+        {
           path: 'blog',
           children: [
             {
@@ -249,6 +258,11 @@ const BlogList = Loadable(lazy(() => import('../pages/dashboard/Blog')));
 const BlogCreate = Loadable(
   lazy(() => import('../pages/dashboard/BlogCreate')),
 );
+
+//--------------------------Thống kê-------------------------------------------/
+
+const GeneralBooking = Loadable(lazy(() => import('../pages/dashboard/GeneralBooking')));
+
 
 const BookCreate = Loadable(
   lazy(() => import('../pages/dashboard/BookCreate')),

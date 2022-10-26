@@ -81,6 +81,12 @@ const sidebarConfig = [
         icon: ICONS.chat,
       },
       {
+        title: 'Thống kê',
+        path: PATH_DASHBOARD.general.thongke,
+        icon: ICONS.analytics,
+      },
+
+      {
         title: 'Bài viết',
         path: PATH_DASHBOARD.blog.root,
         icon: ICONS.blog,

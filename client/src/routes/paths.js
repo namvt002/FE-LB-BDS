@@ -39,7 +39,7 @@ export const PATH_DASHBOARD = {
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics'),
     banking: path(ROOTS_DASHBOARD, '/banking'),
-    booking: path(ROOTS_DASHBOARD, '/booking'),
+    thongke: path(ROOTS_DASHBOARD, '/thongke'),
   },
   mail: {
     root: path(ROOTS_DASHBOARD, '/mail'),

@@ -149,7 +149,7 @@ export default function BookList() {
     }
   };
   return (
-    <Page title="Book: List | HYPE">
+    <Page title="Dự án: Danh sách | Delta">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Dự án"

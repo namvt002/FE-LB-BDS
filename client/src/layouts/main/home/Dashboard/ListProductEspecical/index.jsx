@@ -47,7 +47,7 @@ export default function ListProductEspecical() {
                                         <img src={`http://localhost:4000/public/${product?.adm_hinh}`} alt={product.dm_ten}/>
                                         <div class="wr_title">
                                             <div class="wrap_title_ed">
-                                                <h2 class="h2"><Link className="tag-a" id="link-danh-muc" to={`/danh-muc/${product.sp_iddm}`} title={product.dm_ten}>{product.dm_ten}</Link></h2>
+                                                <h2 class="h2"><Link className="tag-a" id="link-danh-muc" to={`/tat-ca-san-pham?danhmuc=${product.sp_iddm}`} title={product.dm_ten}>{product.dm_ten}</Link></h2>
                                                 <p>{product.so_luong_Sp}&nbsp;Dự án</p>
                                             </div>
                                         </div>
