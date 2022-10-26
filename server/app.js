@@ -72,6 +72,7 @@ require("./routes/nhacungcap")(app);
 require("./routes/danhmuc")(app);
 require("./routes/tacgia")(app);
 require("./routes/lienhe")(app);
+require("./routes/thongke")(app);
 require("./routes/theloai")(app);
 require("./routes/ngonngu")(app);
 require("./routes/book")(app);

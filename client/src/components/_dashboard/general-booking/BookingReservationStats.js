@@ -12,22 +12,22 @@ const CHART_DATA = [
   {
     year: 'Week',
     data: [
-      { name: 'Check In', data: [10, 41, 35, 151, 49, 62, 69, 91, 48] },
-      { name: 'Check Out', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] }
+      { name: 'Đã mua', data: [10, 41, 35, 151, 49, 62, 69, 91, 48] },
+      { name: 'Đã liên hệ', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] }
     ]
   },
   {
     year: 'Month',
     data: [
-      { name: 'Check In', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-      { name: 'Check Out', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] }
+      { name: 'Đã mua', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
+      { name: 'Đã liên hệ', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] }
     ]
   },
   {
     year: 'Year',
     data: [
-      { name: 'Check In', data: [76, 42, 29, 41, 27, 138, 117, 86, 63] },
-      { name: 'Check Out', data: [80, 55, 34, 114, 80, 130, 15, 28, 55] }
+      { name: 'Đã mua', data: [76, 42, 29, 41, 27, 138, 117, 86, 63] },
+      { name: 'Đã liên hệ', data: [80, 55, 34, 114, 80, 130, 15, 28, 55] }
     ]
   }
 ];
@@ -50,7 +50,7 @@ export default function BookingReservationStats() {
     },
     tooltip: {
       y: {
-        formatter: (val) => `$${val}`
+        formatter: (val) => `${val}`
       }
     }
   });
