@@ -230,8 +230,8 @@ export default function ProductDetail() {
             <Typography variant="h6" className="title">
               Đặc điểm dự án
             </Typography>
-            <Grid container spacing={4}>
-              <Grid item xs={12} md={7}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={8}>
                 <ul className="product-specical-info">
                   <li>
                     <span>Loại tin rao:</span>
@@ -242,7 +242,7 @@ export default function ProductDetail() {
                     {datas.sp_diachi}
                   </li>
                   <li>
-                    <span>Diện tích:</span>
+                    <span>Diện tích (m2):</span>
                     {datas.sp_dientich}
                   </li>
                   <li>
@@ -259,7 +259,7 @@ export default function ProductDetail() {
                   </li>
                 </ul>
               </Grid>
-              <Grid item xs={12} md={5}>
+              <Grid item xs={12} md={4}>
                 <ul className="product-specical-info info-user">
                   <li>
                     <Avatar
@@ -268,15 +268,15 @@ export default function ProductDetail() {
                     />
                   </li>
                   <li>
-                    <span>Tên liên lạc</span>
+                    <span>Tên liên lạc:</span>
                     {datas.tg_ten}
                   </li>
                   <li>
-                    <span>Số điện thoại</span>
+                    <span>Số điện thoại:</span>
                     {datas.tg_phone}
                   </li>
                   <li>
-                    <span>Email</span>
+                    <span>Email:</span>
                     {datas.tg_email}
                   </li>
                 </ul>

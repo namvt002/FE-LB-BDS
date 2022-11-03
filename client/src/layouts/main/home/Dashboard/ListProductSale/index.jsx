@@ -27,7 +27,7 @@ export default function ListProductSale() {
       }, []);
 
     return (
-       <Box className="list-product-new">
+       <Box className="list-product-new" id="wrap-dang-ban">
             <Container sx={{py: 5}}>
                 <Stack className="h-title-menu" direction="row" alignItems="center">
                     <Box className="h-title" sx={{flexGrow: 1 }}>

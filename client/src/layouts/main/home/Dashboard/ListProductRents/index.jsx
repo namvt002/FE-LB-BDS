@@ -25,7 +25,7 @@ export default function ListProductRents() {
         })();
       }, []);
     return (
-       <Box className="list-product-new">
+       <Box className="list-product-new" id="wrap-product-rents">
             <Container sx={{py: 5}}>
                 <Stack className="h-title-menu" direction="row" alignItems="center">
                     <Box className="h-title" sx={{flexGrow: 1 }}>

@@ -79,8 +79,8 @@ export default function MainNavbar() {
           <RouterLink to="/">
             <Logo />
           </RouterLink>
-          <Typography variant="h4" sx={{ ml: 2, color: 'text.primary' }}>
-            HYPE
+          <Typography variant="h3" sx={{ ml: 2, color: 'text.primary' }}>
+            Delta
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <MHidden width="mdDown">
@@ -90,7 +90,7 @@ export default function MainNavbar() {
               navConfig={navConfig}
             />
           </MHidden>
-          <Searchbar />
+          {/* <Searchbar /> */}
           {/* {isLogined ? (
             <AccountPopover />
           ) : (

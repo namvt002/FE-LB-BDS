@@ -118,7 +118,7 @@ export default function MainFooter() {
             textAlign: { xs: 'center', md: 'left' }
           }}
         >
-          © 2021. Trung B1805931
+          © 2022. Trung B1805931
         </Typography>
       </Container>
     </RootStyle>

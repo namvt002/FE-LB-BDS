@@ -20,7 +20,7 @@ export default function Product(props) {
         <div className="product-box product-item-main product-item-compare">
             <div className="product-thumbnail" >
                 <Link className="image_thumb p_img" to={`/san-pham/${props.product?.sp_id}`} title={props.product.sp_ten}>	
-                    <img src={ props?.product ? 'http://localhost:4000/public/'+ props?.product?.sp_hinhanh[0]?.ha_hinh : ''} alt="Cho thuê căn hộ, biệt thự cao cấp"/>
+                    <img style={{width: "800px", height: "250px"}} src={ props?.product ? 'http://localhost:4000/public/'+ props?.product?.sp_hinhanh[0]?.ha_hinh : ''} alt="Cho thuê căn hộ, biệt thự cao cấp"/>
                 </Link>
                 {/* <div className="label_thumb">
                     <div className="wrap_lable">

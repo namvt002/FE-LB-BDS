@@ -33,6 +33,8 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { formatDate } from 'src/_helper/formatDate';
 import { MIconButton } from 'src/components/@material-extend';
 import closeFill from '@iconify/icons-eva/close-fill';
+import { useDispatch } from 'react-redux';
+import { login } from 'src/redux/slices/user';
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +51,7 @@ export default function UserNewForm({ isEdit, currentUser, id }) {
   const [showPassword, setShowPassword] = useState(false);
   const [roles, setRoles] = useState([]);
   const [reset, setReset] = useState(0);
+  const dispatch = useDispatch();
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
@@ -108,6 +111,7 @@ export default function UserNewForm({ isEdit, currentUser, id }) {
         if (isEdit) {
           delete values.credential;
           await putData(API_BASE_URL + `/user/${id}/edit`, values);
+          await dispatch(login());
           resetForm();
         } else {
           values.verify = true;

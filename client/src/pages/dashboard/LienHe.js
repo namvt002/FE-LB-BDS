@@ -192,7 +192,7 @@ export default function LienHeList() {
     }
   };
   return (
-    <Page title="The Loai|HYPE">
+    <Page title="Liên hệ| Delta">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Liên hệ"
