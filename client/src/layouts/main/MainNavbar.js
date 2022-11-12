@@ -17,9 +17,7 @@ import { MHidden } from '../../components/@material-extend';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
-import Searchbar from './Searchbar';
-// import AccountPopover from './AccountPopover';
-// import { useSelector } from 'react-redux';
+// import Searchbar from './Searchbar';
 
 // ----------------------------------------------------------------------
 

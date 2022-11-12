@@ -72,7 +72,6 @@
 }
 
 .wrapper-news ul.news-category .once-new img {
-    width: 90px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -221,7 +220,7 @@
     color: #7dce32;
 }
 
-// #imageListNews{
-//     width: 200px;
-//     height: 100px;
-// }
+#imageListNews{
+    width: 300px !important;
+    height: 100px !important;
+}

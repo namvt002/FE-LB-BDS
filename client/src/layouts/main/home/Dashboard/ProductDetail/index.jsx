@@ -40,6 +40,7 @@ export default function ProductDetail() {
           API_BASE_URL + `/books/danhmuc/${res.data.sp_iddm}`,
         );
         setDataTinCungChuDe(rs.data);
+        console.log(rs.data)
         setImgSrc(
           `http://localhost:4000/public/${res.data?.sp_hinhanh[0]?.ha_hinh}`,
         );
@@ -332,7 +333,7 @@ export default function ProductDetail() {
             </Stack>
             <Grid container spacing={2} sx={{ mt: 2 }}>
               {dataTinCungChuDe.map((product, index) => {
-                if (index < 1) {
+                if (index >= 1) {
                   return (
                     <Grid key={index} item xs={12} md={6} lg={4}>
                       <Box sx={{ width: '100%' }}>

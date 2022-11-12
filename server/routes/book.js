@@ -102,7 +102,7 @@ module.exports = function (app) {
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
         LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
-        ORDER BY san_pham.sp_id DESC LIMIT 9
+        ORDER BY san_pham.sp_id DESC LIMIT 9 
     `;
     const _books = await query(db, qr);
     await Promise.all(

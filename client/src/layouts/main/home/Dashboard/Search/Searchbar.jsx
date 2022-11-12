@@ -122,9 +122,7 @@ export default function Searchbar() {
                     }
                     sx={{mr: 1, fontWeight: 'fontWeightBold'}}
                 />
-                <Button variant="contained" sx={{width: '9rem', height:'55px'}} onClick={() => {
-                    navigate(`${PATH_PAGE.product}?search=${search}`)
-                }}>
+                <Button variant="contained" sx={{width: '9rem', height:'55px'}}>
                     Tìm kiếm
                 </Button>
             </SearchbarStyle>
@@ -156,8 +154,8 @@ export default function Searchbar() {
                                                 <ThumbImgStyle alt="product image"
                                                                src={URL_PUBLIC_IMAGES + sp_hinhanh[0].ha_hinh}/>
                                                 <Box>
-                                                    <Link to={linkTo} color="inherit" component={RouterLink}>
-                                                        <Typography variant="subtitle2">
+                                                    <Link to={linkTo} color="inherit" component={RouterLink} sx={{textDecoration: 'none'}}>
+                                                        <Typography variant="subtitle2" >
                                                             {sp_masp} - {sp_ten}
                                                         </Typography>
 

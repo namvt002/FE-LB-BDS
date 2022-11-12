@@ -32,7 +32,7 @@ export default function ListProductNews() {
         (async () => {
           try {
             const res = await getData(
-              API_BASE_URL + `/books`,
+              API_BASE_URL + `/books/new`,
             );
             setDatas(res.data);
             console.log(res.data,"ListProductNews");
