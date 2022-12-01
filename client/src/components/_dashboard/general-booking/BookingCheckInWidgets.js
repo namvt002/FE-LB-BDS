@@ -18,7 +18,7 @@ import { API_BASE_URL } from 'src/config/configUrl';
 
 // ----------------------------------------------------------------------
 
-const CHART_SIZE = { width: 106, height: 106 };
+const CHART_SIZE = { width: 406, height: 406 };
 
 export default function BookingCheckInWidgets() {
   const [tong, setTong] = useState(0);

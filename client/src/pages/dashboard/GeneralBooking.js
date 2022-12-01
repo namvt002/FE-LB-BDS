@@ -41,7 +41,7 @@ export default function GeneralBooking() {
           </Grid>
 
           <Grid item xs={12} md={12}>
-            <Grid container spacing={3}>
+            <Grid container spacing={12}>
 
               <Grid item xs={12} md={12}>
                 <BookingCheckInWidgets />
@@ -58,9 +58,9 @@ export default function GeneralBooking() {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} md={12}>
+          {/* <Grid item xs={12} md={12}>
             <BookingReservationStats />
-          </Grid>
+          </Grid> */}
 
         </Grid>
       </Container>

@@ -10,21 +10,21 @@ import { BaseOptionChart } from '../../charts';
 
 const CHART_DATA = [
   {
-    year: 'Week',
+    year: 'Tuần',
     data: [
       { name: 'Đã mua', data: [10, 41, 35, 151, 49, 62, 69, 91, 48] },
       { name: 'Đã liên hệ', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] }
     ]
   },
   {
-    year: 'Month',
+    year: 'Tháng',
     data: [
       { name: 'Đã mua', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
       { name: 'Đã liên hệ', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] }
     ]
   },
   {
-    year: 'Year',
+    year: 'Năm',
     data: [
       { name: 'Đã mua', data: [76, 42, 29, 41, 27, 138, 117, 86, 63] },
       { name: 'Đã liên hệ', data: [80, 55, 34, 114, 80, 130, 15, 28, 55] }
@@ -33,7 +33,7 @@ const CHART_DATA = [
 ];
 
 export default function BookingReservationStats() {
-  const [seriesData, setSeriesData] = useState('Year');
+  const [seriesData, setSeriesData] = useState('Năm');
 
   const handleChangeSeriesData = (event) => {
     setSeriesData(event.target.value);

@@ -36,7 +36,7 @@ const DRAWER_WIDTH = 280;
 const COLLAPSE_WIDTH = 102;
 
 const RootStyle = styled('div')(({ theme }) => ({
-  [theme.breakpoints.up('lg')]: {
+  [theme.breakpoints.up('sm')]: {
     flexShrink: 0,
     transition: theme.transitions.create('width', {
       duration: theme.transitions.duration.complex,
@@ -162,7 +162,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           </Box>
           <Typography variant="h5">HYBE</Typography>
 
-          <MHidden width="lgDown">
+          <MHidden width="smDown">
             {!isCollapse && (
               <IconCollapse
                 onToggleCollapse={onToggleCollapse}
@@ -239,7 +239,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         }),
       }}
     >
-      <MHidden width="lgUp">
+      <MHidden width="smUp">
         <Drawer
           open={isOpenSidebar}
           onClose={onCloseSidebar}
@@ -251,7 +251,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Drawer>
       </MHidden>
 
-      <MHidden width="lgDown">
+      <MHidden width="smDown">
         <Drawer
           open
           variant="persistent"
