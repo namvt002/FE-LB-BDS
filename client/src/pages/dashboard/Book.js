@@ -71,6 +71,7 @@ export default function BookList() {
         const res = await getData(API_BASE_URL + `/books?search=${filterName}`);
         setDatas(res.data);
         console.log(res.data);
+        console.log(load,"alllllllllllllaaa");
       } catch (e) {
         console.log(e);
       }
@@ -128,12 +129,12 @@ export default function BookList() {
 
   const isUserNotFound = _datas.length === 0;
 
-  const changeActiveUser = async (id, active) => {
-    console.log(id, active);
+  const changeActiveUser = async (id, sp_active) => {
+    console.log(id, sp_active);
     try {
-      const res = await postData(API_BASE_URL + '/user/active', {
+      const res = await postData(API_BASE_URL + '/book/active', {
         id: id,
-        active: active,
+        sp_active: sp_active,
       });
       setLoad((e) => e + 1);
       enqueueSnackbar(res.data, {
@@ -203,8 +204,9 @@ export default function BookList() {
                         tg_ten,
                         tl_ten,
                         dm_ten,
-                        active,
+                        sp_active
                       } = row;
+                      console.log(row.sp_active, "aaaaaaaaaaaaaaaaaaaaaa");
                       const isItemSelected = selected.indexOf(sp_id) !== -1;
                       return (
                         <TableRow
@@ -253,12 +255,12 @@ export default function BookList() {
                           <TableCell align="left">{tg_ten}</TableCell>
                           <TableCell align="left">{tl_ten}</TableCell>
                           <TableCell align="left">
-                            <Switch
-                              checked={active === 1}
-                              onChange={() => {
-                                changeActiveUser(sp_id, !active);
-                              }}
-                            />
+                              <Switch
+                                checked={sp_active === 1}
+                                onChange={() => {
+                                  changeActiveUser(sp_id, !sp_active);
+                                }}
+                              />
                           </TableCell>
 
                           <TableCell align="right">

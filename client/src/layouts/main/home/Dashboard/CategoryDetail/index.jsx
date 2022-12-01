@@ -33,6 +33,7 @@ export default function CategoryDetail() {
 	const [_load, setLoad] = React.useState(0);
 	const [dataDanhMuc, setDataDanhMuc] = React.useState([]);
 	const [checked, setChecked] = React.useState([]);
+	const [page, setPage] = React.useState(1);
 	const [selectedValue, setSelectedValue] = React.useState({
 		radioPrice: '',
 		radioSize: '',
@@ -67,16 +68,17 @@ export default function CategoryDetail() {
 
 			
             const res = await getData(
-              API_BASE_URL + `/sanpham/tatca?category=${_danhmuc}&&_fromPrice=${_fromPrice}&&_toPrice=${_toPrice}&&_fromSize=${_fromSize}&&_toSize=${_toSize}&&sort=${radioSort}&&type=${radioType}`,
+              API_BASE_URL + `/sanpham/tatca?category=${_danhmuc}&&_fromPrice=${_fromPrice}&&_toPrice=${_toPrice}&&_fromSize=${_fromSize}&&_toSize=${_toSize}&&sort=${radioSort}&&type=${radioType}&&pageURL=${page}`,
             );
 			const resDanhMuc = await getData(API_BASE_URL + `/danhmuc`);
 			setDataDanhMuc(resDanhMuc.data)
             setDatas(res.data);
+			console.log(res.data);
           } catch (e) {
             console.log(e);
           }
         })();
-      }, [_danhmuc, _load,selectedValue.radioDanhMuc, selectedValue.radioPrice, selectedValue.radioSize, selectedValue.radioSort, selectedValue.radioType]);
+      }, [_danhmuc,page, _load,selectedValue.radioDanhMuc, selectedValue.radioPrice, selectedValue.radioSize, selectedValue.radioSort, selectedValue.radioType]);
 
 	const [sort, setSort] = React.useState(0);
 	const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -287,6 +289,9 @@ export default function CategoryDetail() {
 										})
 									}
 								</Grid>
+							</Box>
+							<Box mt={4} display='flex' justifyContent='center'>
+								<Button variant='contained' onClick={() => setPage(e => e + 1)}>Xem thêm</Button>
 							</Box>
 						</Grid>
 						<Grid tem xs={12}>

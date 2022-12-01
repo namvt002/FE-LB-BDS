@@ -102,6 +102,7 @@ module.exports = function (app) {
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
         LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
+        WHERE san_pham.sp_active = 1
         ORDER BY san_pham.sp_id DESC LIMIT 9 
     `;
     const _books = await query(db, qr);
@@ -126,7 +127,7 @@ module.exports = function (app) {
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
         LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
-        WHERE the_loai.tl_ten = "Cho thuê"
+        WHERE the_loai.tl_ten = "Cho thuê" AND san_pham.sp_active = 1
         ORDER BY san_pham.sp_id DESC LIMIT 9
     `;
     const _books = await query(db, qr);
@@ -151,7 +152,7 @@ module.exports = function (app) {
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
         LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
-        WHERE the_loai.tl_ten = "Bán"
+        WHERE the_loai.tl_ten = "Bán" AND san_pham.sp_active = 1
         ORDER BY san_pham.sp_id DESC LIMIT 9
     `;
     const _books = await query(db, qr);
@@ -197,6 +198,11 @@ module.exports = function (app) {
   //lay tat ca sp va loc theo danh muc
   app.get("/sanpham/tatca", async (req, res) => {
     const {_fromPrice, _toPrice, _fromSize, _toSize, type, sort, category} = req.query;
+    const { pageURL } = req.query;
+    let limit = 12;
+    if (pageURL) {
+      limit = limit * pageURL;
+    }
     let qr = `
     SELECT 
         san_pham.*,  the_loai.tl_ten, tac_gia.*, danh_muc.dm_ten
@@ -204,7 +210,7 @@ module.exports = function (app) {
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
         LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
-    WHERE 
+    WHERE san_pham.sp_active = 1 
     `;
 
     if(type){
@@ -257,7 +263,7 @@ if(category.split(',').length > 2 ){
   }
 } 
 if(category.split(',').length == 1 && category.split(',')[0] == ''){
-  qr += ` 1`;
+  qr += ` LIMIT ${limit} `;
 }
 
 
@@ -369,4 +375,14 @@ if(category.split(',').length == 1 && category.split(',')[0] == ''){
       return res.status(201).send("Xóa thành công!");
     }
   });
+
+  app.post("/book/active", async (req, res) => {
+    const { id, sp_active } = req.body;
+    console.log(req.body);
+    if (!id) return res.status(404).send("No content");
+    const qr = "UPDATE san_pham SET sp_active = ? where sp_id  = ?";
+    await db.query(qr, [sp_active, id]);
+    return res.status(201).send("Cập nhật thành công!");
+  });
+
 };
