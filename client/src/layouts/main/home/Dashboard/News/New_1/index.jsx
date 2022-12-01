@@ -10,7 +10,7 @@ export default function New_1(props) {
                 <div className="myblog">
                     <div className="image-blog-left">
                         <Link className="tag-a" to={`/tin-tuc/${props.new.bv_id}`} >
-                            <img src={`http://localhost:4000/public/${props.new?.bv_hinhanh[0]?.abv_hinh}`} data-lazyload="//bizweb.dktcdn.net/thumb/1024x1024/100/336/794/articles/20180615142644-cd98.jpg?v=1540401640587" title="Những lí do đầy thu hút của dự án chung cư New City" alt="" />
+                            <img src={`http://192.168.1.5:4000/public/${props.new?.bv_hinhanh[0]?.abv_hinh}`} data-lazyload="//bizweb.dktcdn.net/thumb/1024x1024/100/336/794/articles/20180615142644-cd98.jpg?v=1540401640587" title="Những lí do đầy thu hút của dự án chung cư New City" alt="" />
                         </Link>
                     </div>
                     <div className="content_blog">

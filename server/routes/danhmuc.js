@@ -116,7 +116,7 @@ module.exports = function (app) {
         await query(db, "DELETE FROM anh_danh_muc WHERE adm_iddm = ?", id);
         let values = [];
         data.dm_hinhanh.map((e) => {
-          values.push([e.replace("http://localhost:4000/public/", ""), id]);
+          values.push([e.replace("http://192.168.1.5:4000/public/", ""), id]);
         });
         const qr_ha1 = "INSERT INTO anh_danh_muc(adm_hinh, adm_iddm) VALUES ?";
         await db.query(qr_ha1, [values], (err, results) => {

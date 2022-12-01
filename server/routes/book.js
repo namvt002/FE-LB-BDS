@@ -210,7 +210,7 @@ module.exports = function (app) {
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
         LEFT JOIN danh_muc ON danh_muc.dm_id = san_pham.sp_iddm
-    WHERE san_pham.sp_active = 1 
+    WHERE 
     `;
 
     if(type){
@@ -263,14 +263,17 @@ if(category.split(',').length > 2 ){
   }
 } 
 if(category.split(',').length == 1 && category.split(',')[0] == ''){
-  qr += ` LIMIT ${limit} `;
+  qr += ` san_pham.sp_active = 1 `;
+}else{
+  qr += ` AND san_pham.sp_active = 1  `
+
 }
 
-
-    if(sort){
-      qr += ` ORDER BY sp_gia ${sort}`;
-    }
-    // console.log(qr)
+  if(sort){
+    qr += ` ORDER BY sp_gia ${sort}`;
+  }
+  qr += ` LIMIT ${limit} `
+// console.log(qr)
     const _books = await query(db, qr);
     await Promise.all(
       _books.map(async (book, idx) => {
@@ -332,7 +335,7 @@ if(category.split(',').length == 1 && category.split(',')[0] == ''){
         let values = [];
         console.log(data.sp_hinhanh);
         data.sp_hinhanh.map((e) => {
-          values.push([e.replace("http://localhost:4000/public/", ""), id]);
+          values.push([e.replace("http://192.168.1.5:4000/public/", ""), id]);
         });
         const qr_ha1 = "INSERT INTO hinh_anh(ha_hinh, ha_idsp) VALUES ?";
         await db.query(qr_ha1, [values], (err, results) => {

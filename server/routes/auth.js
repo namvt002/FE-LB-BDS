@@ -26,7 +26,7 @@ module.exports = function (app) {
       res.cookie("fullname", user[0].fullname);
       res.cookie("email", user[0].email);
       res.cookie("role", user[0].role);
-      return res.redirect("http://localhost:3000");
+      return res.redirect("http://192.168.1.5:3000");
     });
   });
   app.post("/user/register", async (req, res) => {
@@ -50,7 +50,7 @@ module.exports = function (app) {
             fullname,
             bcrypt.hashSync(password, 8),
           ]);
-          const URL = `http://localhost:4000/auth/verify/email?token=${tokenEmail}`;
+          const URL = `http://192.168.1.5:4000/auth/verify/email?token=${tokenEmail}`;
           const optionsSendMail = {
             to: email, // list of receivers
             subject: "Verify Account", // Subject line
@@ -78,7 +78,7 @@ module.exports = function (app) {
         const tokenEmail = jwt.sign({ email: email }, process.env.SECRET, {
           expiresIn: 18000, // 5m
         });
-        const URL = `http://localhost:4000/auth/verify/email?token=${tokenEmail}`;
+        const URL = `http://192.168.1.5:4000/auth/verify/email?token=${tokenEmail}`;
         const optionsSendMail = {
           to: email, // list of receivers
           subject: "Verify Account", // Subject line
@@ -131,8 +131,8 @@ module.exports = function (app) {
           res.cookie("fullname", req.user.displayName);
           res.cookie("email", req.user.email);
           res.cookie("role", data[0].role);
-          if(data[0].role === 'ADMIN') return res.redirect("http://localhost:3000/dashboard");
-          return res.redirect("http://localhost:3000");
+          if(data[0].role === 'ADMIN') return res.redirect("http://192.168.1.5:3000/dashboard");
+          return res.redirect("http://192.168.1.5:3000");
         } else {
           let sql =
             "INSERT INTO `users` (`user_id`, `email`, `fullname`, `verify`) VALUES ?";
@@ -143,7 +143,7 @@ module.exports = function (app) {
             res.cookie("email", req.user.email);
             res.cookie("token", token, { expire: new Date() + 86400 });
             res.cookie("role", "USER");
-            return res.redirect("http://localhost:3000");
+            return res.redirect("http://192.168.1.5:3000");
           });
         }
       }
