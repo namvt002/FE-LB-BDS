@@ -25,7 +25,9 @@ module.exports = function (app) {
   app.use(bodyParser.json());
   app.post("/book/create", upload.array("sp_hinhanh", 10), async (req, res) => {
     let { data } = req.body;
+
     data = JSON.parse(data);
+    console.log(data)
     delete data.sp_hinhanh_old;
     const qr_sp = "SELECT * FROM san_pham WHERE sp_masp = ?";
     await db.query(qr_sp, data.sp_masp, async (err, result) => {
@@ -97,7 +99,7 @@ module.exports = function (app) {
   app.get("/books/new", async (req, res) => {
     let qr = `
     SELECT 
-      san_pham.*,  the_loai.tl_ten, tac_gia.tg_ten, danh_muc.dm_ten
+      san_pham.*,  the_loai.*, tac_gia.*, danh_muc.dm_ten
     FROM san_pham
         LEFT JOIN the_loai ON the_loai.tl_id = san_pham.sp_idtl
         LEFT JOIN tac_gia ON tac_gia.tg_id = san_pham.sp_idtg
@@ -335,7 +337,7 @@ if(category.split(',').length == 1 && category.split(',')[0] == ''){
         let values = [];
         console.log(data.sp_hinhanh);
         data.sp_hinhanh.map((e) => {
-          values.push([e.replace("http://192.168.1.5:4000/public/", ""), id]);
+          values.push([e.replace("http://localhost:4000/public/", ""), id]);
         });
         const qr_ha1 = "INSERT INTO hinh_anh(ha_hinh, ha_idsp) VALUES ?";
         await db.query(qr_ha1, [values], (err, results) => {

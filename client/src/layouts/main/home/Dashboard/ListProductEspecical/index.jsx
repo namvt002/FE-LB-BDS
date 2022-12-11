@@ -44,7 +44,7 @@ export default function ListProductEspecical() {
                             return (
                                 <Grid className="_item" key={index} item xs={12} sm={col_md}>
                                     <div className="wrap_banner">
-                                        <img src={`http://192.168.1.5:4000/public/${product?.adm_hinh}`} alt={product.dm_ten}/>
+                                        <img src={`http://localhost:4000/public/${product?.adm_hinh}`} alt={product.dm_ten}/>
                                         <div class="wr_title">
                                             <div class="wrap_title_ed">
                                                 <h2 class="h2"><Link className="tag-a" id="link-danh-muc" to={`/tat-ca-san-pham?danhmuc=${product.sp_iddm}`} title={product.dm_ten}>{product.dm_ten}</Link></h2>

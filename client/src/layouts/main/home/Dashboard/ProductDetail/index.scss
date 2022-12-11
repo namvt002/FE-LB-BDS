@@ -1,5 +1,5 @@
 .breadcrumb_background {
-    background-image: url(http://192.168.1.5:3000//images/backgroudProductDetail.jpg);
+    background-image: url(http://localhost:3000//images/backgroudProductDetail.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center top;
@@ -173,7 +173,7 @@
 
 .wrapper-product-detail .product-info .contactphone .icon {
     margin-top: 3px;
-    background: url(http://192.168.1.5:3000/images/phone-call.gif) no-repeat center;
+    background: url(http://localhost:3000/images/phone-call.gif) no-repeat center;
     width: 45px;
     height: 45px;
     background-size: contain;

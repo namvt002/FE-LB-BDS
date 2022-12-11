@@ -16,12 +16,12 @@ export default function DialogListImage({
 }) {
   const [imgActive, setImgActive] = React.useState(0);
   const [imgSrc, setImgSrc] = React.useState(
-    `http://192.168.1.5:4000/public/${listProduct[0].ha_hinh}`,
+    `http://localhost:4000/public/${listProduct[0].ha_hinh}`,
   );
 
   const setImgThumbSrc = (imgSrc, index) => {
     setImgActive(index);
-    setImgSrc(`http://192.168.1.5:4000/public/${imgSrc}`);
+    setImgSrc(`http://localhost:4000/public/${imgSrc}`);
   };
 
   return (
@@ -56,7 +56,7 @@ export default function DialogListImage({
                       onClick={() => {
                         setImgThumbSrc(product.ha_hinh, index);
                       }}
-                      src={'http://192.168.1.5:4000/public/' + product.ha_hinh}
+                      src={'http://localhost:4000/public/' + product.ha_hinh}
                       className={active}
                       alt=""
                     />

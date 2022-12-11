@@ -95,7 +95,7 @@ export default function MainNavbar() {
             <Button
               variant="contained"
               target="_blank"
-              href="http://192.168.1.5:3000/auth/login"
+              href="http://localhost:3000/auth/login"
               sx={{ ml: 4 }}
             >
               Đăng nhập

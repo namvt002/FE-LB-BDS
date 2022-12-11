@@ -12,9 +12,9 @@ import New1 from '../News/New_1';
 
 
 const list_news = [
-    {title: 'Những lí do đầy thu hút của dự án chung cư New City', detail: 'Dự án chung cư cao cấp new city tại quận 2 gồm hơn 4000 căn hộ tại số 27 đường Mai Chí Thọ Thủ Thiêm do CDT Thuận V...', date: '25/10/2018 ', author: 'Đào Quý Thương', comment: 2 ,image: 'http://192.168.1.5:3000/images/banner_project_1.png'},
-    {title: 'Tình hình thị trường bất động sản năm 2018 sẽ diễn ra như thế nào', detail: 'Dự án chung cư cao cấp new city tại quận 2 gồm hơn 4000 căn hộ tại số 27 đường Mai Chí Thọ Thủ Thiêm do CDT Thuận V...', date: '25/10/2018 ', author: 'Đào Quý Thương', comment: 2 ,image: 'http://192.168.1.5:3000/images/banner_project_2.png'},
-    {title: 'Chủ đầu tư Tân Hoàng Minh Group', detail: 'Dự án chung cư cao cấp new city tại quận 2 gồm hơn 4000 căn hộ tại số 27 đường Mai Chí Thọ Thủ Thiêm do CDT Thuận V...', date: '25/10/2018 ', author: 'Đào Quý Thương', comment: 2 ,image: 'http://192.168.1.5:3000/images/banner_project_3.png'},
+    {title: 'Những lí do đầy thu hút của dự án chung cư New City', detail: 'Dự án chung cư cao cấp new city tại quận 2 gồm hơn 4000 căn hộ tại số 27 đường Mai Chí Thọ Thủ Thiêm do CDT Thuận V...', date: '25/10/2018 ', author: 'Đào Quý Thương', comment: 2 ,image: 'http://localhost:3000/images/banner_project_1.png'},
+    {title: 'Tình hình thị trường bất động sản năm 2018 sẽ diễn ra như thế nào', detail: 'Dự án chung cư cao cấp new city tại quận 2 gồm hơn 4000 căn hộ tại số 27 đường Mai Chí Thọ Thủ Thiêm do CDT Thuận V...', date: '25/10/2018 ', author: 'Đào Quý Thương', comment: 2 ,image: 'http://localhost:3000/images/banner_project_2.png'},
+    {title: 'Chủ đầu tư Tân Hoàng Minh Group', detail: 'Dự án chung cư cao cấp new city tại quận 2 gồm hơn 4000 căn hộ tại số 27 đường Mai Chí Thọ Thủ Thiêm do CDT Thuận V...', date: '25/10/2018 ', author: 'Đào Quý Thương', comment: 2 ,image: 'http://localhost:3000/images/banner_project_3.png'},
 ]
 
 export default function ListNew2() {

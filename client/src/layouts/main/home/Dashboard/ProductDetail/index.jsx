@@ -42,7 +42,7 @@ export default function ProductDetail() {
         setDataTinCungChuDe(rs.data);
         console.log(rs.data)
         setImgSrc(
-          `http://192.168.1.5:4000/public/${res.data?.sp_hinhanh[0]?.ha_hinh}`,
+          `http://localhost:4000/public/${res.data?.sp_hinhanh[0]?.ha_hinh}`,
         );
       } catch (e) {
         console.log(e);
@@ -68,7 +68,7 @@ export default function ProductDetail() {
 
   const setImgThumbSrc = (imgSrc, index) => {
     setImgActive(index);
-    setImgSrc(`http://192.168.1.5:4000/public/${imgSrc}`);
+    setImgSrc(`http://localhost:4000/public/${imgSrc}`);
   };
 
   return (
@@ -158,7 +158,7 @@ export default function ProductDetail() {
                         onClick={() => {
                           setImgThumbSrc(product?.ha_hinh, index);
                         }}
-                        src={'http://192.168.1.5:4000/public/' + product.ha_hinh}
+                        src={'http://localhost:4000/public/' + product.ha_hinh}
                         alt=""
                       />
                     </Grid>
@@ -210,7 +210,7 @@ export default function ProductDetail() {
                   Liên hệ tư vấn
                 </Button>
               </div>
-              <a href="http://192.168.1.5:3000/Mau-hop.pdf" className='hd-a' target="_blank" rel="noopener noreferrer">
+              <a href="http://localhost:3000/Mau-hop.pdf" className='hd-a' target="_blank" rel="noopener noreferrer">
                 <Button
                   variant="contained"
                   id="buttonhopdong"

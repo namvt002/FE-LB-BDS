@@ -34,7 +34,7 @@ const Search_2 = () => {
                         return (
                             <Link to={`/tat-ca-san-pham?danhmuc=${obj?.dm_id}`} className="_1-search-advanced">
                                 <Box className="thumbnail">
-                                    <img src={`http://192.168.1.5:4000/public/${obj.dm_hinhanh[0].adm_hinh}`} alt="" />
+                                    <img src={`http://localhost:4000/public/${obj.dm_hinhanh[0].adm_hinh}`} alt="" />
                                 </Box>
                                 <Typography sx={{textDecoration: "none"}} className="typography" variant="p">{obj.dm_ten}</Typography>
                             </Link>

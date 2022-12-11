@@ -130,7 +130,7 @@ module.exports = function (app) {
         await query(db, "DELETE FROM anh_bai_viet WHERE abv_idbv = ?", id);
         let values = [];
         data.bv_hinhanh.map((e) => {
-          values.push([e.replace("http://192.168.1.5:4000/public/", ""), id]);
+          values.push([e.replace("http://localhost:4000/public/", ""), id]);
         });
         const qr_ha1 = "INSERT INTO anh_bai_viet(abv_hinh, abv_idbv) VALUES ?";
         await db.query(qr_ha1, [values], (err, results) => {

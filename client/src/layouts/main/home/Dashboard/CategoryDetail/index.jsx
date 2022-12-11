@@ -22,7 +22,7 @@ import { getData } from 'src/_helper/httpProvider';
 import { API_BASE_URL } from 'src/config/configUrl';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-const thumbnail_category = 'http://192.168.1.5:3000/images/thumbnail_category.png';
+const thumbnail_category = 'http://localhost:3000/images/thumbnail_category.png';
 
 
 

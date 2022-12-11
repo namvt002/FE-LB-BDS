@@ -106,7 +106,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
           tg_ten: currentProduct?.tg_ten,
           tg_id: currentProduct?.sp_idtg,
         } || '',
-      active: Boolean(currentProduct?.active) || true,
+      sp_active: Boolean(currentProduct?.sp_active) || true,
       sp_masp: currentProduct?.sp_masp || '',
       sp_hinhanh_old: currentProduct?.sp_hinhanh || [],
     },
@@ -257,8 +257,8 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                 <FormControlLabel
                   control={
                     <Switch
-                      {...getFieldProps('active')}
-                      checked={values.active}
+                      {...getFieldProps('sp_active')}
+                      checked={values.sp_active}
                     />
                   }
                   label="Trạng thái (Ẩn/hiện)"
